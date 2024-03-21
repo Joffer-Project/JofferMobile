@@ -33,7 +33,7 @@ const FieldsScreen = () => {
     { id: 14, name: 'Other' },
     { id: 15, name: 'Other' },
     { id: 16, name: 'Other' },
-    // Add more fields as needed
+ 
   ];
 
   const [selectedFields, setSelectedFields] = useState([]);
@@ -59,7 +59,6 @@ const FieldsScreen = () => {
     );
   };
 
-  // Navigate to the TitlesScreen
   const handleNextPress = () => {
     navigation.navigate('Titles');
   };

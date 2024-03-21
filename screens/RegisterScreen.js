@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 const RegisterScreen = () => {
   const navigation = useNavigation();
 
-  // Load the Fredoka font
+  
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -17,13 +17,13 @@ const RegisterScreen = () => {
     loadFonts();
   }, []);
 
-  // State variables to store username and password
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
-  // Navigate to the next screen
+  
   const handleNextPress = () => {
     navigation.navigate('Register2');
   };

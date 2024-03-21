@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
-import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+import { useNavigation } from '@react-navigation/native'; 
 
 
 const TitlesScreen = () => {
-  const navigation = useNavigation(); // Initialize navigation
+  const navigation = useNavigation(); 
   
   useEffect(() => {
     async function loadFonts() {
@@ -16,7 +16,7 @@ const TitlesScreen = () => {
     loadFonts();
   }, []);
   const handleNextPress = () => {
-    navigation.navigate('Socials'); // Navigate to the SocialsScreen
+    navigation.navigate('Socials'); 
   };
 
   const fields = [

@@ -38,8 +38,7 @@ const SocialsScreen = () => {
   };
 
   const handleAddLink = () => {
-    // Add your logic here to handle adding links
-    // For now, let's add some sample links
+    
     setLinks([...links, 'https://example.com']);
   };
 
@@ -50,7 +49,7 @@ const SocialsScreen = () => {
   };
 
   const handlePreviewPress = () => {
-    navigation.navigate('Preview'); // Navigate to the ProfilePreview screen
+    navigation.navigate('Preview');
   };
 
   return (
