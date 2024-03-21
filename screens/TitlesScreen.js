@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, Modal, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
-import SocialsScreen from './SocialsScreen';
+import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+
 
 const TitlesScreen = () => {
+  const navigation = useNavigation(); // Initialize navigation
+  
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -12,10 +15,8 @@ const TitlesScreen = () => {
     }
     loadFonts();
   }, []);
-  const [showSocialsModal, setShowSocialsModal] = useState(false);
-  
-  const handleRegisterPress = () => {
-    setShowSocialsModal(true);
+  const handleNextPress = () => {
+    navigation.navigate('Socials'); // Navigate to the SocialsScreen
   };
 
   const fields = [
@@ -89,18 +90,9 @@ const TitlesScreen = () => {
         />
         
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={handleRegisterPress}>
+          <TouchableOpacity style={styles.returnButton} onPress={handleNextPress}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
-
-          <Modal
-            visible={showSocialsModal}
-            animationType="fade"
-            onRequestClose={() => setShowSocialsModal(false)}
-          >
-            <SocialsScreen />
-          </Modal>
-
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -111,7 +103,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 0, 
-    
   },
   scrollView: {
     flexGrow: 1,
@@ -129,7 +120,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 15,
   },
   welcomeText: {
     fontSize: 20,
@@ -151,7 +143,6 @@ const styles = StyleSheet.create({
   },
   fieldButtonsContainer: {
     alignItems: 'center',
-    
   },
   fieldButton: {
     paddingVertical: 10,

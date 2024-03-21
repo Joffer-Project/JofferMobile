@@ -1,11 +1,11 @@
-
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Modal, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import * as Font from 'expo-font';
-//import LoginScreen from './LoginScreen';
-import FieldsScreen from './FieldsScreen';
+import { useNavigation } from '@react-navigation/native';
+
 
 const RegisterScreen2 = () => {
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function loadFonts() {
@@ -16,13 +16,12 @@ const RegisterScreen2 = () => {
     loadFonts();
   }, []);
 
-
   const [about, setAbout] = useState('');
   const [fact, setFact] = useState('');
-  const [showFieldsModal, setShowFieldsModal] = useState(false);
-  
-  const handleRegisterPress = () => {
-    setShowFieldsModal(true);
+
+  // Navigate to the FieldsScreen
+  const handleNextPress = () => {
+    navigation.navigate('Fields');
   };
 
   return (
@@ -68,17 +67,9 @@ const RegisterScreen2 = () => {
         
         
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={handleRegisterPress}>
+          <TouchableOpacity style={styles.returnButton} onPress={handleNextPress}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
-          <Modal
-            visible={showFieldsModal}
-            animationType="fade"
-            onRequestClose={() => setShowFieldsModal(false)}
-          >
-            <FieldsScreen />
-          </Modal>
-
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -108,7 +99,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 15,
   },
   welcomeText: {
     fontSize: 20,

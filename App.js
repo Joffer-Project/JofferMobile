@@ -1,8 +1,10 @@
-
+/*
 import React, { useState, useEffect } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity, Modal, TextInput, BackHandler } from 'react-native';
 import * as Font from 'expo-font';
-import LoginScreen from './components/LoginScreen.js';// Import the LoginModal component
+import LoginScreen from './components/LoginScreen.js';
+
+
 
 const App = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -83,7 +85,7 @@ const App = () => {
           </Text>
         </View>
       </View>
-      {/* Render the LoginModal component */}
+     
       <Modal
         visible={showLoginModal}
         onRequestClose={() => setShowLoginModal(false)}
@@ -171,26 +173,19 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontFamily: 'Fredoka',
   },
-  /*xContainer: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-  },
-  xLine: {
-    position: 'absolute',
-    backgroundColor: 'black',
-    height: 5,
-    width: '125%',
-  },
-  diagonalLine: {
-    transform: [{ rotate: '45deg' }],
-  },
-  reverseDiagonalLine: {
-    transform: [{ rotate: '-45deg' }],
-  },*/
+ 
 });
 
-export default App;
+export default App;*/
+import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import Navigation from './navigation';
+
+export default function App() {
+  return (
+    <Navigation />
+
+    
+  );
+}

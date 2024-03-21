@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Modal, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
-import TitlesScreen from './TitlesScreen';
+import { useNavigation } from '@react-navigation/native';
+
 
 const FieldsScreen = () => {
+  const navigation = useNavigation();
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -13,11 +16,6 @@ const FieldsScreen = () => {
     loadFonts();
   }, []);
 
-  const [showTitlesModal, setShowTitlesModal] = useState(false);
-  
-  const handleRegisterPress = () => {
-    setShowTitlesModal(true);
-  };
   const fields = [
     { id: 1, name: 'Tech' },
     { id: 2, name: 'Health' },
@@ -35,7 +33,6 @@ const FieldsScreen = () => {
     { id: 14, name: 'Other' },
     { id: 15, name: 'Other' },
     { id: 16, name: 'Other' },
-    
     // Add more fields as needed
   ];
 
@@ -60,6 +57,11 @@ const FieldsScreen = () => {
         <Text style={styles.fieldButtonText}>{item.name}</Text>
       </TouchableOpacity>
     );
+  };
+
+  // Navigate to the TitlesScreen
+  const handleNextPress = () => {
+    navigation.navigate('Titles');
   };
 
   return (
@@ -92,18 +94,9 @@ const FieldsScreen = () => {
         />
         
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={handleRegisterPress}>
+          <TouchableOpacity style={styles.returnButton} onPress={handleNextPress}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
-
-          <Modal
-            visible={showTitlesModal}
-            animationType="fade"
-            onRequestClose={() => setShowTitlesModal(false)}
-          >
-            <TitlesScreen />
-          </Modal>
-
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -114,7 +107,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 0, 
-    
   },
   scrollView: {
     flexGrow: 1,
@@ -132,7 +124,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 15,
   },
   welcomeText: {
     fontSize: 20,
@@ -154,7 +147,6 @@ const styles = StyleSheet.create({
   },
   fieldButtonsContainer: {
     alignItems: 'center',
-    
   },
   fieldButton: {
     paddingVertical: 10,

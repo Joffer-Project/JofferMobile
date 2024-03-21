@@ -1,10 +1,12 @@
-
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Modal, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import * as Font from 'expo-font';
-import RegisterScreen2 from './RegisterScreen2';
+import { useNavigation } from '@react-navigation/native';
+
 
 const RegisterScreen = () => {
+  const navigation = useNavigation();
+
   // Load the Fredoka font
   useEffect(() => {
     async function loadFonts() {
@@ -20,10 +22,10 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [showRegisterModal2, setShowRegisterModal2] = useState(false);
 
-  const handleRegisterPress = () => {
-    setShowRegisterModal2(true);
+  // Navigate to the next screen
+  const handleNextPress = () => {
+    navigation.navigate('Register2');
   };
   
   return (
@@ -84,17 +86,9 @@ const RegisterScreen = () => {
         
         {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={handleRegisterPress}>
+          <TouchableOpacity style={styles.returnButton} onPress={handleNextPress}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
-          {/* Register Screen Modal */}
-          <Modal
-            visible={showRegisterModal2}
-            animationType="fade"
-            onRequestClose={() => setShowRegisterModal2(false)}
-          >
-            <RegisterScreen2 />
-          </Modal>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -122,7 +116,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 15,
   },
   welcomeText: {
     fontSize: 20,

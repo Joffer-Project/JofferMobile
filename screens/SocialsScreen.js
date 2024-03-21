@@ -1,12 +1,14 @@
-
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Modal, Platform, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Modal, Alert } from 'react-native';
 import * as Font from 'expo-font';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
-import ProfilePreview from './PreviewScreen';
+import { useNavigation } from '@react-navigation/native';
+
 
 const SocialsScreen = () => {
+  const navigation = useNavigation();
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -18,11 +20,6 @@ const SocialsScreen = () => {
 
   const [profileImage, setProfileImage] = useState(null);
   const [links, setLinks] = useState([]);
-  const [showPreviewModal, setShowPreviewModal] = useState(false);
-
-  const handlePreviewPress = () => {
-    setShowPreviewModal(true);
-  }
 
   const pickImage = async () => {
     try {
@@ -50,6 +47,10 @@ const SocialsScreen = () => {
     const updatedLinks = [...links];
     updatedLinks.splice(index, 1);
     setLinks(updatedLinks);
+  };
+
+  const handlePreviewPress = () => {
+    navigation.navigate('Preview'); // Navigate to the ProfilePreview screen
   };
 
   return (
@@ -117,15 +118,6 @@ const SocialsScreen = () => {
           <TouchableOpacity style={styles.uploadButton} onPress={handlePreviewPress}>
             <Text style={styles.uploadText}>Preview Your Profile</Text>
           </TouchableOpacity>
-          <Modal
-            visible={showPreviewModal}
-            animationType="fade"
-            onRequestClose={() => setShowPreviewModal(false)}
-          >
-            <ProfilePreview />
-          </Modal>
-
-
         </View>
        
       </ScrollView>
@@ -154,7 +146,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 15,
   },
   profileContainer: {
     alignItems: 'center',
@@ -263,8 +256,3 @@ const styles = StyleSheet.create({
 });
 
 export default SocialsScreen;
-
-
-
-
-
