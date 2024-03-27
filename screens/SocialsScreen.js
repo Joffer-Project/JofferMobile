@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FAA16F',
+    backgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 20,
     marginLeft: -20,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: '#FAA16F',
+    backgroundColor: '#FF7E33',
     borderRadius: 15,
     width: 30,
     height: 30,
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   uploadButton: {
-    backgroundColor: '#FAA16F',
+    backgroundColor: '#FF7E33',
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka',
     fontSize: 16,
     marginLeft: 5,
-    color: '#FAA16F',
+    color: '#FF7E33',
   },
 });
 

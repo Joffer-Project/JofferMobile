@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FAA16F',
+    backgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 20,
     marginLeft:-20,
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
   },
   selectedFieldButton: {
-    backgroundColor: '#FAA16F',
+    backgroundColor: '#FF7E33',
      // Change color for selected button
   },
   fieldButtonText: {
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor: '#FAA16F',
+    backgroundColor: '#FF7E33',
     width: 130,
     
   },

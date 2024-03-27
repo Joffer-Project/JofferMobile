@@ -18,19 +18,22 @@ const ProfilePreview = () => {
         <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
       </View>
       <View style={styles.profileContainer}>
-        <Text style={[styles.userName, { color: '#F98A4B', fontSize: 26, marginBottom: 15 }]}>Joku Nimi</Text>
+        <Text style={[styles.userName, { color: '#F98A4B', fontSize: 26, marginBottom: 15 }]}>Users name</Text>
         <Image source={require('../assets/kuva1.jpg')} style={styles.profileImage} />
         <Text style={[styles.professions, { marginTop: 10 }]}>Coder ● Data Engineer ● Plain Awesome</Text>
+
       </View>
       <View style={styles.aboutContainer}>
-        <Text style={[styles.aboutHeaderText, { color: '#FAA16F', fontSize: 22 }]}>About Me</Text>
+        <Text style={[styles.aboutHeaderText, { color: '#FF7E33', fontSize: 22 }]}>About Me</Text>
         <Text style={[styles.aboutText, { color: 'black', fontSize: 18 }]}>I'm a software engineer passionate about building mobile applications. I love hiking, reading, and being awesome in my free time.</Text>
+        <Text style={[styles.professions, { marginTop: 20, fontSize: 18, color: '#FF7E33' }]}>A fun fact about me: </Text>
+        <Text style={[styles.professions, { marginTop: 10 }]}>"happiest animal in the world" </Text>
       </View>
       <View style={styles.linksContainer}>
-        <Text style={[styles.linksHeader, { color: '#FAA16F', fontSize: 18 }]}>Links</Text>
+        <Text style={[styles.linksHeader, { color: '#FF7E33', fontSize: 18 }]}>Links and Socials</Text>
         <View style={styles.linksList}>
-          <Text style={[styles.linkText, { color: '#FAA16F' }]}>https://example.com</Text>
-          <Text style={[styles.linkText, { color: '#FAA16F' }]}>https://example2.com</Text>
+          <Text style={[styles.linkText, { color: '#FF7E33' }]}>https://example.com</Text>
+          <Text style={[styles.linkText, { color: '#FF7E33' }]}>https://example2.com</Text>
         </View>
       </View>
       <SwipeButton
@@ -38,15 +41,15 @@ const ProfilePreview = () => {
         onSwipeSuccess={handleNextPress}
         railStyles={{ 
           backgroundColor: 'rgba(255, 191, 129, 0.3)',
-          borderColor: '#FAA16F', 
+          borderColor: '#FF7E33', 
           zIndex: 1, 
           elevation: 1, 
         }}
-        thumbIconBackgroundColor="#FAA16F" 
+        thumbIconBackgroundColor="#FF7E33" 
         thumbIconImageSource={require('../assets/right-arrow.png')}
         railBackgroundColor="#FFFFFF"
         
-        thumbIconBorderColor="#FAA16F"
+        thumbIconBorderColor="#FF7E33"
         thumbIconStyles={{ width: 30, height: 30 }}
         titleStyles={{ color: 'black', fontFamily: 'Fredoka', fontSize: 18 }} 
         containerStyles={{ marginTop: 20 }} 
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FAA16F',
+    backgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 10,
     marginLeft: -20,

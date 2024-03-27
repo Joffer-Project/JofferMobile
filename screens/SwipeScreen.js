@@ -1,70 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faHeart, faTimesCircle, faCircleQuestion, faGear } from '@fortawesome/free-solid-svg-icons';
+import CompanyInfo from '../components/companyInfo';
 
 const SwipeScreen = () => {
-  const navigation = useNavigation();
-  const [expandedIndex, setExpandedIndex] = useState(-1);
-
-  const handleSwipeLeft = () => {
-    navigation.navigate('Swipe');
-  };
-
-  const handleSwipeRight = () => {
-    navigation.navigate('Swipe');
-  };
-
-  const toggleExpand = (index) => {
-    setExpandedIndex(prevIndex => prevIndex === index ? -1 : index);
-  };
-
-  const handleExpandButtonPress = (index) => {
-    toggleExpand(index);
-  };
-
-  const renderCard = (company, index) => {
-    const isExpanded = expandedIndex === index;
-    console.log(index);
-
-    return (
-      <TouchableOpacity style={styles.card} onPress={() => toggleExpand(index)}>
-        <Image source={company.image} style={styles.profileImage} />
-        <Text style={styles.companyName}>{company.name}</Text>
-        <Text style={styles.jobDetails}>{company.jobDetails}</Text>
-        {isExpanded && (
-          <View>
-            <Text style={styles.expandedText}>
-              About the Company:{'\n'}
-              Nokia Corporation is a Finnish multinational telecommunications, information technology, and consumer electronics company,
-              founded in 1865. Nokia's headquarters are in Espoo, Finland, in the greater Helsinki metropolitan area.
-            </Text>
-            <Text style={styles.expandedText}>
-              Job Offering:{'\n'}
-              Experience: 3-5 years {'\n'}
-              Salary: $100,000 - $120,000 per year
-              About the offer: päläpäläpäläpäläpäläpäläpäläpäläjgfhigjgijdsggkjdsjgdbj {'\n'}
-            </Text>
-          </View>
-        )}
-        {!isExpanded && (
-          <TouchableOpacity style={styles.expandButton} onPress={() => handleExpandButtonPress(index)}>
-            <Text style={styles.expandButtonText}>More Info</Text>
-          </TouchableOpacity>
-        )}
-      </TouchableOpacity>
-    );
-  };
-
-  const companies = [
+  const [companies, setCompanies] = useState([
     {
       name: 'Nokia',
-      image: require('../assets/kuva4.jpg'),
+      image: require('../assets/kuva6.png'),
       jobDetails: 'Position: Software Engineer\nLocation: Oulu',
     },
     {
       name: 'IT',
-      image: require('../assets/kuva4.jpg'),
+      image: require('../assets/kuva5.jpg'),
       jobDetails: 'Position: Software Engineer\nLocation: Oulu',
     },
     {
@@ -72,71 +22,105 @@ const SwipeScreen = () => {
       image: require('../assets/kuva4.jpg'),
       jobDetails: 'Position: Software Engineer\nLocation: Oulu',
     },
-  ];
+  ]);
+
+  const renderSwiper = () => {
+    return (
+      <Swiper
+        cards={companies}
+        renderCard={(company, index) => <CompanyInfo company={company} />}
+        backgroundColor={'transparent'} 
+        stackSize={2}
+        verticalSwipe={false}
+        containerStyle={styles.swiperContainer} 
+      />
+    );
+  };
 
   return (
-    <Swiper
-      cards={companies}
-      renderCard={(company, index) => renderCard(company, index)}
-      onSwipedLeft={handleSwipeLeft}
-      onSwipedRight={handleSwipeRight}
-      cardIndex={0}
-      backgroundColor={'#FAA16F'}
-      stackSize={2}
-    />
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../assets/joffer2.png')} 
+            style={styles.logo}
+          />
+        </View>
+        {renderSwiper()}
+        <View style={styles.iconsContainer}>
+          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+            <FontAwesomeIcon icon={faTimesCircle} size={60} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+            <Image source={require('../assets/Superlike.png')} style={styles.customIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+            <FontAwesomeIcon icon={faHeart} size={60} style={[styles.icon, { color: '#58D336' }]} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.iconsContainer2}>
+          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+            <FontAwesomeIcon icon={faCircleQuestion} size={40} style={[styles.icon, { color: 'black' }]} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+            <FontAwesomeIcon icon={faGear} size={40} style={[styles.icon, { color: '#FF7E33' }]} />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
+  container: {
     flex: 1,
-    borderRadius: 10,
-    backgroundColor: '#FFFFFF',
-    padding: 20,
-    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  logoContainer: {
     alignItems: 'center',
-  },
-  profileImage: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
+    marginTop: 0,
+    backgroundColor: '#FF7E33',
+    padding: 20,
     marginBottom: 10,
+    marginLeft: -20,
+    marginRight: -20,
+    height: 150,
   },
-  companyName: {
-    fontFamily: 'Fredoka',
-    fontSize: 26,
-    color: '#FAA16F',
-    marginBottom: 10,
-    textAlign: 'center',
+  logo: {
+    width: 70,
+    height: 70,
+    marginTop: 30,
   },
-  jobDetails: {
-    fontFamily: 'Fredoka',
-    fontSize: 16,
-    lineHeight: 24,
-    textAlign: 'center',
-    marginBottom: 10,
+  swiperContainer: {
+    height: 400, 
   },
-  expandedText: {
-    fontFamily: 'Fredoka',
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 10,
+  iconsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 20,
+    marginTop: 450,
   },
-  expandButton: {
-    marginTop: 10,
-    backgroundColor: '#FAA16F',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
+  iconsContainer2: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 20,
+    
   },
-  expandButtonText: {
-    fontFamily: 'Fredoka',
-    fontSize: 16,
-    color: '#FFFFFF',
+  icon: {
+    fontSize: 80,
+    color: '#D9352D',
+  },
+  customIcon: {
+    width: 60,  
+    height: 60, 
+    resizeMode: 'contain', 
   },
 });
 
 export default SwipeScreen;
-
-
 
