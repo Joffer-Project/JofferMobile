@@ -1,13 +1,10 @@
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
-import { useFonts } from 'expo-font';
+
 
 export default function Start() {
-
-
-  module.exports = {
-    assets: ['./assets/fonts/'],
-  };
+  const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
@@ -15,14 +12,14 @@ export default function Start() {
             <Text style={styles.Welcome}>Welcome to</Text>
           </View>
           <View style={styles.logoImage}>
-            <Image source={require('./img/WhiteLogoJoffer.png')}/>
+            <Image source={require('./img/JofferLogo.png')}/>
           </View> 
           <View style={styles.WelContainer2}>
             <Text style={styles.Welcome2}>Your professional matchmaker!</Text>
           </View>
           <View style={styles.orangeButton}>
-             <TouchableOpacity /*onPress ={onPress}*/ style={styles.buttonEmployee}>
-              <Text style={styles.text1}>Employee</Text>
+             <TouchableOpacity onPress ={() =>navigation.navigate("LoginScreen")} style={styles.buttonEmployee}>
+              <Text style={styles.text1}>Talent</Text>
               <Text style={styles.text2}>For job seeker</Text>
              </TouchableOpacity>
           </View>
