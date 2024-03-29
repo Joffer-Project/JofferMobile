@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 
-const SocialsScreen = () => {
+const CompanySocials = () => {
   const navigation = useNavigation();
 /*
   useEffect(() => {
@@ -60,18 +60,18 @@ const SocialsScreen = () => {
             source={require('./img/Joffer-Logobig.png')} 
             style={styles.logo}
           />
-          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+          <Text style={styles.descriptionText}>Let's find new talents!</Text>
         </View>
         
       <ScrollView contentContainerStyle={styles.scrollView}>
         
         <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 5/5: Socials and Docs</Text>
+          <Text style={styles.welcomeText}>Step 5/5: Socials And Links</Text>
         </View>
 
 
         <View style={styles.profileContainer}>
-          <Text style={styles.descriptionText}>Add a profile picture</Text>
+          <Text style={styles.descriptionText}>Add Company Logo</Text>
           {profileImage ? (
             <Image source={{ uri: profileImage }} style={styles.profileImage} />
           ) : (
@@ -86,7 +86,7 @@ const SocialsScreen = () => {
         
         <View style={styles.uploadContainer}>
           <TouchableOpacity style={styles.uploadButton}>
-            <Text style={styles.uploadText}>Upload Image</Text>
+            <Text style={styles.uploadText}>Upload Images</Text>
           </TouchableOpacity>
         </View>
         
@@ -96,19 +96,19 @@ const SocialsScreen = () => {
             {links.map((link, index) => (
               <View key={index} style={styles.linkItem}>
                 <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveLink(index)}>
-                  <Ionicons name="remove-circle-outline" size={24} color="#FAA16F" />
+                  <Ionicons name="remove-circle-outline" size={24} color='#1771E9' />
                 </TouchableOpacity>
                 <Text style={styles.linkText}>{link}</Text>
               </View>
             ))}
           </View>
           <TouchableOpacity style={styles.addLinkButton} onPress={handleAddLink}>
-            <Ionicons name="add-circle-outline" size={24} color="#FAA16F" />
+            <Ionicons name="add-circle-outline" size={24} color='#1771E9' />
             <Text style={styles.addLinkButtonText}>Add a Link</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.PreviewContainer}>
-          <TouchableOpacity style={styles.uploadButton} onPress={() => navigation.navigate("ProfilePreview")}>
+          <TouchableOpacity style={styles.uploadButton} onPress={() => navigation.navigate("CompanyPreview")}>
             <Text style={styles.uploadText}>Preview Your Profile</Text>
           </TouchableOpacity>
         </View>
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 0,
+    backgroundColor: "#fff"
   },
   scrollView: {
     flexGrow: 1,
@@ -129,17 +130,17 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FF7E33',
+    backgroundColor:  '#1771E9',
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     marginLeft: -20,
     marginRight: -20,
-    height: 230,
+    height: 200,
   },
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 10,
+    marginBottom: 5,
     marginTop: 15,
   },
   profileContainer: {
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: '#FF7E33',
+    backgroundColor:  '#1771E9',
     borderRadius: 15,
     width: 30,
     height: 30,
@@ -168,11 +169,13 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   descriptionText: {
-    fontSize: 15,
-    marginTop: 10,
+    fontSize: 20,
+    marginTop: 5,
    // fontFamily: 'Fredoka',
-    textAlign: 'center',  
-    padding: 10, 
+    textAlign: 'center', 
+    color: 'white', 
+    padding: 0, 
+    
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -181,9 +184,8 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 20,
   //  fontFamily: 'Fredoka',
-    marginTop: 0,
-    marginBottom: 10,
-    padding: 10,
+    marginTop: 10,
+    padding: 0,
   },
   uploadContainer: {
     flexDirection: 'row',
@@ -197,7 +199,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   uploadButton: {
-    backgroundColor: '#FF7E33',
+    backgroundColor:  '#1771E9',
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -205,7 +207,7 @@ const styles = StyleSheet.create({
   },
   uploadText: {
     fontSize: 16,
-    color: 'black',
+    color: 'white',
   //  fontFamily: 'Fredoka',
   },
   linksContainer: {
@@ -244,8 +246,8 @@ const styles = StyleSheet.create({
 //    fontFamily: 'Fredoka',
     fontSize: 16,
     marginLeft: 5,
-    color: '#FF7E33',
+    color: '#1771E9',
   },
 });
 
-export default SocialsScreen;
+export default CompanySocials;

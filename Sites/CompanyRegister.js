@@ -4,7 +4,7 @@ import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 
 
-const RegisterScreen = () => {
+const CompanyRegister = () => {
   const navigation = useNavigation();
 
   /*
@@ -38,7 +38,7 @@ const RegisterScreen = () => {
             source={require('./img/Joffer-Logobig.png')} 
             style={styles.logo}
           />
-          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+          <Text style={styles.descriptionText}>Let's find new talents!</Text>
         </View>
         {/* Other content */}
         <View style={styles.welcomeContainer}>
@@ -83,7 +83,7 @@ const RegisterScreen = () => {
         
         {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={() =>navigation.navigate("RegisterScreen2")}>
+          <TouchableOpacity style={styles.returnButton} onPress={() =>navigation.navigate("CompanyRegister2")}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -95,7 +95,8 @@ const RegisterScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 0, 
+    padding: 0,
+    backgroundColor: "#fff" 
   },
   scrollView: {
     flexGrow: 1,
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#1771E9',
     padding: 20,
     marginBottom: 20,
     marginLeft:-20,
@@ -124,11 +125,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   descriptionText: {
-    fontSize: 15,
+    fontSize: 20,
     marginTop: 10,
  //   fontFamily: 'Fredoka',
     textAlign: 'center',  
     padding:10, 
+    color: 'white', 
+    fontWeight: '400',
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -158,14 +161,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor: '#FF7E33',
+    backgroundColor:'#1771E9',
     width: 130,
   },
   returnButtonText: {
     fontSize: 18,
   //  fontFamily: 'Fredoka',
-    color: 'black',
+    color: 'white',
   },
 });
 
-export default RegisterScreen;
+export default CompanyRegister;

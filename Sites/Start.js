@@ -24,7 +24,7 @@ export default function Start() {
              </TouchableOpacity>
           </View>
           <View style={styles.blueButton}>
-             <TouchableOpacity /*onPress ={onPress}*/ style={styles.buttonCompany}>
+             <TouchableOpacity onPress ={() =>navigation.navigate("CompanyLog")} style={styles.buttonCompany}>
               <Text style={styles.text1}>Company</Text>
               <Text style={styles.text2}>For talent seeker</Text>
              </TouchableOpacity>

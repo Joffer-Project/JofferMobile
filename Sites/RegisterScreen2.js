@@ -30,15 +30,17 @@ const RegisterScreen2 = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : null}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
     >
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        
-        <View style={styles.logoContainer}>
+
+      <View style={styles.logoContainer}>
           <Image
             source={require('./img/Joffer-Logobig.png')} 
             style={styles.logo}
           />
           <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
         </View>
+
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        
         
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Step 2/5: Essentials</Text>
@@ -64,7 +66,6 @@ const RegisterScreen2 = () => {
           />
           
         </View>
-        
         
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.returnButton} onPress={() => navigation.navigate("FieldsScreen")}>

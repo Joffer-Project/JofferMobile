@@ -4,7 +4,7 @@ import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 
 
-const FieldsScreen = () => {
+const CompanyFields = () => {
   const navigation = useNavigation();
 /*
   useEffect(() => {
@@ -71,7 +71,7 @@ const FieldsScreen = () => {
             source={require('./img/Joffer-Logobig.png')} 
             style={styles.logo}
           />
-          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+          <Text style={styles.descriptionText}>Let's find new talents!</Text>
         </View>
         
         <View style={styles.welcomeContainer}>
@@ -79,16 +79,16 @@ const FieldsScreen = () => {
           <Text style={styles.welcomeText}>Choose the fields you're interested in!</Text>
         </View>
 
-        <FlatList
+      <FlatList
           data={fields}
           renderItem={renderFieldButton}
           keyExtractor={item => item.id.toString()}
           numColumns={3}
           contentContainerStyle={styles.fieldButtonsContainer}
         />
-        
+
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={() =>navigation.navigate("TitlesScreen")}>
+          <TouchableOpacity style={styles.returnButton} onPress={() =>navigation.navigate("CompanyTitles")}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -100,6 +100,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 0, 
+    backgroundColor: "#fff"
+
   },
   scrollView: {
     flexGrow: 1,
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#1771E9',
     padding: 20,
     marginBottom: 20,
     marginLeft:-20,
@@ -128,11 +130,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   descriptionText: {
-    fontSize: 15,
+    fontSize: 20,
     marginTop: 0,
    // fontFamily: 'Fredoka',
     textAlign: 'center',  
     padding: 5, 
+    color: 'white',
+    fontWeight: '400', 
   }, 
   welcomeContainer: {
     alignItems: 'center',
@@ -151,16 +155,15 @@ const styles = StyleSheet.create({
     width: 100,
     borderWidth: 2,
     borderRadius: 15,
-    borderColor: '#FF7E33',
+    borderColor: '#1771E9',
   },
   selectedFieldButton: {
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#1771E9',
      // Change color for selected button
   },
   fieldButtonText: {
     fontSize: 18,
   //  fontFamily: 'Fredoka',
-    color: 'black',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -173,15 +176,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#1771E9',
     width: 130,
     
   },
   returnButtonText: {
     fontSize: 18,
   //  fontFamily: 'Fredoka',
-    color: 'black',
+    color: 'white',
   },
 });
 
-export default FieldsScreen;
+export default CompanyFields;

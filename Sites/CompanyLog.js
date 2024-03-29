@@ -4,22 +4,26 @@ import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 
 
-const LoginScreen = () => {
+const CompanyLog = () => {
   const navigation = useNavigation();
 
- /* useEffect(() => {
+  /*
+  useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
         'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
       });
     }
     loadFonts();
-  }, []);
-*/
-  // muuttujat
+  }, []); */
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passcode, setPasscode] = useState('');
 
+  const handleRegisterPress = () => {
+    navigation.navigate('Fields');
+  };
 
   return (
     <View>
@@ -28,21 +32,18 @@ const LoginScreen = () => {
       source={require('./img/Joffer-Logobig.png')}
       style={styles.logo}
     />
-    <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+    <Text style={styles.descriptionText}>Let's find new talents!</Text>
   </View>
     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.container}>
-        {/* Logo */}
-        {/* welcome teksti */}
         <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Welcome, unique talent!</Text>
+          <Text style={styles.welcomeText}>Welcome, talent seeker!</Text>
         </View>
 
-        {/* username ja password */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Name/Mail"
+            placeholder="Mail"
             value={username}
             onChangeText={setUsername}
           />
@@ -53,29 +54,29 @@ const LoginScreen = () => {
             value={password}
             onChangeText={setPassword}
           />
-        </View>
-        
-        {/* Buttons */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={() => console.log("Return pressed")}>
-            <Text style={styles.returnButtonText}>Login</Text>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.orText}>OR</Text>
-        <View style={styles.linksContainer}>
-          <TouchableOpacity style={styles.linkButton}>
-            <Text style={styles.linksText}>G</Text>
-          </TouchableOpacity>
-          <View style={styles.space} />
-          <TouchableOpacity style={styles.linkButton}>
-            <Text style={styles.linksText}>L</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity style={styles.registerButton} /*onPress={handleRegisterPress}*/>
+          <TouchableOpacity style={styles.registerButton} onPress={handleRegisterPress}>
           <Text style={styles.registerText}>Forgot your password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.registerButton} onPress={() =>navigation.navigate("RegisterScreen")}>
-          <Text style={styles.registerText}>Create an account!</Text>
+        </View>
+        <Text style={styles.orText}>OR</Text>       
+        <Text style={styles.orText}>Log in with recruiter passcode</Text>
+        <View style={styles.inputContainer}>      
+         <TextInput
+            style={styles.input}
+            placeholder="Passcode"
+            secureTextEntry={true}
+            value={passcode}
+            onChangeText={setPasscode}
+          />  
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.returnButton} onPress={() => console.log("Return pressed")}>
+            <Text style={styles.returnButtonText}>Sign in</Text>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity style={styles.registerButton} onPress={() =>navigation.navigate("CompanyRegister")}>
+          <Text style={styles.registerText}>Create an account?</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: "#fff"
   },
   scrollView: {
     flexGrow: 1,
@@ -94,9 +96,9 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#0C6BE8',
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 0,
     marginLeft: -20,
     marginRight: -20,
     height: 230,
@@ -108,18 +110,20 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-  //  fontFamily: 'Fredoka',
+   // fontFamily: 'Fredoka',
     marginTop: 0,
     marginBottom: 10,
   },
   descriptionText: {
-    fontSize: 15,
+    fontSize: 20,
     marginTop: 10,
-   // fontFamily: 'Fredoka',
+  //  fontFamily: 'Fredoka',
     textAlign: 'center',
+    color: 'white',
+    fontWeight: '400',
   },
   orText: {
- //   fontFamily: 'Fredoka',
+   // fontFamily: 'Fredoka',
     textAlign: 'center',
     padding: 15,
     fontSize: 18,
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   accountText: {
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     fontSize: 18,
   },
   linksContainer: {
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   linkButton: {
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#0C6BE8',
     width: 40,
     height: 40,
     borderRadius: 20,
@@ -151,7 +155,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   linksText: {
-//    fontFamily: 'Fredoka',
+  //  fontFamily: 'Fredoka',
     fontSize: 20,
     color: 'white',
   },
@@ -164,12 +168,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   registerText: {
- //   fontFamily: 'Fredoka',
+   // fontFamily: 'Fredoka',
     fontSize: 18,
   },
   inputContainer: {
     marginBottom: 0,
-//    fontFamily: 'Fredoka',
+   // fontFamily: 'Fredoka',
     alignItems: 'center',
   },
   input: {
@@ -180,7 +184,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
- //   fontFamily: 'Fredoka',
+  //  fontFamily: 'Fredoka',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -191,14 +195,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#0C6BE8',
     width: 130,
   },
   returnButtonText: {
     fontSize: 18,
-//    fontFamily: 'Fredoka',
-    color: 'black',
+  //  fontFamily: 'Fredoka',
+    color: 'white',
   },
 });
 
-export default LoginScreen;
+export default CompanyLog;

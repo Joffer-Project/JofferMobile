@@ -37,13 +37,15 @@ export default function Offer() {
 
       const upload = () => {
         if (givenTitle.trim() !== "") {
-            setTitleBox(prevTitles => [...prevTitles, givenTitle.trim()]);
-            setGivenTitle(""); // Clear input after adding
+          setTitleBox(prevTitles => {
+            const updatedTitles = [...prevTitles, givenTitle.trim()];
             console.log("New title added:", givenTitle.trim());
+            return updatedTitles;
+          });
+          setGivenTitle(""); // Clear input after adding
         }
         navigation.navigate("AddApplication", { titleBox });
-    };
-
+      };
 
     const onChange = (e, selectedDate) => {
         setDate(selectedDate)
@@ -63,7 +65,7 @@ export default function Offer() {
         <View style={styles.container}>
             <View style={styles.inputContainer}>
                 <View style={styles.logoImage}>
-                    <Image source={require('../img/JofferLogo.png')} />
+                    <Image source={require('./img/JofferLogo.png')} />
                 </View >
                 <View style={styles.Cardcontainer}>
                     <View style={styles.textTitle}>

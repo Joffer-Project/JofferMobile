@@ -11,19 +11,22 @@ export default function AddApplication() {
   const route = useRoute();
   const screenWidth = Dimensions.get('window').width;
   const titles  = route.params?.titleBox || [];
-  
-  useEffect(() => {
-    if (route.params?.givenTitle) {
-      //  const newTitle = route.params.givenTitle;
-        //setTitleBox(prevTitles => [...prevTitles, newTitle]);
+  const [titleBox, setTitleBox] = useState(route.params?.titleBox || []);
+
+  useEffect(() => { //Tässä vika, koska offerissa annetut titlet eivät tule tänne asti.
+    console.log("titles:", titles);
+    if (route.params?.titleBox) {
+      setTitleBox(route.params.titleBox);
+      console.log("titles:", titles);
     }
-}, [route.params?.givenTitle]);
+  }, [route.params?.titleBox]);
+
 
   return (
     <View style={styles.container}>
       <View style={styles.blueContainer}>
         <View style={styles.logoImage}>
-          <Image source={require('../img/Joffer-Logobig.png')} />
+          <Image source={require('./img/Joffer-Logobig.png')} />
         </View >
       </View>
       <View style={styles.ScrollContainer}>
@@ -44,24 +47,24 @@ export default function AddApplication() {
             </TouchableOpacity>
           </View>
       <View style={styles.BottomButtonsContainer}>
-        <TouchableOpacity /* onPress={} */ >
+        <TouchableOpacity onPress={() => navigation.navigate('AddApplication')} >
           <View style={styles.BottomButton}>
-            <Image style={styles.addImage} source={require('../img/add.png')} />
+            <Image style={styles.addImage} source={require('./img/add.png')} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity /*onPress={() => navigation.navigate('CompanyEdit')}*/ >
+          <View style={styles.BottomButton}>
+            <Image style={styles.userImage} source={require('./img/userAvatar.png')} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('CompanySwipe')} >
+          <View style={styles.BottomButton}>
+            <Image style={styles.addImage} source={require('./img/SwipeLogo.png')} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity /* onPress={} */ >
           <View style={styles.BottomButton}>
-            <Image style={styles.userImage} source={require('../img/userAvatar.png')} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity /* onPress={} */ >
-          <View style={styles.BottomButton}>
-            <Image style={styles.addImage} source={require('../img/SwipeLogo.png')} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity /* onPress={} */ >
-          <View style={styles.BottomButton}>
-            <Image style={styles.addImage} source={require('../img/setting.png')} />
+            <Image style={styles.addImage} source={require('./img/setting.png')} />
           </View>
         </TouchableOpacity>
       </View>
@@ -168,8 +171,9 @@ const styles = StyleSheet.create({
   jobOffers: {
     flexDirection: 'column',
     marginTop: 20,
+    color: 'black',
     width: 300,
-    height: 60,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
   }

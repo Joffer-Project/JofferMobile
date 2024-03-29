@@ -72,15 +72,13 @@ const TitlesScreen = () => {
           />
           <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
         </View>
-        
-      <ScrollView contentContainerStyle={styles.scrollView}>
     
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Step 4/5: Titles</Text>
           <Text style={styles.welcomeText}>Choose the titles you're interested in!</Text>
         </View>
-
-        <FlatList
+        
+      <FlatList
           data={fields}
           renderItem={renderFieldButton}
           keyExtractor={item => item.id.toString()}
@@ -93,7 +91,6 @@ const TitlesScreen = () => {
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -151,8 +148,9 @@ const styles = StyleSheet.create({
     margin: 5,
     backgroundColor: 'white',
     width: 100,
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: '#FF7E33',
   },
   selectedFieldButton: {
     backgroundColor: '#FF7E33',

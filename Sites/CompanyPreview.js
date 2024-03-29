@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import SwipeButton from 'rn-swipe-button';
 
 
-const ProfilePreview = () => {
+const CompanyPreview = () => {
   const navigation = useNavigation();
 
   return (
@@ -12,40 +12,38 @@ const ProfilePreview = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.logoContainer}>
         <Image source={require('./img/Joffer-Logobig.png')} style={styles.logo} />
-        <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+        <Text style={styles.descriptionText}>Let's find new talents!</Text>
       </View>
       <View style={styles.profileContainer}>
-        <Text style={[styles.userName, { color: '#F98A4B', fontSize: 26, marginBottom: 15 }]}>Users name</Text>
-        <Image source={require('./img/Joffer-Logobig.png')} style={styles.profileImage} />
-        <Text style={[styles.professions, { marginTop: 10 }]}>Coder ● Data Engineer ● Plain Awesome</Text>
+        <Text style={[styles.userName, { color: '#1771E9', fontSize: 26, marginBottom: 15 }]}>IntelliTech Solutions</Text>
+        <Image source={require('./img/logo.png')} style={styles.profileImage} />
+        <Text style={[styles.professions, { marginTop: 10 }]}>Cybersecurity & IT -Services</Text>
       </View>
       <View style={styles.aboutContainer}>
-        <Text style={[styles.aboutHeaderText, { color: '#FF7E33', fontSize: 22 }]}>About Me</Text>
-        <Text style={[styles.aboutText, { color: 'black', fontSize: 18 }]}>I'm a software engineer passionate about building mobile applications. I love hiking, reading, and being awesome in my free time.</Text>
-        <Text style={[styles.professions, { marginTop: 20, fontSize: 18, color: '#FF7E33' }]}>A fun fact about me: </Text>
-        <Text style={[styles.professions, { marginTop: 10 }]}>"happiest animal in the world" </Text>
+        <Text style={[styles.aboutHeaderText, { color: '#1771E9', fontSize: 22 }]}>About The Company</Text>
+        <Text style={[styles.aboutText, { color: 'black', fontSize: 18 }]}>Customer satisfaction is at the heart of everything we do. We believe in building long-lasting relationships with our clients by providing exceptional service and ongoing support. </Text>
       </View>
       <View style={styles.linksContainer}>
-        <Text style={[styles.linksHeader, { color: '#FF7E33', fontSize: 18 }]}>Links and Socials</Text>
+        <Text style={[styles.linksHeader, { color: '#1771E9', fontSize: 18 }]}>Links and Socials</Text>
         <View style={styles.linksList}>
-          <Text style={[styles.linkText, { color: '#FF7E33' }]}>https://example.com</Text>
-          <Text style={[styles.linkText, { color: '#FF7E33' }]}>https://example2.com</Text>
+          <Text style={[styles.linkText, { color: '#1771E9' }]}>https://example.com</Text>
+          <Text style={[styles.linkText, { color: '#1771E9' }]}>https://example2.com</Text>
         </View>
       </View>
       <SwipeButton
         title=" Save and start swiping!"
-        onSwipeSuccess={() => navigation.navigate("SwipeScreen")}
+        onSwipeSuccess={() => navigation.navigate("AddApplication")}
         railStyles={{ 
           backgroundColor: 'rgba(255, 191, 129, 0.3)',
-          borderColor: '#FF7E33', 
+          borderColor: '#1771E9', 
           zIndex: 1, 
           elevation: 1, 
         }}
-        thumbIconBackgroundColor="#FF7E33" 
+        thumbIconBackgroundColor='#1771E9'
         thumbIconImageSource={require('./img/Joffer-Logobig.png')}
         railBackgroundColor="#FFFFFF"
         
-        thumbIconBorderColor="#FF7E33"
+        thumbIconBorderColor='#1771E9'
         thumbIconStyles={{ width: 30, height: 30 }}
         titleStyles={{ color: 'black', /*fontFamily: 'Fredoka',*/ fontSize: 18 }} 
         containerStyles={{ marginTop: 20 }} 
@@ -59,11 +57,13 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
+    backgroundColor: "#fff"
+
   },
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#1771E9',
     padding: 20,
     marginBottom: 10,
     marginLeft: -20,
@@ -76,11 +76,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   descriptionText: {
-    fontSize: 15,
+    fontSize: 20,
     marginTop: 10,
    // fontFamily: 'Fredoka',
     textAlign: 'center',
     padding: 10,
+    color: 'white', 
+    fontWeight: '400',
   },
   profileContainer: {
     alignItems: 'center',
@@ -142,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfilePreview;
+export default CompanyPreview;
