@@ -21,7 +21,7 @@ const LoginScreen = () => {
   const [passcode, setPasscode] = useState('');
 
   const handleRegisterPress = () => {
-    navigation.navigate('Choose');
+    navigation.navigate('Fields');
   };
 
   return (

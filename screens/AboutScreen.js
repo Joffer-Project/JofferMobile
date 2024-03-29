@@ -32,7 +32,7 @@ const AboutScreen = () => {
   };
 
   const handleNextPress = () => {
-    navigation.navigate('Fields');
+    navigation.navigate('Preview');
   };
 
   return (
@@ -52,7 +52,7 @@ const AboutScreen = () => {
         </View>
         
         <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 3/5: Essentials</Text>
+          <Text style={styles.welcomeText}>Step 5/5: Essentials</Text>
         </View>
 
      
@@ -84,11 +84,11 @@ const AboutScreen = () => {
             <Text style={styles.addLinkButtonText}>Add a Link</Text>
           </TouchableOpacity>
         </View>
-       {/* <View style={styles.PreviewContainer}>
+       {/*} <View style={styles.PreviewContainer}>
           <TouchableOpacity style={styles.uploadButton} onPress={handlePreviewPress}>
             <Text style={styles.uploadText}>Preview Your Profile</Text>
             // </TouchableOpacity>
-        </View>*/}
+            </View>*/}
         
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.returnButton} onPress={handleNextPress}>

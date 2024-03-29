@@ -24,7 +24,7 @@ const FieldsScreen = () => {
     { id: 5, name: 'Tech' },
     { id: 6, name: 'Tech' },
     { id: 7, name: 'Tech' },
-    { id: 8, name: 'Other' },
+    { id: 8, name: 'Ent.' },
     { id: 9, name: 'Other' },
     { id: 10, name: 'Other' },
     { id: 11, name: 'Other' },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+{/*import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -147,10 +147,10 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
         borderRadius: 10,
-       /* shadowOffset: {width: 0, height: 5},
+        shadowOffset: {width: 0, height: 5},
         shadowOpacity: 0.2,
         shadowRadius: 3,
-        shadowColor: "#000000" */
+        shadowColor: "#000000" 
     },
     button: {
         top: 100,
@@ -173,3 +173,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     }
 });
+*/}

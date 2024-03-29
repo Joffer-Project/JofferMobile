@@ -1,4 +1,4 @@
-import React from "react";
+{/*import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import * as Font from 'expo-font';
@@ -36,7 +36,7 @@ export default function CompChoose(){
             <Text style={styles.Welcome2}>I register as a</Text>
           </View>
           <View style={styles.recruiterButton}>
-             <TouchableOpacity /*onPress ={onPress}*/ style={styles.buttonEmployee}>
+             <TouchableOpacity onPress ={onPress} style={styles.buttonEmployee}>
               <Text style={styles.text1}>Recruiter</Text>
              </TouchableOpacity>
           </View>
@@ -113,3 +113,4 @@ export default function CompChoose(){
         top: 50,
       }
     });
+  */}
