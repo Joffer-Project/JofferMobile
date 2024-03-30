@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart, faTimesCircle, faCircleQuestion, faGear } from '@fortawesome/free-solid-svg-icons';
 import CompanyInfo from '../Components/companyInfo.js';
+import { useSwipeContext } from '../Components/ItsMatch.js'
+import MatchModal from '../Components/MatchModal.js';
+
 
 const SwipeScreen = () => {
+  const swiperRef = useRef(null);
+  const { addUserSwipe, companySwipes } = useSwipeContext();
+
   const [companies, setCompanies] = useState([
     {
       name: 'Nokia',
@@ -24,17 +30,52 @@ const SwipeScreen = () => {
     },
   ]);
 
+ /* 
+  const handleSwipedRight = (index) => {
+    addUserSwipe(companies[index].name);
+    console.log(`Swiped right on card ${index}`);
+
+    const matchedUser = companies[index];
+    setMatchedUser(matchedUser);
+    setIsMatchModalVisible(true);
+  };
+
+  const handleCloseMatchModal = () => {
+    setIsMatchModalVisible(false);
+    setMatchedUser(null);
+  };
+
+
+  const [isMatchModalVisible, setIsMatchModalVisible] = useState(false);
+  const [matchedUser, setMatchedUser] = useState(null); */
+
+
   const renderSwiper = () => {
     return (
       <Swiper
+        ref={swiperRef}
         cards={companies}
         renderCard={(company, index) => <CompanyInfo company={company} />}
         backgroundColor={'transparent'} 
         stackSize={2}
         verticalSwipe={false}
-        containerStyle={styles.swiperContainer} 
+        containerStyle={styles.swiperContainer}
+        onSwipedRight={handleSwipedRight} 
       />
     );
+  };
+
+  
+  const handleNextCard = () => {
+    if(swiperRef.current) {
+      swiperRef.current.swipeLeft();
+    }
+  };
+
+  const handleLoveCard = () => {
+    if(swiperRef.current) {
+      swiperRef.current.swipeRight();
+    }
   };
 
   return (
@@ -48,13 +89,13 @@ const SwipeScreen = () => {
         </View>
         {renderSwiper()}
         <View style={styles.iconsContainer}>
-          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+          <TouchableOpacity onPress={handleNextCard}>
             <FontAwesomeIcon icon={faTimesCircle} size={60} style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { /* Handle press */ }}>
             <Image source={require('./img/Joffer-Logobig.png')} style={styles.customIcon} /> 
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+          <TouchableOpacity onPress={handleLoveCard}>
             <FontAwesomeIcon icon={faHeart} size={60} style={[styles.icon, { color: '#58D336' }]} />
           </TouchableOpacity>
         </View>
@@ -168,3 +209,9 @@ const styles = StyleSheet.create({
 });
 
 export default SwipeScreen;
+
+/*  <MatchModal
+        isVisible={isMatchModalVisible}
+        user={matchedUser}
+        onClose={handleCloseMatchModal}
+      >*/

@@ -37,15 +37,15 @@ export default function Offer() {
 
       const upload = () => {
         if (givenTitle.trim() !== "") {
-          setTitleBox(prevTitles => {
-            const updatedTitles = [...prevTitles, givenTitle.trim()];
-            console.log("New title added:", givenTitle.trim());
-            return updatedTitles;
-          });
-          setGivenTitle(""); // Clear input after adding
+            setTitleBox(prevTitles => {
+                const updatedTitles = [...prevTitles, givenTitle.trim()];
+                console.log("New title added:", givenTitle.trim());
+                return updatedTitles;
+            });
+            setGivenTitle(""); // Clear input after adding
         }
         navigation.navigate("AddApplication", { titleBox });
-      };
+    };
 
     const onChange = (e, selectedDate) => {
         setDate(selectedDate)

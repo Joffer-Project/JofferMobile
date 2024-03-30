@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart, faTimesCircle, faCircleQuestion, faGear } from '@fortawesome/free-solid-svg-icons';
 import UserInfo from '../Components/UserInfo.js';
+import { useSwipeContext } from '../Components/ItsMatch.js'
 
 const CompanySwipe = () => {
+  const swiperRef = useRef(null);
+  const { addUserSwipe, companySwipes } = useSwipeContext();
   const [users, setUsers] = useState([
     {
       name: 'Test name',
@@ -24,17 +27,38 @@ const CompanySwipe = () => {
     },
   ]);
 
+    
+  const handleSwipedRight = (index) => {
+    addUserSwipe(users[index].name);
+    console.log(`Swiped right on card ${index}`);
+  };
+
+
   const renderSwiper = () => {
     return (
       <Swiper
+        ref={swiperRef}
         cards={users}
         renderCard={(user, index) => <UserInfo user={user} />}
         backgroundColor={'transparent'} 
         stackSize={2}
         verticalSwipe={false}
         containerStyle={styles.swiperContainer} 
+        onSwipedRight={handleSwipedRight} 
       />
     );
+  };
+
+  const handleNextCard = () => {
+    if(swiperRef.current) {
+      swiperRef.current.swipeLeft();
+    }
+  };
+
+  const handleLoveCard = () => {
+    if(swiperRef.current) {
+      swiperRef.current.swipeRight();
+    }
   };
 
   return (
@@ -47,13 +71,13 @@ const CompanySwipe = () => {
         </View>
         {renderSwiper()}
         <View style={styles.iconsContainer}>
-          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+          <TouchableOpacity onPress={handleNextCard}>
             <FontAwesomeIcon icon={faTimesCircle} size={60} style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { /* Handle press */ }}>
             <Image source={require('./img/Joffer-Logobig.png')} style={styles.customIcon} /> 
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+          <TouchableOpacity onPress={ handleLoveCard }>
             <FontAwesomeIcon icon={faHeart} size={60} style={[styles.icon, { color: '#58D336' }]} />
           </TouchableOpacity>
         </View>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+import { SwipeProvider } from './Components/ItsMatch.js';
 import Start from "./Sites/Start.js";
 // import RecCom from "./Sites/RecCom.js"; // Recruiter or company 
 //import Owner from "./Sites/Owner.js"; 
@@ -33,6 +34,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <SwipeProvider>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Start"component={Start}/> 
@@ -54,8 +56,10 @@ export default function App() {
       <Stack.Screen name="SocialsScreen" component={SocialsScreen}/> 
       <Stack.Screen name="ProfilePreview" component={ProfilePreview}/> 
       <Stack.Screen name="SwipeScreen" component={SwipeScreen}/> 
+      <Stack.Screen name="ItsMatch" component={SwipeProvider}/> 
       </Stack.Navigator>
     </NavigationContainer>
+    </SwipeProvider>
   );
 }
 
