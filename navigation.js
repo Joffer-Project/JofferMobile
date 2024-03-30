@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-
 const Stack = createNativeStackNavigator();
 
 import * as React from 'react';
@@ -14,6 +13,9 @@ import TitlesScreen from './screens/TitlesScreen';
 import SocialsScreen from './screens/SocialsScreen';
 import ProfilePreview from './screens/PreviewScreen';
 import SwipeScreen from './screens/SwipeScreen';
+import HowItWorks from './components/howItWorks';
+import Settings from './components/settings';
+import MatchesScreen from './screens/Matches.js';
 
 export default function Navigation (){
     return (
@@ -28,6 +30,9 @@ export default function Navigation (){
     <Stack.Screen name="Socials" component={SocialsScreen} />
     <Stack.Screen name="Preview" component={ProfilePreview} />
     <Stack.Screen name="Swipe" component={SwipeScreen} />
+    <Stack.Screen name="HowItWorks" component={HowItWorks} />
+    <Stack.Screen name="Settings" component={Settings} />
+    <Stack.Screen name="Matches" component={MatchesScreen} />
     
     </Stack.Navigator>
     </NavigationContainer>

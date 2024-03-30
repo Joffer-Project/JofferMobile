@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native'; 
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const TitlesScreen = () => {
   const navigation = useNavigation(); 
@@ -11,6 +11,7 @@ const TitlesScreen = () => {
     async function loadFonts() {
       await Font.loadAsync({
         'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka1': require('../assets/fonts/Fredoka-Regular.ttf'),
       });
     }
     loadFonts();
@@ -55,8 +56,9 @@ const TitlesScreen = () => {
         style={[styles.fieldButton, isSelected && styles.selectedFieldButton]}
         onPress={() => toggleFieldSelection(item.id)}
       >
-        <Text style={styles.fieldButtonText}>{item.name}</Text>
+        <Text style={[styles.fieldButtonText, isSelected && styles.selectedFieldButtonText]}>{item.name}</Text>
       </TouchableOpacity>
+      
     );
   };
 
@@ -68,17 +70,20 @@ const TitlesScreen = () => {
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
         
-        <View style={styles.logoContainer}>
+      <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.logoContainer}
+        >
           <Image
-            source={require('../assets/joffer2.png')} 
+            source={require('../assets/joffer2.png')}
             style={styles.logo}
           />
           <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-        </View>
+        </LinearGradient>
         
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Step 4/5: Titles</Text>
-          <Text style={styles.welcomeText}>Choose the titles you're interested in!</Text>
+          <Text style={[styles.welcomeText, { fontSize: 16 }]}>Select the roles that align best with your interests, knowledge, experience, and wishes.  </Text>
         </View>
 
         <FlatList
@@ -90,9 +95,16 @@ const TitlesScreen = () => {
         />
         
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={handleNextPress}>
-            <Text style={styles.returnButtonText}>Next</Text>
-          </TouchableOpacity>
+        <LinearGradient
+    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+    style={styles.returnButton}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+  >
+    <TouchableOpacity onPress={handleNextPress}>
+      <Text style={styles.returnButtonText}>Next</Text>
+    </TouchableOpacity>
+  </LinearGradient>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -110,7 +122,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FF7E33',
+    //backgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 20,
     marginLeft:-20,
@@ -125,10 +137,11 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-    fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
+    color:'#FF7E33',
   },
   descriptionText: {
     fontSize: 15,
@@ -147,22 +160,25 @@ const styles = StyleSheet.create({
   fieldButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 0,
+    borderRadius: 20,
     alignItems: 'center',
     margin: 5,
     backgroundColor: 'white',
     width: 100,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#FF7E33',
   },
   selectedFieldButton: {
     backgroundColor: '#FF7E33',
-     // Change color for selected button
+   
+  },
+  selectedFieldButtonText:{
+    color: 'white',
   },
   fieldButtonText: {
     fontSize: 18,
-    fontFamily: 'Fredoka',
-    color: 'black',
+    fontFamily: 'Fredoka1',
+    color: '#FF7E33',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -181,8 +197,8 @@ const styles = StyleSheet.create({
   },
   returnButtonText: {
     fontSize: 18,
-    fontFamily: 'Fredoka',
-    color: 'black',
+    fontFamily: 'Fredoka1',
+    color: 'white',
   },
 });
 

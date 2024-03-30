@@ -4,6 +4,7 @@ import * as Font from 'expo-font';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const SocialsScreen = () => {
@@ -12,6 +13,7 @@ const SocialsScreen = () => {
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
+        'Fredoka2':require ('../assets/fonts/Fredoka-Regular.ttf'),
         'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
       });
     }
@@ -38,7 +40,6 @@ const SocialsScreen = () => {
   };
 
   const handleAddLink = () => {
-    
     setLinks([...links, 'https://example.com']);
   };
 
@@ -60,62 +61,75 @@ const SocialsScreen = () => {
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
         
-        <View style={styles.logoContainer}>
+      <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.logoContainer}
+        >
           <Image
-            source={require('../assets/joffer2.png')} 
+            source={require('../assets/joffer2.png')}
             style={styles.logo}
           />
           <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-        </View>
+        </LinearGradient>
         
         <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 5/5: Socials and Docs</Text>
+          <Text style={[styles.welcomeText,{ marginBottom: -10 } ]}>Step 5/5: Images & Links</Text>
+        </View>
+        <View style={styles.welcomeContainer}>
+          <Text style={[styles.welcomeText,{ marginBottom: -20 } ]}>Images</Text>
         </View>
 
 
         <View style={styles.profileContainer}>
-          <Text style={styles.descriptionText}>Add a profile picture</Text>
-          {profileImage ? (
-            <Image source={{ uri: profileImage }} style={styles.profileImage} />
-          ) : (
-            <TouchableOpacity onPress={pickImage}>
-              <Image source={require('../assets/profilepic.png')} style={styles.profileImage} />
-              <View style={styles.addIconContainer}>
-                <Text style={styles.addIcon}>+</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        </View>
+  {[...Array(3)].map((_, index) => (
+    <TouchableOpacity key={index} style={styles.boxContainer} onPress={pickImage}>
+      <View style={styles.addIconContainer}>
+  <LinearGradient
+    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={styles.gradient}
+  >
+    <Text style={styles.addIcon}>+</Text>
+  </LinearGradient>
+</View>
+    </TouchableOpacity>
+  ))}
+</View>
         
-        <View style={styles.uploadContainer}>
-          <TouchableOpacity style={styles.uploadButton}>
-            <Text style={styles.uploadText}>Upload Image</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.uploadButton}>
-            <Text style={styles.uploadText}>Upload CV</Text>
-          </TouchableOpacity>
-        </View>
         
-        <View style={styles.linksContainer}>
-          <Text style={styles.linksHeader}>Links</Text>
-          <View style={styles.linksList}>
-            {links.map((link, index) => (
-              <View key={index} style={styles.linkItem}>
-                <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveLink(index)}>
-                  <Ionicons name="remove-circle-outline" size={24} color="#FAA16F" />
-                </TouchableOpacity>
-                <Text style={styles.linkText}>{link}</Text>
-              </View>
-            ))}
-          </View>
-          <TouchableOpacity style={styles.addLinkButton} onPress={handleAddLink}>
-            <Ionicons name="add-circle-outline" size={24} color="#FAA16F" />
-            <Text style={styles.addLinkButtonText}>Add a Link</Text>
-          </TouchableOpacity>
-        </View>
+        
+<View style={styles.linksContainer}>
+  <Text style={styles.linksHeader}>Links</Text>
+  <View style={styles.profileContainer}>
+  {[...Array(3)].map((_, index) => (
+    <TouchableOpacity key={index} style={[styles.boxContainer, index !== 0 && { marginLeft: 20 }]} onPress={pickImage}>
+      <View style={styles.addIconContainer}>
+  <LinearGradient
+    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={styles.gradient}
+  >
+    <Text style={styles.addIcon}>+</Text>
+  </LinearGradient>
+</View>
+    </TouchableOpacity>
+  ))}
+</View>
+  <TouchableOpacity style={styles.addLinkButton} onPress={handleAddLink}>
+    <Ionicons name="add-circle-outline" size={24} color="#FAA16F" />
+    <Text style={styles.addLinkButtonText}>Add a Link</Text>
+  </TouchableOpacity>
+</View>
         <View style={styles.PreviewContainer}>
           <TouchableOpacity style={styles.uploadButton} onPress={handlePreviewPress}>
-            <Text style={styles.uploadText}>Preview Your Profile</Text>
+            <LinearGradient
+              colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+              style={styles.buttonGradient}
+            >
+              <Text style={styles.uploadText}>Preview Your Profile</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
        
@@ -135,7 +149,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FF7E33',
+    //SbackgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 20,
     marginLeft: -20,
@@ -149,17 +163,29 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   profileContainer: {
-    alignItems: 'center',
+    borderColor:'#FF7E33',
+    borderRadius: 20,
     marginTop: 0,
     marginBottom: 20,
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    
   },
-  profileImage: {
+  boxContainer: {
     width: 100,
     height: 100,
-    borderRadius: 60,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor:'#FF7E33',
+    borderRadius: 20,
+    
   },
+  
   addIconContainer: {
-    position: 'absolute',
+    
     bottom: 0,
     right: 0,
     backgroundColor: '#FF7E33',
@@ -168,10 +194,13 @@ const styles = StyleSheet.create({
     height: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    
+    
   },
   addIcon: {
     fontSize: 20,
     color: 'white',
+    left: 9,
   },
   descriptionText: {
     fontSize: 15,
@@ -186,16 +215,13 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-    fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
+    color: '#FF7E33',
   },
-  uploadContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
+
   PreviewContainer:{
     marginTop: 20,
     flexDirection: 'row',
@@ -203,26 +229,32 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   uploadButton: {
-    backgroundColor: '#FF7E33',
     borderRadius: 10,
+    marginHorizontal: 10,
+    overflow: 'hidden',
+  },
+  buttonGradient: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginHorizontal: 10,
   },
   uploadText: {
     fontSize: 16,
-    color: 'black',
-    fontFamily: 'Fredoka',
+    color: 'white',
+    fontFamily: 'Fredoka1',
+    textAlign: 'center',
   },
   linksContainer: {
     marginTop: 20,
     paddingHorizontal: 20,
     alignItems: 'center',
+    justifyContent: 'center',
+    
   },
   linksHeader: {
     fontSize: 18,
-    fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     marginBottom: 10,
+    color: '#FF7E33',
   },
   linksList: {
     flexDirection: 'column',
@@ -251,6 +283,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 5,
     color: '#FF7E33',
+  },
+  gradient: {
+    borderRadius: 50,
+    overflow: 'hidden',
+    width: '100%',
+    height: '100%',
+    
   },
 });
 

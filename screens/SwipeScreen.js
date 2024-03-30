@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+
+import React, { useState} from 'react';
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart, faTimesCircle, faCircleQuestion, faGear } from '@fortawesome/free-solid-svg-icons';
 import CompanyInfo from '../components/companyInfo';
+import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+
+
 
 const SwipeScreen = () => {
   const [companies, setCompanies] = useState([
@@ -23,6 +28,16 @@ const SwipeScreen = () => {
       jobDetails: 'Position: Software Engineer\nLocation: Oulu',
     },
   ]);
+  const navigation = useNavigation();
+  const navigateToHowItWorks = () => {
+    navigation.navigate('HowItWorks'); 
+  };
+  const navigateToSettings = () => {
+    navigation.navigate('Settings'); 
+  };
+  const navigateToMatches = () => {
+    navigation.navigate('Matches');
+  };
 
   const renderSwiper = () => {
     return (
@@ -40,12 +55,16 @@ const SwipeScreen = () => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.logoContainer}>
+      <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.logoContainer}
+        >
           <Image
-            source={require('../assets/joffer2.png')} 
+            source={require('../assets/joffer2.png')}
             style={styles.logo}
           />
-        </View>
+          
+        </LinearGradient>
         {renderSwiper()}
         <View style={styles.iconsContainer}>
           <TouchableOpacity onPress={() => { /* Handle press */ }}>
@@ -59,10 +78,10 @@ const SwipeScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.iconsContainer2}>
-          <TouchableOpacity onPress={() => { /* Handle press */ }}>
-            <FontAwesomeIcon icon={faCircleQuestion} size={40} style={[styles.icon, { color: 'black' }]} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+        <TouchableOpacity onPress={navigateToHowItWorks}> 
+        <FontAwesomeIcon icon={faCircleQuestion} size={40} style={[styles.icon, { color: '#FF7E33' }]} />
+        </TouchableOpacity>
+          <TouchableOpacity onPress={navigateToMatches}>
             <FontAwesomeIcon icon={faGear} size={40} style={[styles.icon, { color: '#FF7E33' }]} />
           </TouchableOpacity>
         </View>

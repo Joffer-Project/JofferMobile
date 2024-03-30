@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput,ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, ImageBackground } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -11,6 +11,7 @@ const LoginScreen = () => {
     async function loadFonts() {
       await Font.loadAsync({
         'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka2':require ('../assets/fonts/Fredoka-Regular.ttf'),
       });
     }
     loadFonts();
@@ -23,19 +24,27 @@ const LoginScreen = () => {
   //seuraava ikkuna
   const handleRegisterPress = () => {
     navigation.navigate('Register');
+    
+  };
+  const handleLoginPress = () => {
+    navigation.navigate('Swipe');
   };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.container}>
         {/* Logo */}
-        <View style={styles.logoContainer}>
+        <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.logoContainer}
+        >
           <Image
             source={require('../assets/joffer2.png')}
             style={styles.logo}
           />
           <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-        </View>
+        </LinearGradient>
+
         {/* welcome teksti */}
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Welcome, unique talent!</Text>
@@ -43,40 +52,62 @@ const LoginScreen = () => {
 
         {/* username ja password */}
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Name/Mail"
-            value={username}
-            onChangeText={setUsername}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={setPassword}
-          />
+        <ImageBackground
+        source={require('../assets/Orange Mail input.png')}
+        style={[styles.inputBackground, { width: '90%', height: 60 }]}
+        resizeMode="contain"
+        >
+      <TextInput
+     style={[styles.input, { fontSize: 16, textAlign: 'left', paddingVertical: 10, marginTop: 10, }]}
+      placeholder=""
+      value={username}
+      onChangeText={setUsername}
+      placeholderTextColor="transparent" 
+        />
+      </ImageBackground>
+      <ImageBackground
+        source={require('../assets/Orange Password Input.png')}
+        style={[styles.inputBackground, { width: '90%', height: 50 }]}
+        resizeMode="contain"
+        >
+      <TextInput
+      style={[styles.input1, { fontSize: 16, textAlign: 'left', paddingVertical: 10, marginTop: 10 }]}
+      placeholder=""
+      value={password}
+      onChangeText={setPassword}
+      placeholderTextColor="transparent" 
+        />
+      </ImageBackground>
         </View>
         
         {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={() => console.log("Return pressed")}>
-            <Text style={styles.returnButtonText}>Login</Text>
-          </TouchableOpacity>
+          <LinearGradient
+            colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+            style={styles.returnButton}
+          >
+            <TouchableOpacity onPress={handleLoginPress}>
+              <Text style={styles.returnButtonText}>Login</Text>
+            </TouchableOpacity>
+          </LinearGradient>
         </View>
-        <Text style={styles.orText}>OR</Text>
+
+        <Text style={styles.orText}>or login with socials</Text>
+
         <View style={styles.linksContainer}>
           <TouchableOpacity style={styles.linkButton}>
-            <Text style={styles.linksText}>G</Text>
+          <Image source={require('../assets/Google.png')} style={styles.linkImage} />
           </TouchableOpacity>
           <View style={styles.space} />
           <TouchableOpacity style={styles.linkButton}>
-            <Text style={styles.linksText}>L</Text>
+         <Image source={require('../assets/Linkedin.png')} style={styles.linkImage} />
           </TouchableOpacity>
         </View>
+
         <TouchableOpacity style={styles.registerButton} onPress={handleRegisterPress}>
           <Text style={styles.registerText}>Forgot your password?</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.registerButton} onPress={handleRegisterPress}>
           <Text style={styles.registerText}>Create an account!</Text>
         </TouchableOpacity>
@@ -88,7 +119,7 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    //padding: 20,
   },
   scrollView: {
     flexGrow: 1,
@@ -99,14 +130,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 20,
-    marginLeft: -20,
+    marginLeft:-20,
     marginRight: -20,
-    height: 230,
+    height:230,
+    
   },
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop: 15,
   },
   welcomeText: {
     fontSize: 20,
@@ -119,12 +152,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: 'Fredoka',
     textAlign: 'center',
+    margin: 10,
   },
   orText: {
     fontFamily: 'Fredoka',
     textAlign: 'center',
-    padding: 15,
-    fontSize: 18,
+    padding: 20,
+    fontSize: 14,
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -144,10 +178,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   linkButton: {
-    backgroundColor: '#FF7E33',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+  
+    width: 30,
+    height: 30,
+    
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 10,
@@ -167,22 +201,9 @@ const styles = StyleSheet.create({
   },
   registerText: {
     fontFamily: 'Fredoka',
-    fontSize: 18,
-  },
-  inputContainer: {
-    marginBottom: 0,
-    fontFamily: 'Fredoka',
-    alignItems: 'center',
-  },
-  input: {
-    height: 40,
-    width: 230,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
-    fontFamily: 'Fredoka',
+    fontSize: 16,
+    color: '#FF7E33',
+    textDecorationLine: 'underline',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -193,14 +214,51 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor: '#FF7E33',
     width: 130,
   },
   returnButtonText: {
     fontSize: 18,
-    fontFamily: 'Fredoka',
-    color: 'black',
+    fontFamily: 'Fredoka2',
+    color: 'white',
   },
+  linkImage: {
+    width: 40,
+    height: 40,
+  },
+  inputContainer: {
+    marginBottom: 0,
+    fontFamily: 'Fredoka',
+    alignItems: 'center',
+    left: 17,
+  },
+  inputBackground: {
+    width: 230,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    height: 50,
+    width: 230,
+    borderColor: 'gray',
+    borderRadius: 5,
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    marginBottom: 10,
+    fontFamily: 'Fredoka',
+  },
+  input1: {
+    height: 50,
+    width: 230,
+    borderColor: 'gray',
+    //borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 25,
+    paddingVertical: 10,
+    marginBottom: 10,
+    fontFamily: 'Fredoka',
+  }
+  
 });
 
 export default LoginScreen;

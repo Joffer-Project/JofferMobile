@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import * as Font from 'expo-font';
-
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -13,6 +13,8 @@ const HomeScreen = () => {
     async function loadFonts() {
       await Font.loadAsync({
         'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka1': require('../assets/fonts/Fredoka-Regular.ttf'),
+        'Fredoka2': require('../assets/fonts/Fredoka-Medium.ttf'),
       });
       setFontLoaded(true);
     }
@@ -20,51 +22,69 @@ const HomeScreen = () => {
   }, []);
 
   if (!fontLoaded) {
-    return null; // Render nothing until the font is loaded
+    return null; 
   }
 
   return (
-   
+    <LinearGradient
+    colors={['#FFB58C', '#9BC9FF']}
+    style={styles.container}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 0, y: 1 }}
+  >
       <View style={styles.container}>
-        <Text style={styles.welcomeText}>WELCOME TO {'\n'}</Text>
-        <Image source={require('../assets/joffer1.png')} style={styles.logo} />
+        
+        <Image source={require('../assets/Joffer-Logo.png')} style={styles.logo} />
         <Text style={styles.matchmakerText}>
           Your professional matchmaker! {'\n'}
         </Text>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonBox}>
-            <TouchableOpacity style={[styles.box, styles.talentBox]} onPress={() => navigation.navigate('Login')}>
-              <View style={styles.xContainer}>
-                <View style={[styles.xLine, styles.diagonalLine]} />
-                <View style={[styles.xLine, styles.reverseDiagonalLine]} />
-              </View>
-              <View style={[styles.button, styles.talentButton]}>
-                <Text style={[styles.buttonText, styles.buttonTextFredoka]}>
-                  Talent
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <Text style={styles.buttonDescription}>For job seekers!</Text>
+          <TouchableOpacity style={[styles.box, styles.talentBox]} onPress={() => navigation.navigate('Login')}>
+            
+          <ImageBackground
+              source={require('../assets/talent.png')}
+              style={styles.backgroundImage}
+              imageStyle={{ opacity: 0.07 }}
+              resizeMode="cover"
+            >
+            <LinearGradient
+              colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+              style={[styles.button, styles.talentButton, styles.buttonGradient]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+            >
+              <Text style={[styles.buttonText, styles.buttonTextFredoka]}>Talent</Text>
+            </LinearGradient>
+            </ImageBackground>
+          </TouchableOpacity>
+            <Text style={styles.buttonDescription}>For the ones who seek new job opportunities!</Text>
           </View>
           <View style={styles.buttonBox}>
-            <TouchableOpacity style={[styles.box, styles.recruiterBox]}>
-              <View style={styles.xContainer}>
-                <View style={[styles.xLine, styles.diagonalLine]} />
-                <View style={[styles.xLine, styles.reverseDiagonalLine]} />
-              </View>
-              <View style={[styles.button, styles.companyButton]}>
-                <Text style={[styles.buttonText, styles.buttonTextFredoka]}>
-                  Recruiter
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <Text style={styles.buttonDescription}>
-              For companies and recruiters!
+            <TouchableOpacity style={[styles.box, styles.recruiterBox]} onPress={() => navigation.navigate('Login')}>
+            
+          <ImageBackground
+              source={require('../assets/recruiter.png')}
+              style={styles.backgroundImage}
+              imageStyle={{ opacity: 0.07 }}
+              resizeMode="cover"
+            >
+            <LinearGradient
+              colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+              style={[styles.button, styles.talentButton, styles.buttonGradient, ]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+            >
+              <Text style={[styles.buttonText, styles.buttonTextFredoka]}>Recruiter</Text>
+            </LinearGradient>
+            </ImageBackground>
+          </TouchableOpacity>
+            <Text style={styles.buttonDescription}>For the ones who seek new talents to work with!
             </Text>
           </View>
         </View>
       </View>
-    
+      </LinearGradient>
   );
 };
 
@@ -73,8 +93,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingTop: 130,
-    backgroundColor: 'white',
+    paddingTop: 60,
+    
   },
   welcomeText: {
     textAlign: 'center',
@@ -86,6 +106,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 50,
     marginBottom: 0,
+    left: 5,
   },
   matchmakerText: {
     textAlign: 'center',
@@ -95,35 +116,53 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     width: '55%',
     alignSelf: 'center',
     maxHeight: 300,
+      
+  },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    
   },
   buttonBox: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
+    
   },
   box: {
-    width: 150,
-    height: 120,
+    width: 180,
+    height: 180,
     position: 'relative',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: 'black',
+    
+    borderRadius: 20,
+    
   },
   talentBox: {
     backgroundColor: '#FEF3ED',
+    borderRadius: 20,
+  },
+  buttonGradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   recruiterBox: {
     backgroundColor: '#F0F6FD',
   },
   button: {
     alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 0,
-    zIndex: 1,
+    top: 60, 
   },
   talentButton: {
     backgroundColor: '#F98A4B',
@@ -132,12 +171,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#6BA6E8',
   },
   buttonText: {
-    color: 'black',
+    color: 'white',
     fontSize: 16,
-    fontFamily: 'Fredoka',
+    
+    borderRadius: 20,
+    textAlign: 'center',
+    
+    
   },
   buttonTextFredoka: {
-    fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka2',
+      
   },
   buttonDescription: {
     color: '#666',

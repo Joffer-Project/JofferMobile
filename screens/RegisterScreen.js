@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const RegisterScreen = () => {
@@ -12,6 +13,7 @@ const RegisterScreen = () => {
     async function loadFonts() {
       await Font.loadAsync({
         'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka1': require('../assets/fonts/Fredoka-Regular.ttf'),
       });
     }
     loadFonts();
@@ -27,6 +29,7 @@ const RegisterScreen = () => {
   const handleNextPress = () => {
     navigation.navigate('Register2');
   };
+ 
   
   return (
     <KeyboardAvoidingView
@@ -36,17 +39,22 @@ const RegisterScreen = () => {
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
         {/* Logo with Welcome text */}
-        <View style={styles.logoContainer}>
+        <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.logoContainer}
+        >
           <Image
-            source={require('../assets/joffer2.png')} 
+            source={require('../assets/joffer2.png')}
             style={styles.logo}
           />
           <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-        </View>
+        </LinearGradient>
         {/* Other content */}
+        
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Step 1/5: Essentials</Text>
         </View>
+        
 
         {/* Username and Password input fields */}
         <View style={styles.inputContainer}>
@@ -86,10 +94,17 @@ const RegisterScreen = () => {
         
         {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={handleNextPress}>
-            <Text style={styles.returnButtonText}>Next</Text>
-          </TouchableOpacity>
-        </View>
+  <LinearGradient
+    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+    style={styles.returnButton}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+  >
+    <TouchableOpacity onPress={handleNextPress}>
+      <Text style={styles.returnButtonText}>Next</Text>
+    </TouchableOpacity>
+  </LinearGradient>
+</View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -121,10 +136,12 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-    fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     marginTop: 0,
     marginBottom:10,
     padding: 10,
+    color:'#FF7E33',
+    
   },
   descriptionText: {
     fontSize: 15,
@@ -136,6 +153,7 @@ const styles = StyleSheet.create({
   welcomeContainer: {
     alignItems: 'center',
     marginBottom: 20, 
+    backgroundColor: 'transparent',
   },
   inputContainer: {
     marginBottom: 0,
@@ -161,13 +179,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor: '#FF7E33',
+    //backgroundColor: '#FF7E33',
     width: 130,
   },
   returnButtonText: {
     fontSize: 18,
-    fontFamily: 'Fredoka',
-    color: 'black',
+    fontFamily: 'Fredoka1',
+    color: 'white',
   },
 });
 

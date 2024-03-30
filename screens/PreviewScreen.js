@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SwipeButton from 'rn-swipe-button';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const ProfilePreview = () => {
@@ -13,10 +14,16 @@ const ProfilePreview = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={require('../assets/joffer2.png')} style={styles.logo} />
-        <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-      </View>
+      <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.logoContainer}
+        >
+          <Image
+            source={require('../assets/joffer2.png')}
+            style={styles.logo}
+          />
+          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+        </LinearGradient>
       <View style={styles.profileContainer}>
         <Text style={[styles.userName, { color: '#F98A4B', fontSize: 26, marginBottom: 15 }]}>Users name</Text>
         <Image source={require('../assets/kuva1.jpg')} style={styles.profileImage} />
@@ -24,13 +31,13 @@ const ProfilePreview = () => {
 
       </View>
       <View style={styles.aboutContainer}>
-        <Text style={[styles.aboutHeaderText, { color: '#FF7E33', fontSize: 22 }]}>About Me</Text>
+        <Text style={[styles.aboutHeaderText, { color: '#FF7E33', fontSize: 22, fontFamily: 'Fredoka1' }]}>About Me</Text>
         <Text style={[styles.aboutText, { color: 'black', fontSize: 18 }]}>I'm a software engineer passionate about building mobile applications. I love hiking, reading, and being awesome in my free time.</Text>
-        <Text style={[styles.professions, { marginTop: 20, fontSize: 18, color: '#FF7E33' }]}>A fun fact about me: </Text>
+        <Text style={[styles.professions, { marginTop: 20, fontSize: 18, fontFamily: 'Fredoka1', color: '#FF7E33' }]}>A fun fact about me: </Text>
         <Text style={[styles.professions, { marginTop: 10 }]}>"happiest animal in the world" </Text>
       </View>
       <View style={styles.linksContainer}>
-        <Text style={[styles.linksHeader, { color: '#FF7E33', fontSize: 18 }]}>Links and Socials</Text>
+        <Text style={[styles.linksHeader, { color: '#FF7E33', fontFamily: 'Fredoka1', fontSize: 18 }]}>Links and Socials</Text>
         <View style={styles.linksList}>
           <Text style={[styles.linkText, { color: '#FF7E33' }]}>https://example.com</Text>
           <Text style={[styles.linkText, { color: '#FF7E33' }]}>https://example2.com</Text>
@@ -51,7 +58,7 @@ const ProfilePreview = () => {
         
         thumbIconBorderColor="#FF7E33"
         thumbIconStyles={{ width: 30, height: 30 }}
-        titleStyles={{ color: 'black', fontFamily: 'Fredoka', fontSize: 18 }} 
+        titleStyles={{ color: '#FF7E33', fontFamily: 'Fredoka1', fontSize: 18 }} 
         containerStyles={{ marginTop: 20 }} 
       />
     </ScrollView>
@@ -65,10 +72,9 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 0,
-    backgroundColor: '#FF7E33',
-    padding: 20,
-    marginBottom: 10,
+    marginTop: -20,
+    //padding: 20,
+    //marginBottom: 20,
     marginLeft: -20,
     marginRight: -20,
     height: 230,
@@ -77,23 +83,34 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     marginBottom: 10,
+    marginTop: 30,
   },
   descriptionText: {
     fontSize: 15,
     marginTop: 10,
     fontFamily: 'Fredoka',
     textAlign: 'center',
-    padding: 10,
+    padding: 20,
   },
   profileContainer: {
     alignItems: 'center',
     marginBottom: 10,
     marginTop: 20,
+    
   },
   profileImage: {
     width: 300,
     height: 300,
     borderRadius: 60,
+    borderWidth: 4,
+    borderColor: 'rgba(255, 255, 255, 0.5)', 
+    shadowColor: '#FF7E33', 
+    shadowOpacity: 1,
+    shadowRadius: 10, 
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
   },
   userName: {
     fontSize: 20,
