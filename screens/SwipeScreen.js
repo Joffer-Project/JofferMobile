@@ -67,13 +67,13 @@ const SwipeScreen = () => {
         </LinearGradient>
         {renderSwiper()}
         <View style={styles.iconsContainer}>
-          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+          <TouchableOpacity onPress={() => { /* icon */ }}>
             <FontAwesomeIcon icon={faTimesCircle} size={60} style={styles.icon} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+          <TouchableOpacity onPress={() => { /* kuva */ }}>
             <Image source={require('../assets/Superlike.png')} style={styles.customIcon} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => { /* Handle press */ }}>
+          <TouchableOpacity onPress={() => { /* icon */ }}>
             <FontAwesomeIcon icon={faHeart} size={60} style={[styles.icon, { color: '#58D336' }]} />
           </TouchableOpacity>
         </View>
@@ -81,7 +81,7 @@ const SwipeScreen = () => {
         <TouchableOpacity onPress={navigateToHowItWorks}> 
         <FontAwesomeIcon icon={faCircleQuestion} size={40} style={[styles.icon, { color: '#FF7E33' }]} />
         </TouchableOpacity>
-          <TouchableOpacity onPress={navigateToMatches}>
+          <TouchableOpacity onPress={navigateToSettings}>
             <FontAwesomeIcon icon={faGear} size={40} style={[styles.icon, { color: '#FF7E33' }]} />
           </TouchableOpacity>
         </View>

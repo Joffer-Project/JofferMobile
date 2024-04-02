@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import ModalComponent from './companyModal'; 
 
 const CompanyInfo = ({ company }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,23 +25,14 @@ const CompanyInfo = ({ company }) => {
               <Text style={styles.moreInfoButtonText}>More Info</Text>
             </TouchableOpacity>
           </View>
+       
           <Modal
             animationType="slide"
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => setModalVisible(false)}
           >
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text>Ehkä fiksuin tähän lisätä tietoa companysta ja siitä job offerista. liian pieni näyttö!</Text>
-                <TouchableOpacity
-                  style={styles.closeButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.closeButtonText}>Close</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <ModalComponent modalVisible={modalVisible} setModalVisible={setModalVisible} />
           </Modal>
         </View>
       </LinearGradient>
@@ -59,9 +51,9 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 20,
-    alignItems: 'center', 
+    alignItems: 'center',
     height: 400,
-    position: 'relative', 
+    position: 'relative',
     overflow: 'hidden',
   },
   companyName: {
@@ -78,7 +70,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: 'center',
     marginBottom: 10,
-    color: 'black',
+    color: 'white',
   },
   jobDetails1: {
     fontFamily: 'Fredoka',
@@ -95,9 +87,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignSelf: 'center',
     position: 'relative',
+    
   },
   moreInfoButtonText: {
-    fontFamily: 'Fredoka1',
+    fontFamily: 'Fredoka2',
     fontSize: 16,
     color: '#FF7E33',
   },

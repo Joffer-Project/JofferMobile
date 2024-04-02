@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     marginBottom: 10,
-    marginTop: 15,
+    marginTop: 19,
   },
   welcomeText: {
     fontSize: 20,

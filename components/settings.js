@@ -11,6 +11,7 @@ const Settings = () => {
         const loadFont = async () => {
             await Font.loadAsync({
                 'fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+                'fredoka1': require('../assets/fonts/Fredoka-Regular.ttf'),
             });
             setFontLoaded(true);
         };
@@ -18,7 +19,10 @@ const Settings = () => {
     }, []);
 
     const handleNavigateBack = () => {
-        navigation.goBack(); // Navigate back to previous screen
+        navigation.goBack();
+    };
+    const navigateToMatches = () => {
+        navigation.navigate('Matches');
     };
 
     if (!fontLoaded) {
@@ -26,18 +30,18 @@ const Settings = () => {
     }
 
     const windowWidth = Dimensions.get('window').width;
-    const itemWidth = (windowWidth - 30) / 2; 
+    const itemWidth = (windowWidth - 30) / 2;
 
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
-            <View style={styles.logoContainer}>
-          <Image
-            source={require('../assets/joffer2.png')} 
-            style={styles.logo}
-          />
-          
-        </View>
+                <View style={styles.logoContainer}>
+                    <Image
+                        source={require('../assets/joffer2.png')}
+                        style={styles.logo}
+                    />
+
+                </View>
                 <View style={styles.buttonsContainer}>
                     <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={handleNavigateBack}>
                         <LinearGradient
@@ -49,14 +53,17 @@ const Settings = () => {
                             <Text style={styles.registerText}>User Information</Text>
                         </LinearGradient>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={handleNavigateBack}>
+                    <TouchableOpacity
+                        style={[styles.settingsButton, { width: itemWidth }]}
+                        onPress={navigateToMatches}
+                    >
                         <LinearGradient
                             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
                             style={styles.linearGradient}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
                         >
-                            <Text style={styles.registerText}>Industries</Text>
+                            <Text style={styles.registerText}>Matches</Text>
                         </LinearGradient>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={handleNavigateBack}>
@@ -100,7 +107,7 @@ const Settings = () => {
                         </LinearGradient>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={[styles.registerButton, { width: itemWidth  }]} onPress={handleNavigateBack}>
+                <TouchableOpacity style={[styles.registerButton, { width: itemWidth }]} onPress={handleNavigateBack}>
                     <LinearGradient
                         colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
                         style={styles.linearGradient}
@@ -119,7 +126,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        
+
     },
     scrollView: {
         flexGrow: 1,
@@ -130,16 +137,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#FF7E33',
         padding: 20,
         marginBottom: 20,
-        marginLeft:-20,
+        marginLeft: -20,
         marginRight: -20,
-        
-      },
-      logo: {
+
+    },
+    logo: {
         width: 120,
         height: 120,
         marginBottom: 10,
         marginTop: 20,
-      },
+    },
     buttonsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -158,13 +165,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 20,
-        borderRadius: 20,
+        borderRadius: 10,
         height: 40,
         marginTop: 30,
         left: 95,
     },
     registerText: {
-        fontFamily: 'Fredoka',
+        fontFamily: 'Fredoka1',
         fontSize: 18,
         color: 'white',
     },

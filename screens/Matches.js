@@ -1,113 +1,230 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faHeart, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-
-const profiles = [
-  {
-    id: 1,
-    name: 'Nokia',
-    
-    image: require('../assets/Google.png'),
-  },
-  {
-    id: 2,
-    name: 'It',
-   
-    image: require('../assets/Google.png'),
-  },
-
-];
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Font from 'expo-font';
 
 const MatchesScreen = () => {
-  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
+  const [latestMatchesVisible, setLatestMatchesVisible] = useState(false);
+  const [superlikesVisible, setSuperlikesVisible] = useState(false);
 
-  const handleSwipeLeft = () => {
-   
-    setCurrentProfileIndex(currentProfileIndex + 1);
+  const handleLatestMatchesPress = () => {
+    setLatestMatchesVisible(!latestMatchesVisible);
   };
 
-  const handleSwipeRight = () => {
-
-    setCurrentProfileIndex(currentProfileIndex + 1);
+  const handleSuperlikesPress = () => {
+    setSuperlikesVisible(!superlikesVisible);
   };
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka2': require('../assets/fonts/Fredoka-Regular.ttf'),
+      });
+    }
+    loadFonts();
+  }, []);
 
   return (
-    <View style={styles.container}>
-      {profiles.map((profile, index) => {
-        if (index < currentProfileIndex) {
-          return null; 
-        }
+    <LinearGradient
+      colors={['rgba(255, 118, 38, 1)', 'rgba(173, 65, 1, 1)']}
+      style={styles.container}
+    >
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.container1}>
+          <Text style={styles.sectionTitle}>Scroll your latest matches!</Text>
 
-        if (index > currentProfileIndex + 1) {
-          return null; 
-        }
+          <TouchableOpacity style={styles.logoButton} onPress={handleLatestMatchesPress}>
+            <LinearGradient
+              colors={['rgba(232, 86, 0, 1)', 'rgba(140, 52, 0, 1)']}
+              style={styles.logoContainer}
+            >
+              <Image
+                style={styles.logoImage}
+                source={require('../assets/White png 1.png')}
+                resizeMode="contain"
+              />
+              <Text style={styles.logoText}>Latest Matches</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          {latestMatchesVisible && (
+            <LinearGradient
+              colors={['rgba(255, 118, 38, 1)', 'rgba(173, 65, 1, 1)']}
+              style={styles.section}
+            >
+              <View style={styles.matchesContainer}>
+                <TouchableOpacity style={styles.matchButton}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      source={require('../assets/Company logo.png')}
+                      style={styles.logoImageInButton}
+                    />
+                  </View>
+                  <View style={styles.textContainer}>
+                    <Text style={styles.logoText1}>Nokia</Text>
+                    <Text style={styles.logoText2}>Developer</Text>
+                  </View>
+                  <View style={styles.textContainer1}>
+                    <Text style={styles.logoText3}>11.3.2024</Text>
+                    
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.matchButton}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      source={require('../assets/Company logo.png')}
+                      style={styles.logoImageInButton}
+                    />
+                  </View>
+                  <View style={styles.textContainer}>
+                    <Text style={styles.logoText1}>City of Oulu</Text>
+                    <Text style={styles.logoText2}>Backend Developer</Text>
+                  </View>
+                  <View style={styles.textContainer1}>
+                    <Text style={styles.logoText3}>20.3.2024</Text>
+                    
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </LinearGradient>
+          )}
 
-        return (
-          <View key={profile.id} style={styles.card}>
-            <Image source={profile.image} style={styles.profileImage} />
-            <View style={styles.profileInfo}>
-              <Text style={styles.profileName}>{profile.name}, {profile.age}</Text>
-            </View>
-            <View style={styles.actions}>
-              <TouchableOpacity style={[styles.actionButton, styles.dislikeButton]} onPress={handleSwipeLeft}>
-                <FontAwesomeIcon icon={faTimesCircle} size={24} />
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.actionButton, styles.likeButton]} onPress={handleSwipeRight}>
-                <FontAwesomeIcon icon={faHeart} size={24} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        );
-      })}
-    </View>
+          
+          <TouchableOpacity style={styles.logoButton} onPress={handleSuperlikesPress}>
+            <LinearGradient
+              colors={['rgba(0, 90, 209, 1)', 'rgba(0, 54, 127, 1)']}
+              style={styles.logoContainer}
+            >
+              <Image
+                style={styles.logoImage}
+                source={require('../assets/White png 1.png')}
+                resizeMode="contain"
+              />
+              <Text style={styles.logoText}>Superlikes</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          
+          {superlikesVisible && (
+            <LinearGradient
+              colors={['rgba(0, 90, 209, 1)', 'rgba(0, 54, 127, 1)']}
+              style={styles.section}
+            >
+              <View style={styles.matchesContainer}>
+                <TouchableOpacity style={styles.matchButton}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      source={require('../assets/Company logo.png')}
+                      style={styles.logoImageInButton}
+                    />
+                  </View>
+                  <View style={styles.textContainer}>
+                    <Text style={styles.logoText1}>Nokia</Text>
+                    <Text style={styles.logoText2}>Developer</Text>
+                  </View>
+                  <View style={styles.textContainer1}>
+                    <Text style={styles.logoText3}>20.3.2024</Text>
+                    
+                  </View>
+                </TouchableOpacity>
+                
+              </View>
+            </LinearGradient>
+          )}
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  card: {
-    width: '80%',
-    height: 400,
-    borderRadius: 10,
-    backgroundColor: 'white',
-    elevation: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
+  scrollViewContent: {
+    flexGrow: 1,
   },
-  profileImage: {
-    width: '100%',
-    height: '70%',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+  container1: {
+    paddingTop: 40,
   },
-  profileInfo: {
-    padding: 10,
-  },
-  profileName: {
+  sectionTitle: {
+    color: 'white',
     fontSize: 24,
-    fontWeight: 'bold',
+    textAlign: 'center',
+    fontFamily: 'Fredoka2',
+    marginBottom: 20,
+    marginTop: 30,
   },
-  actions: {
+  logoContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    overflow: 'hidden',
+    height: 100,
   },
-  actionButton: {
-    padding: 20,
-    margin: 10,
-    borderRadius: 50,
-    justifyContent: 'center',
+  logoImage: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+    marginLeft: 10,
+  },
+  logoText: {
+    color: '#fff',
+    fontSize: 18,
+    fontFamily: 'Fredoka2',
+  },
+  logoText1: {
+    color: '#fff',
+    fontSize: 18,
+    fontFamily: 'Fredoka',
+  },
+  section: {
+    padding: 10,
+    height: 450,
+  },
+  matchesContainer: {
+    flexDirection: 'column',
     alignItems: 'center',
   },
-  dislikeButton: {
-    backgroundColor: '#FF6666',
+  matchButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    fontFamily: 'Fredoka',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+    width: '80%',
+    alignItems: 'center',
   },
-  likeButton: {
-    backgroundColor: '#66CC66',
+  imageContainer: {
+    marginRight: 0,
+    right: 20,
   },
+  textContainer: {
+    flexDirection: 'column',
+    right: 10,
+    alignItems: 'flex-start', 
+    flex: 1,
+  },
+  textContainer1: {
+    flexDirection: 'column',
+    
+  },
+  logoImageInButton: {
+    width: 30,
+    height: 30,
+    marginRight: 20,
+  },
+  logoText2: {
+    fontSize: 14,
+    color: 'black',
+    fontFamily: 'Fredoka',
+  },
+  logoText3: {
+    fontSize: 14,
+    color: 'white',
+    fontFamily: 'Fredoka',
+  }
 });
 
 export default MatchesScreen;
+
+

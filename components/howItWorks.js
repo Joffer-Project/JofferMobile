@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'rea
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 
 import * as Font from 'expo-font';
 
@@ -20,7 +20,7 @@ const HowItWorks = () => {
         loadFont();
     }, []);
 
-    
+
     if (!fontLoaded) {
         return null;
     }
@@ -57,7 +57,7 @@ const HowItWorks = () => {
                         </View>
                     </View>
                     <TouchableOpacity style={styles.registerButton} onPress={handleNavigateBack}>
-                    <LinearGradient
+                        <LinearGradient
                             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
                             style={styles.linearGradient}
                             start={{ x: 0, y: 0 }}
@@ -89,16 +89,16 @@ const styles = StyleSheet.create({
         padding: 20,
         borderRadius: 10,
         fontFamily: 'Fredoka1',
-        minWidth: '95%', 
+        minWidth: '95%',
     },
     heading: {
-        fontFamily: 'Fredoka1', 
+        fontFamily: 'Fredoka1',
         fontSize: 20,
         color: '#FF7E33',
         marginBottom: 20,
         marginTop: 0,
         left: 85,
-        
+
     },
     iconContainer: {
         flexDirection: 'row',
@@ -110,15 +110,15 @@ const styles = StyleSheet.create({
         color: '#D9352D',
     },
     stepText: {
-        fontFamily: 'Fredoka1', 
+        fontFamily: 'Fredoka1',
         fontSize: 16,
         left: 20,
     },
     stepText1: {
-        fontFamily: 'Fredoka1', 
+        fontFamily: 'Fredoka1',
         fontSize: 16,
         right: -10,
-        
+
     },
     moreInfoText: {
         fontFamily: 'fredoka',
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     registerButton: {
         alignItems: 'center',
-        justifyContent: 'center', 
+        justifyContent: 'center',
         marginBottom: 10,
         marginTop: 10,
         backgroundColor: '#FF7E33',
@@ -152,9 +152,9 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     customIcon: {
-        width: 80,  
-        height: 80, 
-        resizeMode: 'contain', 
+        width: 80,
+        height: 80,
+        resizeMode: 'contain',
         right: 10,
     },
     textContainer: {

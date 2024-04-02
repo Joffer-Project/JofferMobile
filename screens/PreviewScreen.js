@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SwipeButton from 'rn-swipe-button';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,15 +15,15 @@ const ProfilePreview = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <LinearGradient
-          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-          style={styles.logoContainer}
-        >
-          <Image
-            source={require('../assets/joffer2.png')}
-            style={styles.logo}
-          />
-          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-        </LinearGradient>
+        colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+        style={styles.logoContainer}
+      >
+        <Image
+          source={require('../assets/joffer2.png')}
+          style={styles.logo}
+        />
+        <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+      </LinearGradient>
       <View style={styles.profileContainer}>
         <Text style={[styles.userName, { color: '#F98A4B', fontSize: 26, marginBottom: 15 }]}>Users name</Text>
         <Image source={require('../assets/kuva1.jpg')} style={styles.profileImage} />
@@ -46,20 +46,20 @@ const ProfilePreview = () => {
       <SwipeButton
         title="    Save and start swiping!"
         onSwipeSuccess={handleNextPress}
-        railStyles={{ 
+        railStyles={{
           backgroundColor: 'rgba(255, 191, 129, 0.3)',
-          borderColor: '#FF7E33', 
-          zIndex: 1, 
-          elevation: 1, 
+          borderColor: '#FF7E33',
+          zIndex: 1,
+          elevation: 1,
         }}
-        thumbIconBackgroundColor="#FF7E33" 
+        thumbIconBackgroundColor="#FF7E33"
         thumbIconImageSource={require('../assets/right-arrow.png')}
         railBackgroundColor="#FFFFFF"
-        
+
         thumbIconBorderColor="#FF7E33"
         thumbIconStyles={{ width: 30, height: 30 }}
-        titleStyles={{ color: '#FF7E33', fontFamily: 'Fredoka1', fontSize: 18 }} 
-        containerStyles={{ marginTop: 20 }} 
+        titleStyles={{ color: '#FF7E33', fontFamily: 'Fredoka1', fontSize: 18 }}
+        containerStyles={{ marginTop: 20 }}
       />
     </ScrollView>
   );
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: -20,
+    marginTop: -0,
     //padding: 20,
     //marginBottom: 20,
     marginLeft: -20,
@@ -96,17 +96,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     marginTop: 20,
-    
+
   },
   profileImage: {
     width: 300,
     height: 300,
     borderRadius: 60,
     borderWidth: 4,
-    borderColor: 'rgba(255, 255, 255, 0.5)', 
-    shadowColor: '#FF7E33', 
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    shadowColor: '#FF7E33',
     shadowOpacity: 1,
-    shadowRadius: 10, 
+    shadowRadius: 10,
     shadowOffset: {
       width: 0,
       height: 0,
