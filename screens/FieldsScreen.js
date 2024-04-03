@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAv
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 
 const FieldsScreen = () => {
   const navigation = useNavigation();
@@ -20,11 +20,11 @@ const FieldsScreen = () => {
     }
     loadFonts();
 
-    // Fetch fields data from the API
+  
     
     axios.get('https://joffer-backend-latest.onrender.com/api/Field')
       .then(response => {
-        // Set the fetched fields data to state
+      
         setFields(response.data);
       })
       .catch(error => {
