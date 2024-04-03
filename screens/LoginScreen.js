@@ -23,7 +23,7 @@ const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // API endpoint URL
+  // API endpoint URL ja login hakee tiedot tietokannasta
   const API_URL = 'https://joffer-backend-latest.onrender.com/api/Account';
 
   
@@ -58,6 +58,10 @@ const LoginScreen = () => {
      
       fetchData();
     }
+  };
+  const handleRegisterPress = () => {
+    navigation.navigate('Register');
+    
   };
 
   return (
@@ -139,7 +143,7 @@ const LoginScreen = () => {
           <Text style={styles.registerText}>Forgot your password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.registerButton}>
+        <TouchableOpacity style={styles.registerButton} onPress={handleRegisterPress}>
           <Text style={styles.registerText}>Create an account!</Text>
         </TouchableOpacity>
       </View>

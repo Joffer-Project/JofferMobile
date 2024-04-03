@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView,
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
 
 
 const RegisterScreen2 = () => {
@@ -22,9 +23,33 @@ const RegisterScreen2 = () => {
   const [fact, setFact] = useState('');
 
   // Navigate to the FieldsScreen
+  
   const handleNextPress = () => {
     navigation.navigate('Fields');
   };
+  /* INTERNAL SERVER ERROR TÄSSÄKIN, VOIKO TIETOKANTAAN LÄHETTÄÄ TIETOA???
+  const handleNextPress = async () => {
+    try {
+      const payload = {
+        aboutMe: about,
+        EmploymentStatus: 'Employed' 
+      };
+  
+      console.log('Payload:', payload);
+  
+      const response = await axios.post('https://joffer-backend-latest.onrender.com/api/Applicant', payload);
+  
+      console.log('Response:', response.data);
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+  
+      navigation.navigate('Fields');
+    } catch (error) {
+      console.error('Error creating applicant:', error);
+      console.error('Error response:', error.response);
+      console.error('Error message:', error.message);
+    }
+  };*/
 
   return (
     <KeyboardAvoidingView

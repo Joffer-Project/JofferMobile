@@ -1,11 +1,15 @@
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios'; // Import Axios
 
 const FieldsScreen = () => {
   const navigation = useNavigation();
+
+  const [fields, setFields] = useState([]); 
 
   useEffect(() => {
     async function loadFonts() {
@@ -15,27 +19,18 @@ const FieldsScreen = () => {
       });
     }
     loadFonts();
-  }, []);
 
-  const fields = [
-    { id: 1, name: 'Tech' },
-    { id: 2, name: 'Health' },
-    { id: 3, name: 'Tech' },
-    { id: 4, name: 'Tech' },
-    { id: 5, name: 'Tech' },
-    { id: 6, name: 'Tech' },
-    { id: 7, name: 'Tech' },
-    { id: 8, name: 'Other' },
-    { id: 9, name: 'Other' },
-    { id: 10, name: 'Other' },
-    { id: 11, name: 'Other' },
-    { id: 12, name: 'Other' },
-    { id: 13, name: 'Other' },
-    { id: 14, name: 'Other' },
-    { id: 15, name: 'Other' },
-    { id: 16, name: 'Other' },
- 
-  ];
+    // Fetch fields data from the API
+    
+    axios.get('https://joffer-backend-latest.onrender.com/api/Field')
+      .then(response => {
+        // Set the fetched fields data to state
+        setFields(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching fields:', error);
+      });
+  }, []);
 
   const [selectedFields, setSelectedFields] = useState([]);
 
@@ -181,7 +176,7 @@ const styles = StyleSheet.create({
    
   },
   fieldButtonText: {
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: 'Fredoka1',
     color: '#FF7E33',
   },
@@ -208,3 +203,4 @@ const styles = StyleSheet.create({
 });
 
 export default FieldsScreen;
+
