@@ -1,8 +1,10 @@
+
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, ImageBackground, Alert } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -11,7 +13,7 @@ const LoginScreen = () => {
     async function loadFonts() {
       await Font.loadAsync({
         'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
-        'Fredoka2':require ('../assets/fonts/Fredoka-Regular.ttf'),
+        'Fredoka2': require('../assets/fonts/Fredoka-Regular.ttf'),
       });
     }
     loadFonts();
@@ -21,13 +23,41 @@ const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  //seuraava ikkuna
-  const handleRegisterPress = () => {
-    navigation.navigate('Register');
+  // API endpoint URL
+  const API_URL = 'https://joffer-backend-latest.onrender.com/api/Account';
+
+  
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(API_URL);
+      console.log('API Response:', response.data);
     
+      const user = response.data.find(
+        (user) => user.username === username && user.password === password
+      );
+      if (user) {
+        
+        navigation.navigate('Swipe');
+      } else {
+       
+        Alert.alert('Invalid credentials', 'Please enter valid username and password.');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+     
+      Alert.alert('Error', 'An error occurred ');
+    }
   };
+
+  
   const handleLoginPress = () => {
-    navigation.navigate('Swipe');
+    
+    if (username.trim() === '' || password.trim() === '') {
+      Alert.alert('Missing credentials', 'Please enter both username and password.');
+    } else {
+     
+      fetchData();
+    }
   };
 
   return (
@@ -52,34 +82,35 @@ const LoginScreen = () => {
 
         {/* username ja password */}
         <View style={styles.inputContainer}>
-        <ImageBackground
-        source={require('../assets/Orange Mail input.png')}
-        style={[styles.inputBackground, { width: '90%', height: 60 }]}
-        resizeMode="contain"
-        >
-      <TextInput
-     style={[styles.input, { fontSize: 16, textAlign: 'left', paddingVertical: 10, marginTop: 10, }]}
-      placeholder=""
-      value={username}
-      onChangeText={setUsername}
-      placeholderTextColor="transparent" 
-        />
-      </ImageBackground>
-      <ImageBackground
-        source={require('../assets/Orange Password Input.png')}
-        style={[styles.inputBackground, { width: '90%', height: 50 }]}
-        resizeMode="contain"
-        >
-      <TextInput
-      style={[styles.input1, { fontSize: 16, textAlign: 'left', paddingVertical: 10, marginTop: 10 }]}
-      placeholder=""
-      value={password}
-      onChangeText={setPassword}
-      placeholderTextColor="transparent" 
-        />
-      </ImageBackground>
+          <ImageBackground
+            source={require('../assets/Orange Mail input.png')}
+            style={[styles.inputBackground, { width: '90%', height: 60 }]}
+            resizeMode="contain"
+          >
+            <TextInput
+              style={[styles.input, { fontSize: 16, textAlign: 'left', paddingVertical: 10, marginTop: 10, }]}
+              placeholder="Username"
+              value={username}
+              onChangeText={setUsername}
+              placeholderTextColor="transparent"
+            />
+          </ImageBackground>
+          <ImageBackground
+            source={require('../assets/Orange Password Input.png')}
+            style={[styles.inputBackground, { width: '90%', height: 50 }]}
+            resizeMode="contain"
+          >
+            <TextInput
+              style={[styles.input1, { fontSize: 16, textAlign: 'left', paddingVertical: 10, marginTop: 10 }]}
+              placeholder="Password"
+              value={password}
+              onChangeText={setPassword}
+              placeholderTextColor="transparent"
+              secureTextEntry={true}
+            />
+          </ImageBackground>
         </View>
-        
+
         {/* Buttons */}
         <View style={styles.buttonContainer}>
           <LinearGradient
@@ -96,19 +127,19 @@ const LoginScreen = () => {
 
         <View style={styles.linksContainer}>
           <TouchableOpacity style={styles.linkButton}>
-          <Image source={require('../assets/Google.png')} style={styles.linkImage} />
+            <Image source={require('../assets/Google.png')} style={styles.linkImage} />
           </TouchableOpacity>
           <View style={styles.space} />
           <TouchableOpacity style={styles.linkButton}>
-         <Image source={require('../assets/Linkedin.png')} style={styles.linkImage} />
+            <Image source={require('../assets/Linkedin.png')} style={styles.linkImage} />
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.registerButton} onPress={handleRegisterPress}>
+        <TouchableOpacity style={styles.registerButton}>
           <Text style={styles.registerText}>Forgot your password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.registerButton} onPress={handleRegisterPress}>
+        <TouchableOpacity style={styles.registerButton}>
           <Text style={styles.registerText}>Create an account!</Text>
         </TouchableOpacity>
       </View>
@@ -130,10 +161,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 20,
-    marginLeft:-20,
+    marginLeft: -20,
     marginRight: -20,
-    height:230,
-    
+    height: 230,
+
   },
   logo: {
     width: 120,
@@ -178,10 +209,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   linkButton: {
-  
+
     width: 30,
     height: 30,
-    
+
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 10,
@@ -258,7 +289,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontFamily: 'Fredoka',
   }
-  
+
 });
 
 export default LoginScreen;
+
