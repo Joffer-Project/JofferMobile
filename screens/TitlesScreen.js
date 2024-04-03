@@ -77,7 +77,7 @@ const TitlesScreen = () => {
         </View>
         
         <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 4/5: Titles</Text>
+          <Text style={styles.welcomeText}>Step 4/5: Roles</Text>
           <Text style={styles.welcomeText}>Choose the titles that describes best the talent that you are searching for</Text>
         </View>
 

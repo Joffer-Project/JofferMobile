@@ -80,7 +80,7 @@ const FieldsScreen = () => {
         </View>
         
         <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 3/5: Fields</Text>
+          <Text style={styles.welcomeText}>Step 3/5: Industries</Text>
           <Text style={styles.welcomeText}>Choose the fields that align best with where your company holds a place</Text>
         </View>
 
