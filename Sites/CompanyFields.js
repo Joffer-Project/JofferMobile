@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 const CompanyFields = () => {
   const navigation = useNavigation();
-/*
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka1': require('../assets/Fredoka-Regular.ttf'),
       });
     }
     loadFonts();
-  }, []); */
+  }, []); 
 
   const fields = [
     { id: 1, name: 'Tech' },
@@ -66,31 +69,42 @@ const CompanyFields = () => {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
     >
     
-    <View style={styles.logoContainer}>
+        <LinearGradient
+          colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+          style={styles.logoContainer}
+            >
           <Image
             source={require('./img/Joffer-Logobig.png')} 
             style={styles.logo}
           />
-          <Text style={styles.descriptionText}>Let's find new talents!</Text>
-        </View>
+          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+          </LinearGradient>
+        
         
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Step 3/5: Fields</Text>
           <Text style={styles.welcomeText}>Choose the fields you're interested in!</Text>
         </View>
 
-      <FlatList
+        <FlatList
           data={fields}
           renderItem={renderFieldButton}
           keyExtractor={item => item.id.toString()}
           numColumns={3}
           contentContainerStyle={styles.fieldButtonsContainer}
         />
-
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={() =>navigation.navigate("CompanyTitles")}>
+        
+       <View style={styles.buttonContainer}>
+      <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.returnButton}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+          >
+          <TouchableOpacity onPress={() => navigation.navigate('CompanyTitles')}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
+          </LinearGradient>
         </View>
     </KeyboardAvoidingView>
   );
@@ -100,8 +114,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 0, 
-    backgroundColor: "#fff"
-
   },
   scrollView: {
     flexGrow: 1,
@@ -109,35 +121,35 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#1771E9',
+    backgroundColor: '#0C6BE8',
     padding: 20,
     marginBottom: 20,
     marginLeft:-20,
     marginRight: -20,
-    height:200,
+    height:230,
   },
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 0,
-    marginTop: 10,
+    marginBottom: 10,
+    marginTop: 15,
   },
   welcomeText: {
     fontSize: 20,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
+    color: '#0C6BE8',
+    
   },
   descriptionText: {
-    fontSize: 20,
-    marginTop: 0,
-   // fontFamily: 'Fredoka',
+    fontSize: 15,
+    marginTop: 10,
+    fontFamily: 'Fredoka',
     textAlign: 'center',  
-    padding: 5, 
-    color: 'white',
-    fontWeight: '400', 
-  }, 
+    padding: 10, 
+  },
   welcomeContainer: {
     alignItems: 'center',
     marginBottom: 20, 
@@ -148,22 +160,27 @@ const styles = StyleSheet.create({
   fieldButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 0,
+    borderRadius: 20,
     alignItems: 'center',
     margin: 5,
     backgroundColor: 'white',
     width: 100,
-    borderWidth: 2,
-    borderRadius: 15,
-    borderColor: '#1771E9',
+    borderWidth: 1,
+    borderColor: '#0C6BE8',
   },
   selectedFieldButton: {
-    backgroundColor: '#1771E9',
-     // Change color for selected button
+    backgroundColor: '#0C6BE8',
+    color: 'white',
+   
+  },
+  selectedFieldButtonText: {
+    color: 'white',
+   
   },
   fieldButtonText: {
     fontSize: 18,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
+    color: '#0C6BE8',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -176,15 +193,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor: '#1771E9',
     width: 130,
     
   },
   returnButtonText: {
     fontSize: 18,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     color: 'white',
   },
 });
+
 
 export default CompanyFields;

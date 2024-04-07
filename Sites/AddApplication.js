@@ -13,14 +13,14 @@ export default function AddApplication() {
   const titles  = route.params?.titleBox || [];
   const [titleBox, setTitleBox] = useState(route.params?.titleBox || []);
 
-  useEffect(() => { //Tässä vika, koska offerissa annetut titlet eivät tule tänne asti.
+/*  useEffect(() => { //Tässä vika, koska offerissa annetut titlet eivät tule tänne asti.
     console.log("titles:", titles);
     if (route.params?.titleBox) {
       setTitleBox(route.params.titleBox);
       console.log("titles:", titles);
     }
   }, [route.params?.titleBox]);
-
+*/
 
   return (
     <View style={styles.container}>
@@ -62,7 +62,7 @@ export default function AddApplication() {
             <Image style={styles.addImage} source={require('./img/SwipeLogo.png')} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity /* onPress={} */ >
+        <TouchableOpacity onPress={() => navigation.navigate("CompanySettings")} >
           <View style={styles.BottomButton}>
             <Image style={styles.addImage} source={require('./img/setting.png')} />
           </View>
@@ -109,8 +109,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 40,
-    borderColor: 'black',
-    borderWidth: 2,
+    borderColor: '#0C6BE8',
+    borderWidth: 3,
   },
   BottomButtonsContainer: {
     flexDirection: 'row',
@@ -176,5 +176,9 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  plus: {
+    color: '#0C6BE8',
+    fontWeight: '500'
   }
 })

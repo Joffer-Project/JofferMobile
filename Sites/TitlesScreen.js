@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native'; 
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const TitlesScreen = () => {
   const navigation = useNavigation(); 
-  /*
+  
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka1': require('../assets/Fredoka-Regular.ttf'),
       });
     }
     loadFonts();
-  }, []); */
-
+  }, []);
 
   const fields = [
     { id: 1, name: 'Tech' },
@@ -30,9 +30,6 @@ const TitlesScreen = () => {
     { id: 10, name: 'Other' },
     { id: 11, name: 'Other' },
     { id: 12, name: 'Other' },
-    
-    
-   
   ];
 
   const [selectedFields, setSelectedFields] = useState([]);
@@ -53,8 +50,9 @@ const TitlesScreen = () => {
         style={[styles.fieldButton, isSelected && styles.selectedFieldButton]}
         onPress={() => toggleFieldSelection(item.id)}
       >
-        <Text style={styles.fieldButtonText}>{item.name}</Text>
+        <Text style={[styles.fieldButtonText, isSelected && styles.selectedFieldButtonText]}>{item.name}</Text>
       </TouchableOpacity>
+      
     );
   };
 
@@ -64,21 +62,23 @@ const TitlesScreen = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : null}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
     >
-
-        <View style={styles.logoContainer}>
+           <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.logoContainer}
+        >
           <Image
-            source={require('./img/Joffer-Logobig.png')} 
+            source={require('./img/Joffer-Logobig.png')}
             style={styles.logo}
           />
           <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-        </View>
-    
-        <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 4/5: Titles</Text>
-          <Text style={styles.welcomeText}>Choose the titles you're interested in!</Text>
-        </View>
+      </LinearGradient>
         
-      <FlatList
+      <View style={styles.welcomeContainer}>
+          <Text style={styles.welcomeText}>Step 4/5: Titles</Text>
+          <Text style={[styles.welcomeText, { fontSize: 16 }]}>Select the roles that align best with your interests, knowledge, experience, and wishes.  </Text>
+      </View>
+      
+        <FlatList
           data={fields}
           renderItem={renderFieldButton}
           keyExtractor={item => item.id.toString()}
@@ -86,10 +86,17 @@ const TitlesScreen = () => {
           contentContainerStyle={styles.fieldButtonsContainer}
         />
         
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={() =>navigation.navigate("SocialsScreen")}>
-            <Text style={styles.returnButtonText}>Next</Text>
-          </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <LinearGradient
+    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+    style={styles.returnButton}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+  >
+    <TouchableOpacity onPress={() => navigation.navigate('SocialsScreen')}>
+      <Text style={styles.returnButtonText}>Next</Text>
+    </TouchableOpacity>
+  </LinearGradient>
         </View>
     </KeyboardAvoidingView>
   );
@@ -121,15 +128,16 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
+    color:'#FF7E33',
   },
   descriptionText: {
     fontSize: 15,
     marginTop: 10,
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     textAlign: 'center',  
     padding: 10, 
   },
@@ -143,23 +151,25 @@ const styles = StyleSheet.create({
   fieldButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 0,
+    borderRadius: 20,
     alignItems: 'center',
     margin: 5,
     backgroundColor: 'white',
     width: 100,
-    borderWidth: 2,
-    borderRadius: 15,
+    borderWidth: 1,
     borderColor: '#FF7E33',
   },
   selectedFieldButton: {
     backgroundColor: '#FF7E33',
-     // Change color for selected button
+   
+  },
+  selectedFieldButtonText:{
+    color: 'white',
   },
   fieldButtonText: {
     fontSize: 18,
- //   fontFamily: 'Fredoka',
-    color: 'black',
+    fontFamily: 'Fredoka1',
+    color: '#FF7E33',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -178,8 +188,8 @@ const styles = StyleSheet.create({
   },
   returnButtonText: {
     fontSize: 18,
- //   fontFamily: 'Fredoka',
-    color: 'black',
+    fontFamily: 'Fredoka1',
+    color: 'white',
   },
 });
 

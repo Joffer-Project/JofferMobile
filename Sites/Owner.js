@@ -6,7 +6,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 
 export default function Owner() {
     const [selectedImages, setSelectedImages] = useState([]);
-    const [text, onChangeText] = React.useState('  Your fullname');
+    const [text, onChangeText] = React.useState('Your fullname');
     const [email, onChangeEmail] = React.useState('  ');
     const [password, onChangePassword] = React.useState('  ');
     const [passwordTwo, onChangePasswordTwo] = React.useState('  ');

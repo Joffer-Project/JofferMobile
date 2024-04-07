@@ -1,10 +1,22 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 
 
 export default function Start() {
   const navigation = useNavigation();
+
+  
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
+      });
+    }
+    loadFonts();
+  }, []); 
+
 
     return (
         <View style={styles.container}>
@@ -74,6 +86,8 @@ export default function Start() {
         height: 100,
         alignItems: 'center',
         justifyContent: 'center',
+        fontFamily: 'Fredoka',
+
       },
       logoImage: {
         top: 100
@@ -81,7 +95,8 @@ export default function Start() {
       Welcome: {
         fontSize: 26,
         fontWeight: '500',
-        fontFamily: ''
+        fontFamily: 'Fredoka',
+
       }, 
       WelContainer: { 
         top: 80
@@ -89,7 +104,8 @@ export default function Start() {
       Welcome2: {
         fontSize: 20,
         fontWeight: '500',
-        fontFamily: 'Roboto'
+        fontFamily: 'Fredoka',
+
       }, 
       WelContainer2: { 
         top: 120

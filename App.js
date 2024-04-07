@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { SwipeProvider } from './Components/ItsMatch.js';
+import { ThemeProvider } from './context/ThemeContext.js';
 import Start from "./Sites/Start.js";
 // import RecCom from "./Sites/RecCom.js"; // Recruiter or company 
 //import Owner from "./Sites/Owner.js"; 
@@ -27,6 +28,9 @@ import CompanyRegister2 from './Sites/CompanyRegister2.js';
 import CompanySocials from './Sites/CompanySocials.js';
 import CompanyPreview from './Sites/CompanyPreview.js';
 import CompanySwipe from './Sites/CompanySwipe.js';
+import HowItWorks from './Sites/HowItWorks.js';
+import HowItWorksUser from './Sites/HowItWorksUser.js';
+import CompanySettings from './Sites/CompanySettings.js';
 
 
 
@@ -34,6 +38,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <ThemeProvider>
     <SwipeProvider>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -45,6 +50,9 @@ export default function App() {
       <Stack.Screen name="CompanyTitles"component={CompanyTitles}/>
       <Stack.Screen name="CompanySocials"component={CompanySocials}/>
       <Stack.Screen name="CompanyPreview"component={CompanyPreview}/>
+      <Stack.Screen name="CompanySettings"component={CompanySettings}/>
+      <Stack.Screen name="HowItWorks"component={HowItWorks}/> 
+      <Stack.Screen name="HowItWorksUser"component={HowItWorksUser}/> 
       <Stack.Screen name="CompanySwipe"component={CompanySwipe}/>
       <Stack.Screen name="AddApplication" component={AddApplication} options={{ title: "upload",}}/> 
       <Stack.Screen name="offer" component={Offer} options={{title: "textDetails",}}/> 
@@ -58,8 +66,9 @@ export default function App() {
       <Stack.Screen name="SwipeScreen" component={SwipeScreen}/> 
       <Stack.Screen name="ItsMatch" component={SwipeProvider}/> 
       </Stack.Navigator>
-    </NavigationContainer>
+     </NavigationContainer>
     </SwipeProvider>
+    </ThemeProvider>
   );
 }
 

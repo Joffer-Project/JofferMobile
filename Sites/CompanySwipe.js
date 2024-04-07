@@ -5,8 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart, faTimesCircle, faCircleQuestion, faGear } from '@fortawesome/free-solid-svg-icons';
 import UserInfo from '../Components/UserInfo.js';
 import { useSwipeContext } from '../Components/ItsMatch.js'
+import { useNavigation } from "@react-navigation/native";
+
 
 const CompanySwipe = () => {
+  const navigation = useNavigation();
   const swiperRef = useRef(null);
   const { addUserSwipe, companySwipes } = useSwipeContext();
   const [users, setUsers] = useState([
@@ -83,7 +86,7 @@ const CompanySwipe = () => {
         </View>
 
         <View style={styles.BottomButtonsContainer}>
-        <TouchableOpacity /* onPress={} */ >
+        <TouchableOpacity onPress={()=> navigation.navigate("AddApplication")} >
           <View style={styles.BottomButton}>
             <Image style={styles.addImage} source={require('./img/add.png')} />
           </View>
@@ -93,12 +96,12 @@ const CompanySwipe = () => {
             <Image style={styles.userImage} source={require('./img/userAvatar.png')} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity /* onPress={} */ >
+        <TouchableOpacity onPress={() => navigation.navigate("CompanySwipe")} >
           <View style={styles.BottomButton}>
             <Image style={styles.addImage} source={require('./img/SwipeLogo.png')} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity /* onPress={} */ >
+        <TouchableOpacity onPress={()=> navigation.navigate("CompanySettings")}>
           <View style={styles.BottomButton}>
             <Image style={styles.addImage} source={require('./img/setting.png')} />
           </View>
@@ -164,6 +167,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 'screenWidth',
     height: 90,
+    width: "100%",
   },
   BottomButton: {
     width: 92,

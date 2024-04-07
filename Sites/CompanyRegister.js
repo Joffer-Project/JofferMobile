@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform, AsyncStorage } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 
 
 const CompanyRegister = () => {
   const navigation = useNavigation();
-
-  /*
+  
   
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
       });
     }
     loadFonts();
   }, []);
-*/
+
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-  //  fontFamily: 'Fredoka',
+   fontFamily: 'Fredoka',
     marginTop: 0,
     marginBottom:10,
     padding: 10,
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontSize: 20,
     marginTop: 10,
- //   fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     textAlign: 'center',  
     padding:10, 
     color: 'white', 
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 0,
- //   fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     alignItems: 'center',
   },
   input: {
@@ -150,7 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
- //   fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
   },
   returnButtonText: {
     fontSize: 18,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     color: 'white',
   },
 });

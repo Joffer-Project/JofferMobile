@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput,ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput,ScrollView, ImageBackground } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,15 +7,15 @@ import { useNavigation } from '@react-navigation/native';
 const CompanyLog = () => {
   const navigation = useNavigation();
 
-  /*
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
       });
     }
     loadFonts();
-  }, []); */
+  }, []); 
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -46,7 +46,7 @@ const CompanyLog = () => {
             placeholder="Mail"
             value={username}
             onChangeText={setUsername}
-          />
+          /> 
           <TextInput
             style={styles.input}
             placeholder="Password"
@@ -78,8 +78,8 @@ const CompanyLog = () => {
         <TouchableOpacity style={styles.registerButton} onPress={() =>navigation.navigate("CompanyRegister")}>
           <Text style={styles.registerText}>Create an account?</Text>
         </TouchableOpacity>
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -87,7 +87,7 @@ const CompanyLog = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingTop: 30,
     backgroundColor: "#fff"
   },
   scrollView: {
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     marginLeft: -20,
     marginRight: -20,
     height: 230,
+    
   },
   logo: {
     width: 120,
@@ -110,20 +111,20 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     marginTop: 0,
     marginBottom: 10,
   },
   descriptionText: {
     fontSize: 20,
     marginTop: 10,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     textAlign: 'center',
     color: 'white',
     fontWeight: '400',
   },
   orText: {
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     textAlign: 'center',
     padding: 15,
     fontSize: 18,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   linksText: {
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     fontSize: 20,
     color: 'white',
   },
@@ -168,12 +169,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   registerText: {
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     fontSize: 18,
   },
   inputContainer: {
     marginBottom: 0,
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     alignItems: 'center',
   },
   input: {
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -200,8 +201,9 @@ const styles = StyleSheet.create({
   },
   returnButtonText: {
     fontSize: 18,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     color: 'white',
+    
   },
 });
 

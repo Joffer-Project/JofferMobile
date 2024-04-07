@@ -1,11 +1,39 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import SwipeButton from 'rn-swipe-button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const ProfilePreview = () => {
   const navigation = useNavigation();
+  const [registered, setRegistered] = useState(false);
+  const [okPressed, setOkPressed] = useState(false);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    AsyncStorage.getItem('isRegistered').then((value) => {
+      if(value !== null) {
+        setRegistered(true);
+      }
+    })
+  },[isFocused]);
+
+
+  const handleOkPress = () => {
+    AsyncStorage.setItem('okPressed', 'true').then(() => {
+      setOkPressed(true);
+    });
+  };
+
+ useEffect(() => {
+    if (registered && okPressed) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'HowItWorksUser' }],
+      });
+    }
+  }, [registered, okPressed]);
 
   return (
     <View>
@@ -34,8 +62,9 @@ const ProfilePreview = () => {
       </View>
       <SwipeButton
         title=" Save and start swiping!"
-        onSwipeSuccess={() => navigation.navigate("SwipeScreen")}
-        railStyles={{ 
+        onSwipeSuccess={() => {
+          handleOkPress();}}
+          railStyles={{ 
           backgroundColor: 'rgba(255, 191, 129, 0.3)',
           borderColor: '#FF7E33', 
           zIndex: 1, 

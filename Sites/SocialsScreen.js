@@ -8,16 +8,16 @@ import { useNavigation } from '@react-navigation/native';
 
 const SocialsScreen = () => {
   const navigation = useNavigation();
-/*
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
       });
     }
     loadFonts();
   }, []);
-*/
+
   const [profileImage, setProfileImage] = useState(null);
   const [links, setLinks] = useState([]);
 
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontSize: 15,
     marginTop: 10,
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     textAlign: 'center',  
     padding: 10, 
   },
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   uploadText: {
     fontSize: 16,
     color: 'black',
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
   },
   linksContainer: {
     marginTop: 20,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
   linksHeader: {
     fontSize: 18,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     marginBottom: 10,
   },
   linksList: {
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   linkText: {
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     fontSize: 16,
   },
   addLinkButton: {
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addLinkButtonText: {
-//    fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     fontSize: 16,
     marginLeft: 5,
     color: '#FF7E33',

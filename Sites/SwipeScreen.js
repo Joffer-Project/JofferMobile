@@ -11,7 +11,6 @@ import MatchModal from '../Components/MatchModal.js';
 const SwipeScreen = () => {
   const swiperRef = useRef(null);
   const { addUserSwipe, companySwipes } = useSwipeContext();
-
   const [companies, setCompanies] = useState([
     {
       name: 'Nokia',
@@ -30,7 +29,7 @@ const SwipeScreen = () => {
     },
   ]);
 
- /* 
+ 
   const handleSwipedRight = (index) => {
     addUserSwipe(companies[index].name);
     console.log(`Swiped right on card ${index}`);
@@ -47,7 +46,7 @@ const SwipeScreen = () => {
 
 
   const [isMatchModalVisible, setIsMatchModalVisible] = useState(false);
-  const [matchedUser, setMatchedUser] = useState(null); */
+  const [matchedUser, setMatchedUser] = useState(null); 
 
 
   const renderSwiper = () => {

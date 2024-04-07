@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Modal, Alert } from 'react-native';
- // import * as Font from 'expo-font';
+import * as Font from 'expo-font';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -8,16 +8,16 @@ import { useNavigation } from '@react-navigation/native';
 
 const CompanySocials = () => {
   const navigation = useNavigation();
-/*
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
       });
     }
     loadFonts();
   }, []);
-*/
+
   const [profileImage, setProfileImage] = useState(null);
   const [links, setLinks] = useState([]);
 
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontSize: 20,
     marginTop: 5,
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     textAlign: 'center', 
     color: 'white', 
     padding: 0, 
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-  //  fontFamily: 'Fredoka',
+     fontFamily: 'Fredoka',
     marginTop: 10,
     padding: 0,
   },
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   uploadText: {
     fontSize: 16,
     color: 'white',
-  //  fontFamily: 'Fredoka',
+   fontFamily: 'Fredoka',
   },
   linksContainer: {
     marginTop: 20,
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
   },
   linksHeader: {
     fontSize: 18,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     marginBottom: 10,
   },
   linksList: {
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   linkText: {
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     fontSize: 16,
   },
   addLinkButton: {
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addLinkButtonText: {
-//    fontFamily: 'Fredoka',
+   fontFamily: 'Fredoka',
     fontSize: 16,
     marginLeft: 5,
     color: '#1771E9',

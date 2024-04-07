@@ -6,15 +6,15 @@ import { useNavigation } from '@react-navigation/native';
 
 const FieldsScreen = () => {
   const navigation = useNavigation();
-/*
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
       });
     }
     loadFonts();
-  }, []); */
+  }, []); 
 
   const fields = [
     { id: 1, name: 'Tech' },
@@ -112,28 +112,30 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft:-20,
     marginRight: -20,
-    height:200,
+    height:230,
   },
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 0,
-    marginTop: 10,
+    marginBottom: 10,
+    marginTop: 15,
   },
   welcomeText: {
     fontSize: 20,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
+    color: '#FF7E33',
+    
   },
   descriptionText: {
     fontSize: 15,
-    marginTop: 0,
-   // fontFamily: 'Fredoka',
+    marginTop: 10,
+    fontFamily: 'Fredoka',
     textAlign: 'center',  
-    padding: 5, 
-  }, 
+    padding: 10, 
+  },
   welcomeContainer: {
     alignItems: 'center',
     marginBottom: 20, 
@@ -144,23 +146,27 @@ const styles = StyleSheet.create({
   fieldButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 0,
+    borderRadius: 20,
     alignItems: 'center',
     margin: 5,
     backgroundColor: 'white',
     width: 100,
-    borderWidth: 2,
-    borderRadius: 15,
+    borderWidth: 1,
     borderColor: '#FF7E33',
   },
   selectedFieldButton: {
     backgroundColor: '#FF7E33',
-     // Change color for selected button
+    color: 'white',
+   
+  },
+  selectedFieldButtonText: {
+    color: 'white',
+   
   },
   fieldButtonText: {
     fontSize: 18,
-  //  fontFamily: 'Fredoka',
-    color: 'black',
+    fontFamily: 'Fredoka1',
+    color: '#FF7E33',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -179,9 +185,10 @@ const styles = StyleSheet.create({
   },
   returnButtonText: {
     fontSize: 18,
-  //  fontFamily: 'Fredoka',
-    color: 'black',
+    fontFamily: 'Fredoka1',
+    color: 'white',
   },
 });
+
 
 export default FieldsScreen;

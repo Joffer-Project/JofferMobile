@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet} from 'react-native';
 import { View, Text, TextInput, Image, Button} from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker'
+import DatePicker from '@react-native-community/datetimepicker'
 import * as Font from 'expo-font';
 import AddApplication from "./AddApplication";
 import { useNavigation } from "@react-navigation/native";
@@ -19,21 +19,17 @@ export default function Offer() {
     const route = useRoute();
     const [titleBox, setTitleBox] = useState(route.params?.titleBox || []);
 
-    /*
-    const HandleAddPress = () => {
-    navigation.navigate('offer');
-    }
 
 
-   /* useEffect(() => {
+    useEffect(() => {
         async function loadFonts() {
           await Font.loadAsync({
-            'Fredoka': require('.../assets/Fredoka-VariableFont_wdth,wght.ttf'),
+            'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
           });
         }
         loadFonts();
       }, []);
-    */
+    
 
       const upload = () => {
         if (givenTitle.trim() !== "") {
@@ -75,35 +71,44 @@ export default function Offer() {
                         <Text style={styles.salary}>Salary</Text>
                     </View>
                     <View style={styles.Textcontainer}>
-                        <View style={styles.salDatContainer}>
-                            <TextInput
-                                keyboardType="numeric"
-                                style={styles.input1}
-                               /* placeholder="Text"
-                                value={text}
-                                onChangeText={(text)=>setText(text)} */
-                            ></TextInput>
-                            <View style={styles.input3}>
-                                <Button title="Starting date" style={styles.buttonText} onPress={() => showMode("date")} />
-                                {show && (
-                                    <DateTimePicker
-                                    value={date}
-                                    mode={mode}
-                                    is24Hour={true}
-                                    onChange={onChange}
-                                ></DateTimePicker>
-                             )}
-                              <Text>{date.toLocaleString()}</Text>
-                            </View>
-                        </View>
                         <TextInput
                             style={styles.input4}
-                            placeholder="Title"
+                            placeholder="Example: Cypersecurity assistant"
                             value={givenTitle}
                             onChangeText={(text)=>setGivenTitle(text)}
                         // value={}
                         //onChangeText={}
                         ></TextInput>
+                        <View style={styles.rowSalary}>
+                         <TextInput
+                                keyboardType="numeric"
+                                style={styles.input1}
+                            /*    placeholder="Text"
+                                value={text}
+                                onChangeText={(text)=>setText(text)} */
+                            ></TextInput>
+                             <TextInput
+                                keyboardType="numeric"
+                                style={styles.input1}
+                            /*    placeholder="Text"
+                                value={text}
+                                onChangeText={(text)=>setText(text)} */
+                            ></TextInput>
+                        </View>
+                           <View style={styles.input3}>
+                                <TouchableOpacity style={styles.DateButton} onPress={() => showMode("date")}>
+                                    <Text style={styles.dateButtonText}>Choose date</Text>
+                                    </TouchableOpacity>
+                                {show && (
+                                    <DatePicker
+                                    value={date}
+                                    mode={mode}
+                                    is24Hour={true}
+                                    onChange={onChange}
+                                ></DatePicker>
+                             )}
+                              <Text>{date.toLocaleString()}</Text>
+                            </View>
                         <TextInput
                             style={styles.input2}
                         ></TextInput>
@@ -129,6 +134,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#0C6BE8',
+        
     },
     Cardcontainer: {
         width: 350,
@@ -138,86 +144,114 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         borderColor: "#fff",
-    },
-    salDatContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        borderRadius: 20,
     },
     input1: {
-        top: 95,
+        top: 90,
         width: 148,
-        height: 30,
+        height: 40,
         backgroundColor: 50,
         borderWidth: 1,
         borderRadius: 10,
-        borderColor: "#fff",
-        shadowColor: "#fff",
+        backgroundColor: 'white',
+        borderWidth: 3,
+        borderColor: '#0C6BE8',
+        paddingTop: 5,
+        paddingLeft: 5,
+        textAlignVertical: 'center',
+    },
+    DateButton: {
+        width: 300,
+        height: 40,
+        backgroundColor: '#0C6BE8',
+        borderRadius: 10, 
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     input3: {
-        top: 95,
-        width: 148,
-        height: 30,
-        backgroundColor: 50,
+        top: 100,
+        width: 150,
+        height: 32,
+    },
+    dateButtonText: {
+        fontFamily: 'Fredoka',
+        fontWeight: '600',
+        fontSize: 18,
+        color: 'white',
     },
     Textcontainer: {
         fontSize: 24,
         color: "white"
     },
     input2: {
-        top: 90,
+        top: 130,
         width: 300,
-        height: 350,
-        backgroundColor: 50,
+        height: 280,
         borderWidth: 1,
         borderRadius: 10,
-        shadowColor: "#fff",
-        borderColor: "#fff",
-        
+        backgroundColor: 'white',
+        borderColor: '#0C6BE8',
+        borderWidth: 3,
+        textAlign: 'left', 
+        textAlignVertical: 'top',
+        padding: 5,
     },
     input4: {
-        top: 0,
+        position:'absolute',
+        top: 10,
         width: 300,
-        height: 30,
+        height: 40,
         backgroundColor: 50,
-        borderWidth: 1,
         borderRadius: 10,
-        borderColor: "#fff",
-        textAlignVertical: 'top',
-        textAlign: 'left' 
+        textAlign: 'left',
+        backgroundColor: 'white',
+        borderWidth: 3,
+        borderColor: '#0C6BE8',
+        paddingTop: 0,
+        paddingLeft: 5,
+        textAlignVertical: 'center',
     },
     logoImage: {
         top: 0,
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     textTitle: {
-        width: 80,
+        width: 90,
         height: 30,
-        top: 45,
+        top: 30,
         right: 105,
     },
     Title: {
         fontSize: 24,
-       // fontFamily: 'Fredoka',
+        fontFamily: 'Fredoka',
     },
     textSalary: {
-        width: 70,
+        width: 80,
         height: 30,
-        top: 95,
+        top: 90,
         right: 110,
+        marginBottom: 5,
     },
     salary: {
         fontSize: 20,
+        fontSize: 24,
+        fontFamily: 'Fredoka',
+    },
+    rowSalary: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     DoneButtonContainer: {
         width: 80,
-        height: 70,
-        borderRadius: 40,
+        height: 80,
+        borderRadius: 50,
         backgroundColor: "#0C6BE8",
         borderWidth: 1,
         borderColor: "#fff",
         left: 140,
-        top: 40,
+        top: 80,
         alignItems: 'center',
         justifyContent: 'center',
     },

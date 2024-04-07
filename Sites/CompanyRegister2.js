@@ -7,17 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 const CompanyRegister2 = () => {
     const navigation = useNavigation();
 
-    /*
-  const navigation = useNavigation();
-
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
       });
     }
     loadFonts();
-  }, []);*/
+  }, []);
 
   const [about, setAbout] = useState('');
   const [fact, setFact] = useState('');
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-  //  fontFamily: 'Fredoka',
+   fontFamily: 'Fredoka',
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
@@ -103,7 +100,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontSize: 20,
     marginTop: 5,
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     textAlign: 'center',  
     padding: 0, 
     color: 'white',
@@ -117,7 +114,7 @@ const styles = StyleSheet.create({
  
   inputContainer: {
     marginBottom: 0,
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka',
     alignItems: 'center',
     
     
