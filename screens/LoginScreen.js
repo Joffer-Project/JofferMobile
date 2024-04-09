@@ -20,11 +20,11 @@ const LoginScreen = () => {
   }, []);
 
   // muuttujat
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   // API endpoint URL ja login hakee tiedot tietokannasta
-  const API_URL = 'https://joffer-backend-latest.onrender.com/api/Account';
+  const API_URL = 'https://joffer-backend-latest.onrender.com/Account';
 
   
   const fetchData = async () => {
@@ -33,14 +33,15 @@ const LoginScreen = () => {
       console.log('API Response:', response.data);
     
       const user = response.data.find(
-        (user) => user.username === username && user.password === password
+        (user) => user.email === email && user.password === password
       );
       if (user) {
-        
-        navigation.navigate('Swipe');
+        const userId = user.id;
+        console.log(userId);
+        navigation.navigate('Swipe', { userId });
       } else {
        
-        Alert.alert('Invalid credentials', 'Please enter valid username and password.');
+        Alert.alert('Invalid credentials', 'Please enter valid email and password.');
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -52,8 +53,8 @@ const LoginScreen = () => {
   
   const handleLoginPress = () => {
     
-    if (username.trim() === '' || password.trim() === '') {
-      Alert.alert('Missing credentials', 'Please enter both username and password.');
+    if (email.trim() === '' || password.trim() === '') {
+      Alert.alert('Missing credentials', 'Please enter both email and password.');
     } else {
      
       fetchData();
@@ -93,9 +94,9 @@ const LoginScreen = () => {
           >
             <TextInput
               style={[styles.input, { fontSize: 16, textAlign: 'left', paddingVertical: 10, marginTop: 10, }]}
-              placeholder="Username"
-              value={username}
-              onChangeText={setUsername}
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
               placeholderTextColor="transparent"
             />
           </ImageBackground>

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Modal, Alert } from 'react-native';
 import * as Font from 'expo-font';
@@ -7,7 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-const SocialsScreen = () => {
+const SocialsScreen = ({route}) => {
+  const { userId } = route.params;
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -20,9 +22,10 @@ const SocialsScreen = () => {
     loadFonts();
   }, []);
 
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImageUri, setProfileImageUri] = useState(null);
+  
   const [links, setLinks] = useState([]);
-
+/*
   const pickImage = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -37,7 +40,41 @@ const SocialsScreen = () => {
     } catch (error) {
       Alert.alert('Error', 'Failed to pick an image.');
     }
-  };
+  };*/
+  const pickImage = async () => {
+    try {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+            return;
+        }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+        console.log('Image picker result:', result);
+
+        if (!result.cancelled) {
+            setProfileImageUri(result.assets[0].uri);
+            console.log('Image picked:', result.assets[0].uri);
+        } else {
+            console.log('Image selection cancelled.');
+        }
+    } catch (error) {
+        console.error('Error picking image:', error);
+        alert('Error picking image. Please try again.');
+    }
+};
+//* jatka tästä huomenna eteenpäin! cgpt löytyy ohjeet ideana oli linkit--> niille corresponding logo. Lataa ensin iconi figmasta
+/* sitten lisää ne assets. Sitten linkkaa alas. Muista lisätä handleLinks funktio ja returniin oikeat osat!!!!!
+const websiteIcons = {
+  'www.github.com': require('../assets/Linkedin.png'),
+  'www.linkedin.com': require('../assets/linkedin_logo.png'),
+  
+};*/
 
   const handleAddLink = () => {
     setLinks([...links, 'https://example.com']);
@@ -50,7 +87,7 @@ const SocialsScreen = () => {
   };
 
   const handlePreviewPress = () => {
-    navigation.navigate('Preview');
+    navigation.navigate('Preview', {userId});
   };
 
   return (
@@ -76,34 +113,69 @@ const SocialsScreen = () => {
           <Text style={[styles.welcomeText,{ marginBottom: -10 } ]}>Step 5/5: Images & Links</Text>
         </View>
         <View style={styles.welcomeContainer}>
-          <Text style={[styles.welcomeText,{ marginBottom: -20 } ]}>Images</Text>
+          <Text style={[styles.welcomeText,{ marginBottom: -20 } ]}>Profile Picture</Text>
+          
         </View>
 
 
         <View style={styles.profileContainer}>
-  {[...Array(3)].map((_, index) => (
-    <TouchableOpacity key={index} style={styles.boxContainer} onPress={pickImage}>
+  {[...Array(1)].map((_, index) => (
+    <View key={index} style={[styles.boxContainer, index % 2 === 1 && styles.marginLeft]}>
+      <TouchableOpacity onPress={pickImage}>
+        <Image source={profileImageUri ? { uri: profileImageUri } : require('../assets/kuva1.jpg')} style={styles.profileImage} />
+      </TouchableOpacity>
       <View style={styles.addIconContainer}>
-  <LinearGradient
-    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={styles.gradient}
-  >
-    <Text style={styles.addIcon}>+</Text>
-  </LinearGradient>
-</View>
-    </TouchableOpacity>
+        
+        <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.gradient}
+        >
+          <TouchableOpacity onPress={pickImage}>
+          <Text style={styles.addIcon}>+</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+        
+      </View>
+    </View>
   ))}
 </View>
         
+          <View style={styles.welcomeContainer}>
+          <Text style={[styles.welcomeText,{ marginBottom: -20, fontSize: 16, } ]}>Add more images</Text>     
+        </View>  
+        <View style={styles.profileContainer1}>
+  {[...Array(2)].map((_, index) => (
+    <View key={index} style={[styles.boxContainer1, index % 2 === 1 && styles.marginLeft]}>
+      <TouchableOpacity onPress={pickImage}>
+        <Image source={profileImageUri ? { uri: profileImageUri } : require('../assets/kuva1.jpg')} style={styles.profileImage1} />
+      </TouchableOpacity>
+      <View style={styles.addIconContainer}>
         
+        <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.gradient}
+        >
+          <TouchableOpacity onPress={pickImage}>
+          <Text style={styles.addIcon}>+</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+        
+      </View>
+    </View>
+  ))}
+</View> 
+
         
 <View style={styles.linksContainer}>
   <Text style={styles.linksHeader}>Links</Text>
-  <View style={styles.profileContainer}>
-  {[...Array(3)].map((_, index) => (
-    <TouchableOpacity key={index} style={[styles.boxContainer, index !== 0 && { marginLeft: 20 }]} onPress={pickImage}>
+  </View>
+  <View style={styles.profileContainer2}>
+  {[...Array(4)].map((_, index) => (
+    <TouchableOpacity key={index} style={[styles.boxContainer2, index !== 0 && { marginLeft: 20 }]} onPress={pickImage}>
       <View style={styles.addIconContainer}>
   <LinearGradient
     colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
@@ -117,11 +189,12 @@ const SocialsScreen = () => {
     </TouchableOpacity>
   ))}
 </View>
+<View style={styles.linksContainer}>
   <TouchableOpacity style={styles.addLinkButton} onPress={handleAddLink}>
     <Ionicons name="add-circle-outline" size={24} color="#FAA16F" />
-    <Text style={styles.addLinkButtonText}>Add a Link</Text>
+    <Text style={styles.addLinkButtonText}>Add more links</Text>
   </TouchableOpacity>
-</View>
+  </View>
         <View style={styles.PreviewContainer}>
           <TouchableOpacity style={styles.uploadButton} onPress={handlePreviewPress}>
             <LinearGradient
@@ -149,7 +222,6 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    //SbackgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 20,
     marginLeft: -20,
@@ -166,13 +238,55 @@ const styles = StyleSheet.create({
     borderColor:'#FF7E33',
     borderRadius: 20,
     marginTop: 0,
-    marginBottom: 20,
+    marginBottom: 10,
     padding: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    
     
   },
-  boxContainer: {
+  profileContainer1: {
+    borderColor:'#FF7E33',
+    borderRadius: 20,
+    marginTop: 0,
+    marginBottom: 10,
+    padding: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+     
+  },
+  profileContainer2: {
+    borderColor:'#FF7E33',
+    borderRadius: 20,
+    marginTop: 0,
+    marginBottom: 10,
+    padding: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+     
+  },
+  boxContainer1: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor:'#FF7E33',
+    borderRadius: 20,
+    marginBottom: 15,
+    marginEnd: 10,
+    marginStart: 10,
+
+    
+  },
+  boxContainer2: {
     width: 100,
     height: 100,
     borderRadius: 10,
@@ -181,6 +295,37 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor:'#FF7E33',
     borderRadius: 20,
+    marginBottom: 15,
+    marginEnd: 10,
+    marginStart: 10,
+
+    
+  },
+  
+  profileImage: {
+    
+    width: 150, 
+    height: 150, 
+    resizeMode: 'cover', 
+    borderRadius: 10, 
+  },
+  profileImage1: {
+    
+    width: 100, 
+    height: 100, 
+    resizeMode: 'cover', 
+    borderRadius: 10, 
+  },
+  boxContainer: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor:'#FF7E33',
+    borderRadius: 20,
+    marginBottom: 15,
     
   },
   
@@ -194,6 +339,7 @@ const styles = StyleSheet.create({
     height: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop:5,
     
     
   },
@@ -243,13 +389,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka1',
     textAlign: 'center',
   },
-  linksContainer: {
-    marginTop: 20,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    
-  },
+ 
   linksHeader: {
     fontSize: 18,
     fontFamily: 'Fredoka1',
@@ -257,7 +397,7 @@ const styles = StyleSheet.create({
     color: '#FF7E33',
   },
   linksList: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     flexWrap: 'wrap',
     marginBottom: 10,
   },
@@ -290,6 +430,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     
+  },
+  linksContainer: {
+    alignItems:'center',
   },
 });
 

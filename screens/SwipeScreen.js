@@ -1,61 +1,65 @@
-
-import React, { useState} from 'react';
-import { View, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Alert, Modal, Text } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart, faTimesCircle, faCircleQuestion, faGear } from '@fortawesome/free-solid-svg-icons';
 import CompanyInfo from '../components/companyInfo';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTheme } from '../context/ThemeContext';
+import axios from 'axios';
 
 
+const SwipeScreen = ({ route }) => {
+  const { userId } = route.params;
+  const { theme } = useTheme();
+  const [companies, setCompanies] = useState([]);
+  const [showMatchModal, setShowMatchModal] = useState(false);
+  const [companyId, setCompanyId] = useState(null);
 
-const SwipeScreen = () => {
-  const [companies, setCompanies] = useState([
-    {
-      name: 'Nokia',
-      image: require('../assets/kuva6.png'),
-      jobDetails: 'Position: Software Engineer\nLocation: Oulu',
-    },
-    {
-      name: 'IT',
-      image: require('../assets/kuva5.jpg'),
-      jobDetails: 'Position: Software Engineer\nLocation: Oulu',
-    },
-    {
-      name: 'City Of Oulu',
-      image: require('../assets/kuva4.jpg'),
-      jobDetails: 'Position: Software Engineer\nLocation: Oulu',
-    },
-  ]);
   const navigation = useNavigation();
-  const navigateToHowItWorks = () => {
-    navigation.navigate('HowItWorks'); 
-  };
-  const navigateToSettings = () => {
-    navigation.navigate('Settings'); 
-  };
-  const navigateToMatches = () => {
-    navigation.navigate('Matches');
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const response = await axios.get('https://joffer-backend-latest.onrender.com/JobOffer');
+        setCompanies(response.data);
+      } catch (error) {
+        console.error('Error fetching companies:', error);
+        Alert.alert('Error', 'An error occurred while fetching companies.');
+      }
+    };
+
+    fetchCompanies();
+  }, []);
+
+
+  const handleCompanyIdReceived = (companyId) => {
+    setCompanyId(companyId);
+    
   };
 
-  const renderSwiper = () => {
-    return (
-      <Swiper
-        cards={companies}
-        renderCard={(company, index) => <CompanyInfo company={company} />}
-        backgroundColor={'transparent'} 
-        stackSize={2}
-        verticalSwipe={false}
-        containerStyle={styles.swiperContainer} 
-      />
-    );
+  const handleSwipeRight = () => {
+    setShowMatchModal(true);
+  };
+
+  const closeModal = () => {
+    setShowMatchModal(false);
+  };
+
+  const navigateToHowItWorks = () => {
+    navigation.navigate('HowItWorks');
+  };
+
+  const navigateToSettings = () => {
+    console.log(companyId);
+    navigation.navigate('Settings', { userId, companyId });
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme === 'dark' ? 'black' : 'white' }]}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <LinearGradient
+        <LinearGradient
           colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
           style={styles.logoContainer}
         >
@@ -63,9 +67,28 @@ const SwipeScreen = () => {
             source={require('../assets/joffer2.png')}
             style={styles.logo}
           />
-          
         </LinearGradient>
-        {renderSwiper()}
+        <Swiper
+          cards={companies}
+          renderCard={(company, index) => {
+           
+            const images = [
+              require('../assets/icon.png'),
+              require('../assets/Google.png'),
+              require('../assets/kuva4.jpg'),
+            ];
+
+           
+            const imageSource = images[index % images.length];
+
+            return <CompanyInfo company={{ ...company, image: imageSource }} onCompanyIdReceived={handleCompanyIdReceived} />;
+          }}
+          backgroundColor={'transparent'}
+          stackSize={2}
+          verticalSwipe={false}
+          containerStyle={styles.swiperContainer}
+          onSwipedRight={handleSwipeRight}
+        />
         <View style={styles.iconsContainer}>
           <TouchableOpacity onPress={() => { /* icon */ }}>
             <FontAwesomeIcon icon={faTimesCircle} size={60} style={styles.icon} />
@@ -78,17 +101,20 @@ const SwipeScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.iconsContainer2}>
-        <TouchableOpacity onPress={navigateToHowItWorks}> 
-        <FontAwesomeIcon icon={faCircleQuestion} size={40} style={[styles.icon, { color: '#FF7E33' }]} />
-        </TouchableOpacity>
+          <TouchableOpacity onPress={navigateToHowItWorks}>
+            <FontAwesomeIcon icon={faCircleQuestion} size={40} style={[styles.icon, { color: '#FF7E33' }]} />
+          </TouchableOpacity>
           <TouchableOpacity onPress={navigateToSettings}>
             <FontAwesomeIcon icon={faGear} size={40} style={[styles.icon, { color: '#FF7E33' }]} />
           </TouchableOpacity>
         </View>
       </ScrollView>
+     
+
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -114,7 +140,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   swiperContainer: {
-    height: 400, 
+    height: 400,
   },
   iconsContainer: {
     flexDirection: 'row',
@@ -128,18 +154,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     marginVertical: 20,
-    
   },
   icon: {
     fontSize: 80,
     color: '#D9352D',
   },
   customIcon: {
-    width: 60,  
-    height: 60, 
-    resizeMode: 'contain', 
+    width: 60,
+    height: 60,
+    resizeMode: 'contain',
   },
 });
 
-export default SwipeScreen;
 
+export default SwipeScreen;

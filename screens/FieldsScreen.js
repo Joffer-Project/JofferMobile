@@ -6,8 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
-const FieldsScreen = () => {
+const FieldsScreen = ({route}) => {
   const navigation = useNavigation();
+  const { userId } = route.params;
 
   const [fields, setFields] = useState([]); 
 
@@ -20,7 +21,7 @@ const FieldsScreen = () => {
     }
     loadFonts();
 
-  
+  // ei toimi kun tuota endpointtia ei enään ole
     
     axios.get('https://joffer-backend-latest.onrender.com/api/Field')
       .then(response => {
@@ -56,7 +57,7 @@ const FieldsScreen = () => {
   };
 
   const handleNextPress = () => {
-    navigation.navigate('Titles');
+    navigation.navigate('Titles', {userId});
   };
 
   return (

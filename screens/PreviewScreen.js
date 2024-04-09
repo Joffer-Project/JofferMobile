@@ -1,15 +1,41 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SwipeButton from 'rn-swipe-button';
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
 
-
-const ProfilePreview = () => {
+const ProfilePreview = ({route}) => {
   const navigation = useNavigation();
+  const { userId } = route.params;
+  console.log(userId);
+  const [userName, setUserName] = useState('');
+  const [aboutMe, setAboutMe] = useState('');
+
+  useEffect(() => {
+   
+    axios.get(`https://joffer-backend-latest.onrender.com/Account/${userId}`)
+      .then(response => {
+        setUserName(response.data.name);
+      })
+      .catch(error => {
+        console.error('Error fetching user name:', error);
+      });
+
+    
+    const hardcodedUserId = 8;
+    axios.get(`https://joffer-backend-latest.onrender.com/Talent/${hardcodedUserId}`)
+      .then(response => {
+        setAboutMe(response.data.aboutMe);
+      })
+      .catch(error => {
+        console.error('Error fetching about me:', error);
+      });
+  }, [userId]);
 
   const handleNextPress = () => {
-    navigation.navigate('Swipe');
+    console.log(userId);
+    navigation.navigate('Swipe' ,{userId});
   };
 
   return (
@@ -25,14 +51,14 @@ const ProfilePreview = () => {
         <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
       </LinearGradient>
       <View style={styles.profileContainer}>
-        <Text style={[styles.userName, { color: '#F98A4B', fontSize: 26, marginBottom: 15 }]}>Users name</Text>
+        <Text style={[styles.userName, { color: '#F98A4B', fontSize: 26, marginBottom: 15 }]}>{userName}</Text>
         <Image source={require('../assets/kuva1.jpg')} style={styles.profileImage} />
         <Text style={[styles.professions, { marginTop: 10 }]}>Coder ● Data Engineer ● Plain Awesome</Text>
 
       </View>
       <View style={styles.aboutContainer}>
-        <Text style={[styles.aboutHeaderText, { color: '#FF7E33', fontSize: 22, fontFamily: 'Fredoka1' }]}>About Me</Text>
-        <Text style={[styles.aboutText, { color: 'black', fontSize: 18 }]}>I'm a software engineer passionate about building mobile applications. I love hiking, reading, and being awesome in my free time.</Text>
+        <Text style={[styles.aboutHeaderText, { color: '#FF7E33', fontSize: 22, fontFamily: 'Fredoka1' }]}>About me</Text>
+        <Text style={[styles.aboutText, { color: 'black', fontSize: 18 }]}>{aboutMe}</Text>
         <Text style={[styles.professions, { marginTop: 20, fontSize: 18, fontFamily: 'Fredoka1', color: '#FF7E33' }]}>A fun fact about me: </Text>
         <Text style={[styles.professions, { marginTop: 10 }]}>"happiest animal in the world" </Text>
       </View>

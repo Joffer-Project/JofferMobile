@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import * as Font from 'expo-font';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
 
 const RegisterScreen2 = () => {
   const navigation = useNavigation();
+  const route = useRoute();
 
   useEffect(() => {
     async function loadFonts() {
@@ -21,36 +22,66 @@ const RegisterScreen2 = () => {
 
   const [about, setAbout] = useState('');
   const [fact, setFact] = useState('');
-
+  
+  
   // Navigate to the FieldsScreen
-  
-  const handleNextPress = () => {
-    navigation.navigate('Fields');
-  };
-  /* INTERNAL SERVER ERROR TÄSSÄKIN, VOIKO TIETOKANTAAN LÄHETTÄÄ TIETOA???
+   
   const handleNextPress = async () => {
-    try {
-      const payload = {
-        aboutMe: about,
-        EmploymentStatus: 'Employed' 
-      };
-  
-      console.log('Payload:', payload);
-  
-      const response = await axios.post('https://joffer-backend-latest.onrender.com/api/Applicant', payload);
-  
-      console.log('Response:', response.data);
-      console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
-  
-      navigation.navigate('Fields');
-    } catch (error) {
-      console.error('Error creating applicant:', error);
-      console.error('Error response:', error.response);
-      console.error('Error message:', error.message);
-    }
-  };*/
+    const userEmail = route.params.userEmail;
 
+    // Find the user by email
+    const response1 = await axios.get('https://joffer-backend-latest.onrender.com/Account');
+    console.log('API Response:', response1.data);
+    const user = response1.data.find((user) => user.email === userEmail);
+    
+    if (user) {
+      const userId = user.id;
+      console.log(userId);
+      navigation.navigate('Fields', { userId });
+    } else {
+      // Handle case where user is not found
+      alert('User not found. Please try again.');
+      // You can also navigate to a different screen or handle it in any other way appropriate for your app
+    }
+  };
+
+/*
+const handleNextPress = async () => {
+  try {
+    const payload = {
+      aboutMe: about,
+      EmploymentStatus: 'Employed' 
+    };
+
+    console.log('Payload:', payload);
+
+    // Get the user's email from the navigation params
+    const userEmail = route.params.userEmail;
+
+    // Find the user by email
+    const response1 = await axios.get('https://joffer-backend-latest.onrender.com/Account');
+    console.log('API Response:', response1.data);
+    const user = response1.data.find((user) => user.email === userEmail);
+    
+    if (user) {
+      const userId = user.id;
+      console.log(userId);
+    }
+
+    const response = await axios.post('https://joffer-backend-latest.onrender.com/Talent', payload);
+
+    console.log('Response:', response.data);
+    console.log('Response status:', response.status);
+    console.log('Response headers:', response.headers);
+
+    navigation.navigate('Fields');
+  } catch (error) {
+    console.error('Error creating applicant:', error);
+    console.error('Error response:', error.response);
+    console.error('Error message:', error.message);
+  }
+};
+*/
   return (
     <KeyboardAvoidingView
       style={styles.container}

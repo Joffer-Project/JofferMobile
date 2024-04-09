@@ -1,21 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image, Modal } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '../context/ThemeContext'; // Import useTheme hook
 import * as Font from 'expo-font';
-import { useState } from 'react';
-import VersionModal from './versionModal';
 
-const Settings = ({ route }) => {
+const ModifyAccount = ({route}) => {
     const { userId } = route.params;
-    const { companyId } = route.params;
-    console.log(userId);
-    console.log(companyId);
     const navigation = useNavigation();
-    const { theme, toggleTheme } = useTheme();
-    const [versionModalVisible, setVersionModalVisible] = useState(false);
-
     const [fontLoaded, setFontLoaded] = React.useState(false);
     React.useEffect(() => {
         const loadFont = async () => {
@@ -37,15 +28,13 @@ const Settings = ({ route }) => {
     const navigateToHowToUse = () => {
         navigation.navigate('HowItWorks');
     };
-    const navigateToModify = () => {
-        navigation.navigate('Modify', { userId });
+    const navigateToProfileModify = () => {
+        navigation.navigate('ModifyProfile', {userId});
     };
-    const handleToggleVersionModal = () => {
-        setVersionModalVisible(!versionModalVisible);
-      };
-    const navigateToLogin = () => {
-        navigation.navigate('Match', {userId}); //Home
+    const navigateToDeleteProfile = () => {
+        navigation.navigate('DeleteProfile', {userId});
     };
+
 
     if (!fontLoaded) {
         return null;
@@ -55,27 +44,31 @@ const Settings = ({ route }) => {
     const itemWidth = (windowWidth - 30) / 2;
 
     return (
-        <View style={[styles.container, { backgroundColor: theme === 'dark' ? 'black' : 'white' }]}>
+        <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
-                <LinearGradient
-                    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-                    style={styles.logoContainer}
-                >
-                    <Image
-                        source={require('../assets/joffer2.png')}
-                        style={styles.logo}
-                    />
-
-                </LinearGradient>
+            <LinearGradient
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.logoContainer}
+        >
+          <Image
+            source={require('../assets/joffer2.png')}
+            style={styles.logo}
+          />
+          
+        </LinearGradient>
+        <View style={styles.headingContainer}>
+        <Text style={styles.heading}>Customize your account below</Text>
+        </View>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={navigateToHowToUse}>
+                    
+                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={navigateToProfileModify}>
                         <LinearGradient
                             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
                             style={styles.linearGradient}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
                         >
-                            <Text style={styles.registerText}>How to use Joffer</Text>
+                            <Text style={styles.registerText}>User Information</Text>
                         </LinearGradient>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -88,51 +81,39 @@ const Settings = ({ route }) => {
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
                         >
-                            <Text style={styles.registerText}>Matches</Text>
+                            <Text style={styles.registerText}>Fields</Text>
                         </LinearGradient>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={navigateToModify}>
+                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={handleNavigateBack}>
                         <LinearGradient
                             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
                             style={styles.linearGradient}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
                         >
-                            <Text style={styles.registerText}>Modify Account</Text>
+                            <Text style={styles.registerText}>Titles</Text>
                         </LinearGradient>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={handleToggleVersionModal}>
+                    
+                    
+                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={handleNavigateBack}>
                         <LinearGradient
                             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
                             style={styles.linearGradient}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
                         >
-                            <Text style={styles.registerText}>Version</Text>
+                            <Text style={styles.registerText}>Modify Matches/Superlikes</Text>
                         </LinearGradient>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.settingsButton, { width: itemWidth }]}
-                        onPress={toggleTheme} 
-                    >
+                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={navigateToDeleteProfile}>
                         <LinearGradient
                             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
                             style={styles.linearGradient}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
                         >
-                            <Text style={styles.registerText}>Theme</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={navigateToLogin}>
-                        <LinearGradient
-                            colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-                            style={styles.linearGradient}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
-                            onPress={toggleTheme} 
-                        >
-                            <Text style={styles.registerText}>Log Out</Text>
+                            <Text style={styles.registerText}>Delete The Account</Text>
                         </LinearGradient>
                     </TouchableOpacity>
                 </View>
@@ -147,14 +128,6 @@ const Settings = ({ route }) => {
                     </LinearGradient>
                 </TouchableOpacity>
             </ScrollView>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={versionModalVisible}
-                onRequestClose={handleToggleVersionModal}
-            >
-                <VersionModal onClose={handleToggleVersionModal} /> 
-            </Modal>
         </View>
     );
 };
@@ -162,9 +135,22 @@ const Settings = ({ route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'white',
+
     },
     scrollView: {
         flexGrow: 1,
+    },
+    headingContainer: {
+        alignItems:'center',
+    },
+    heading: {
+        fontFamily: 'Fredoka1',
+        fontSize: 20,
+        color: '#FF7E33',
+        marginBottom: 20,
+        marginTop: 0,
+        
     },
     logoContainer: {
         alignItems: 'center',
@@ -174,6 +160,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         marginLeft: -20,
         marginRight: -20,
+
     },
     logo: {
         width: 120,
@@ -218,4 +205,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Settings;
+export default ModifyAccount;

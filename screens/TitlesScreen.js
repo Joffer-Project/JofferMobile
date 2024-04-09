@@ -4,7 +4,8 @@ import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native'; 
 import { LinearGradient } from 'expo-linear-gradient';
 
-const TitlesScreen = () => {
+const TitlesScreen = ({route}) => {
+  const { userId } = route.params; 
   const navigation = useNavigation(); 
   
   useEffect(() => {
@@ -17,7 +18,7 @@ const TitlesScreen = () => {
     loadFonts();
   }, []);
   const handleNextPress = () => {
-    navigation.navigate('Socials'); 
+    navigation.navigate('Socials', {userId}); 
   };
 
   const fields = [

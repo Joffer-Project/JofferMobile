@@ -4,11 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-
+import { useTheme } from '../context/ThemeContext';
 import * as Font from 'expo-font';
 
 const HowItWorks = () => {
     const navigation = useNavigation();
+    const { theme } = useTheme();
     const [fontLoaded, setFontLoaded] = React.useState(false);
     React.useEffect(() => {
         const loadFont = async () => {
@@ -29,7 +30,7 @@ const HowItWorks = () => {
     };
 
     return (
-        <View style={styles.modal}>
+        <View style={[styles.modal, { backgroundColor: theme === 'dark' ? 'black' : 'white' }]}>
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <View style={styles.modalContent}>
                     <Text style={styles.heading}>How It Works</Text>

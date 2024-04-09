@@ -16,6 +16,10 @@ import SwipeScreen from './screens/SwipeScreen';
 import HowItWorks from './components/howItWorks';
 import Settings from './components/settings';
 import MatchesScreen from './screens/Matches.js';
+import ModifyAccount from './screens/ModifyAccount.js';
+import ProfileModify from './screens/settingsScreens/profileModify.js';
+import DeleteProfile from './screens/settingsScreens/delete.js';
+import MatchScreen from './components/match.js';
 
 export default function Navigation (){
     return (
@@ -33,6 +37,10 @@ export default function Navigation (){
     <Stack.Screen name="HowItWorks" component={HowItWorks} />
     <Stack.Screen name="Settings" component={Settings} />
     <Stack.Screen name="Matches" component={MatchesScreen} />
+    <Stack.Screen name="Modify" component={ModifyAccount} />
+    <Stack.Screen name="ModifyProfile" component={ProfileModify} />
+    <Stack.Screen name="DeleteProfile" component={DeleteProfile} />
+    <Stack.Screen name="Match" component={MatchScreen} />
     
     </Stack.Navigator>
     </NavigationContainer>
