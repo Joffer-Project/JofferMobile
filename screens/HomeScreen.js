@@ -61,7 +61,7 @@ const HomeScreen = () => {
             <Text style={styles.buttonDescription}>For the ones who seek new job opportunities!</Text>
           </View>
           <View style={styles.buttonBox}>
-            <TouchableOpacity style={[styles.box, styles.recruiterBox]} onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity style={[styles.box, styles.recruiterBox]} onPress={() => navigation.navigate('Cregister')}>
             
           <ImageBackground
               source={require('../assets/recruiter.png')}

@@ -1,27 +1,25 @@
-
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform, AsyncStorage } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
-const RegisterScreen = () => {
+const CompanyRegister = () => {
   const navigation = useNavigation();
-
+  
+  
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'Fredoka': require('../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
-        'Fredoka1': require('../assets/fonts/Fredoka-Regular.ttf'),
+        'Fredoka': require('../../assets/fonts/Fredoka-VariableFont_wdth,wght.ttf'),
       });
     }
     loadFonts();
   }, []);
 
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  //const [username, setUsername] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,10 +28,9 @@ const RegisterScreen = () => {
       const payload = {
         auth0Id: "string",
         name,
-        //username,
         email,
         password,
-        accountType: "Applicant",
+        accountType: "Company",
         isPremium: false,
         isActive: true
       };
@@ -44,9 +41,9 @@ const RegisterScreen = () => {
       const response = await axios.post('https://joffer-backend-latest.onrender.com/Account', payload);
   
       console.log('Response:', response.data);
-      //const userId = response.data.id;
+      const userId = response.data.id;
      
-      //console.log(userId);
+      console.log(userId);
       navigation.navigate('Register2',{ userEmail: email });
     } catch (error) {
       console.error('Error creating account:', error);
@@ -66,9 +63,10 @@ const RegisterScreen = () => {
       }
     }
   };
-    
-      
 
+
+
+  
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -76,24 +74,20 @@ const RegisterScreen = () => {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
-     
-        <LinearGradient
-          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-          style={styles.logoContainer}
-        >
+        {/* Logo with Welcome text */}
+        <View style={styles.logoContainer}>
           <Image
-            source={require('../assets/joffer2.png')}
+            source={require('../../assets/joffer2.png')} 
             style={styles.logo}
           />
-          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-        </LinearGradient>
-       
-        
+          <Text style={styles.descriptionText}>Let's find new talents!</Text>
+        </View>
+        {/* Other content */}
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Step 1/5: Essentials</Text>
         </View>
 
-      
+        {/* Username and Password input fields */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -101,7 +95,6 @@ const RegisterScreen = () => {
             value={name}
             onChangeText={setName}
           />
-          
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -130,18 +123,11 @@ const RegisterScreen = () => {
           />
         </View>
         
-        
+        {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <LinearGradient
-            colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-            style={styles.returnButton}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-          >
-            <TouchableOpacity onPress={handleNextPress}>
-              <Text style={styles.returnButtonText}>Next</Text>
-            </TouchableOpacity>
-          </LinearGradient>
+          <TouchableOpacity style={styles.returnButton} onPress={handleNextPress}>
+            <Text style={styles.returnButtonText}>Next</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -151,7 +137,8 @@ const RegisterScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 0, 
+    padding: 0,
+    backgroundColor: "#fff" 
   },
   scrollView: {
     flexGrow: 1,
@@ -159,38 +146,38 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#1771E9',
     padding: 20,
     marginBottom: 20,
-    marginLeft: -20,
+    marginLeft:-20,
     marginRight: -20,
-    height: 230,
+    height:230,
   },
   logo: {
     width: 120,
     height: 120,
     marginBottom: 10,
-    marginTop: 19,
+    marginTop: 15,
   },
   welcomeText: {
     fontSize: 20,
-    fontFamily: 'Fredoka1',
+   fontFamily: 'Fredoka',
     marginTop: 0,
-    marginBottom: 10,
+    marginBottom:10,
     padding: 10,
-    color: '#FF7E33',
   },
   descriptionText: {
-    fontSize: 15,
+    fontSize: 20,
     marginTop: 10,
     fontFamily: 'Fredoka',
-    textAlign: 'center',
-    padding: 10,
+    textAlign: 'center',  
+    padding:10, 
+    color: 'white', 
+    fontWeight: '400',
   },
   welcomeContainer: {
     alignItems: 'center',
-    marginBottom: 20,
-    backgroundColor: 'transparent',
+    marginBottom: 20, 
   },
   inputContainer: {
     marginBottom: 0,
@@ -216,15 +203,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    //backgroundColor: '#FF7E33',
+    backgroundColor:'#1771E9',
     width: 130,
   },
   returnButtonText: {
     fontSize: 18,
-    fontFamily: 'Fredoka1',
+    fontFamily: 'Fredoka',
     color: 'white',
   },
 });
 
-export default RegisterScreen;
-
+export default CompanyRegister;

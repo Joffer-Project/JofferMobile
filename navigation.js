@@ -20,6 +20,7 @@ import ModifyAccount from './screens/ModifyAccount.js';
 import ProfileModify from './screens/settingsScreens/profileModify.js';
 import DeleteProfile from './screens/settingsScreens/delete.js';
 import MatchScreen from './components/match.js';
+import CompanyRegister from './screens/company/companyRegister.js';
 
 export default function Navigation (){
     return (
@@ -41,6 +42,7 @@ export default function Navigation (){
     <Stack.Screen name="ModifyProfile" component={ProfileModify} />
     <Stack.Screen name="DeleteProfile" component={DeleteProfile} />
     <Stack.Screen name="Match" component={MatchScreen} />
+    <Stack.Screen name="Cregister" component={CompanyRegister} />
     
     </Stack.Navigator>
     </NavigationContainer>
