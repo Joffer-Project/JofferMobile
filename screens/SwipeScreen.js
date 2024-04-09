@@ -17,13 +17,15 @@ const SwipeScreen = ({ route }) => {
   const [showMatchModal, setShowMatchModal] = useState(false);
   const [companyId, setCompanyId] = useState(null);
 
+  const [activeCardIndex, setActiveCardIndex] = useState(0); 
   const navigation = useNavigation();
-
+  
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
         const response = await axios.get('https://joffer-backend-latest.onrender.com/JobOffer');
         setCompanies(response.data);
+        
       } catch (error) {
         console.error('Error fetching companies:', error);
         Alert.alert('Error', 'An error occurred while fetching companies.');
@@ -33,9 +35,10 @@ const SwipeScreen = ({ route }) => {
     fetchCompanies();
   }, []);
 
-
+  
   const handleCompanyIdReceived = (companyId) => {
     setCompanyId(companyId);
+    console.log('whats',companyId);
     
   };
 
@@ -69,26 +72,44 @@ const SwipeScreen = ({ route }) => {
           />
         </LinearGradient>
         <Swiper
-          cards={companies}
-          renderCard={(company, index) => {
-           
-            const images = [
-              require('../assets/icon.png'),
-              require('../assets/Google.png'),
-              require('../assets/kuva4.jpg'),
-            ];
+  cards={companies}
+  renderCard={(company, index) => {
+    if (!company || index !== activeCardIndex) {
+      return null; 
+    }
 
-           
-            const imageSource = images[index % images.length];
+    console.log("Rendering card for company:", company);
+    const images = [
+      require('../assets/icon.png'),
+      require('../assets/Google.png'),
+      require('../assets/kuva4.jpg'),
+    ];
 
-            return <CompanyInfo company={{ ...company, image: imageSource }} onCompanyIdReceived={handleCompanyIdReceived} />;
-          }}
-          backgroundColor={'transparent'}
-          stackSize={2}
-          verticalSwipe={false}
-          containerStyle={styles.swiperContainer}
-          onSwipedRight={handleSwipeRight}
-        />
+    const imageSource = images[index % images.length];
+
+    return (
+      <CompanyInfo
+        key={company.companyId} 
+        company={{ ...company, image: imageSource }}
+        onCompanyIdReceived={handleCompanyIdReceived}
+        isVisible={index === activeCardIndex} 
+      />
+    );
+  }}
+  backgroundColor={'transparent'}
+  stackSize={2}
+  verticalSwipe={false}
+  containerStyle={styles.swiperContainer}
+  onSwipedLeft={(index) => {
+    console.log("Swiped right on card with index:", index);
+    setActiveCardIndex(index + 1);
+  }} 
+  onSwipedAll={() => {
+   
+    setActiveCardIndex(0);
+  }}
+/>
+
         <View style={styles.iconsContainer}>
           <TouchableOpacity onPress={() => { /* icon */ }}>
             <FontAwesomeIcon icon={faTimesCircle} size={60} style={styles.icon} />

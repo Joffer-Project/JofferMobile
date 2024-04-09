@@ -39,9 +39,9 @@ const RegisterScreen2 = () => {
       console.log(userId);
       navigation.navigate('Fields', { userId });
     } else {
-      // Handle case where user is not found
+    
       alert('User not found. Please try again.');
-      // You can also navigate to a different screen or handle it in any other way appropriate for your app
+  
     }
   };
 

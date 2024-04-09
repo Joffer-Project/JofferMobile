@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
+
 const LoginScreen = () => {
   const navigation = useNavigation();
 
@@ -18,7 +19,6 @@ const LoginScreen = () => {
     }
     loadFonts();
   }, []);
-
   // muuttujat
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -1,8 +1,78 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
 
-const ModalComponent = ({ modalVisible, setModalVisible }) => {
+
+const ModalComponent = ({ modalVisible, setModalVisible, companyId, offerId }) => {
+  const [accountId, setAccountId] = useState();
+  const [companyData, setCompanyData] = useState();
+  const [accountData, setAccountData] = useState();
+  const [offerData, setOfferData] = useState();
+  
+
+  // sitten job offer tarkemmin
+  
+  useEffect(() => {
+    const fetchCompanyData = async () => {
+      try {
+        const response = await axios.get(`https://joffer-backend-latest.onrender.com/Company/${companyId}`);
+        setCompanyData(response.data);
+        const accountId = response.data.accountId;
+        setAccountId(accountId);
+        if (accountId) {
+        
+          const accountResponse = await axios.get(`https://joffer-backend-latest.onrender.com/Account/${accountId}`);
+          setAccountData(accountResponse.data);
+        }
+      } catch (error) {
+        console.error('Error fetching company data:', error);
+      }
+    };
+  
+    if (modalVisible && companyId) {
+      fetchCompanyData();
+    }
+  }, [modalVisible, companyId]);
+
+  useEffect(() => {
+    if (companyData) {
+      console.log(companyData);
+      //console.log(companyData.description);
+    }
+  }, [companyData]);
+  
+  useEffect(() => {
+    if (accountId) {
+      console.log(accountId);
+    }
+  }, [accountId]);
+
+  useEffect(() => {
+    if (accountData) {
+      console.log(accountData);
+    }
+  }, [accountData]);
+  useEffect(() => {
+    const fetchJobOfferData = async () => {
+      try {
+        const response = await axios.get(`https://joffer-backend-latest.onrender.com/JobOffer/${offerId}`);
+        setOfferData(response.data);
+        
+      } catch (error) {
+        console.error('Error fetching job offer data:', error);
+      }
+    };
+
+    if (modalVisible && companyId) {
+      fetchJobOfferData();
+    }
+  }, [modalVisible, companyId]);
+  useEffect(() => {
+    if (offerData) {
+      console.log('offerData:', offerData);
+    }
+  }, [offerData]);
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -18,28 +88,15 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
             />
             
             <View style={styles.textContainer}>
-              <Text style={styles.companyText}>Nokia</Text>
-              <Text style={styles.infoText}>Established in 1865 as a paper mill in Finland, Nokia has traversed a remarkable journey to become a global titan in telecommunications and technology.{"\n"}{"\n"} 
-
-   
-
-
-With a legacy deeply rooted in innovation and ingenuity, Nokia continues to drive progress in the ever-evolving landscape of telecommunications. As a frontrunner in network infrastructure and digital services, Nokia remains committed to connecting the world through reliable and secure communication technologies. 
-{"\n"}{"\n"}
-Leveraging its expertise in areas such as 5G, cloud networking, and digital health solutions, Nokia strives to empower individuals and enterprises alike, facilitating seamless connectivity and enabling transformative experiences in an                     increasingly interconnected world.
-Beyond its technological prowess, Nokia upholds a steadfast dedication to social responsibility and sustainability. 
-{"\n"}{"\n"}
-Embracing a holistic approach to corporate citizenship, Nokia actively engages in initiatives aimed at fostering positive societal impact and environmental stewardship. 
-{"\n"}{"\n"}
-By harnessing the power of technology for the greater good, Nokia endeavors to build a more inclusive and sustainable future for generations to come.
-</Text>
+              { accountData && <Text style={styles.company2Text}>{accountData.name}</Text>}
+              
             </View>
             
             <View style={styles.textContainer}>
-              <Text style={styles.companyText}>Job Offer </Text>
-              <Text style={styles.infoText}>Database Engineer
-Full time / On site                                                                120.000£/Year
-
+            
+              {offerData && <Text style={styles.companyText}>{offerData.title}{"\n"}</Text> }   
+              {offerData &&<Text style={styles.infoText}>{offerData.employmentStatus}{"\n"}                                                   
+Salary Range:  {offerData.minSalary} - {offerData.maxSalary} e/month
 {"\n"}{"\n"}Job Description:{"\n"}{"\n"} 
 Nokia is seeking a talented and motivated Database Engineer to join our dynamic team. As a Database Engineer, you will play a crucial role in designing, implementing, and maintaining our database systems to ensure optimal performance, reliability, and scalability. You will collaborate closely with cross-functional teams to understand business requirements and translate them into efficient database solutions. Additionally, you will monitor database performance, troubleshoot issues, and implement security measures to safeguard sensitive data.
 
@@ -70,7 +127,10 @@ Flexible work arrangements, including remote work options.
 Professional development opportunities and career growth prospects.
 
 If you're passionate about database engineering and eager to make an impact in a global organization, we'd love to hear from you. Join us at Nokia and be part of our journey to connect the world! Apply now by submitting your resume and cover letter detailing your relevant experience and why you're the perfect fit for this role.
-{"\n"}{"\n"} Links: ......</Text>
+{"\n"}{"\n"} Links: ......</Text>}
+
+<Text style={styles.companyText}>About the Company: </Text>
+              {companyData && <Text style={styles.infoText}> {companyData.description} </Text>}
             </View>
           
             <TouchableOpacity
@@ -116,19 +176,33 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginBottom: 20,
+    marginTop:10,
   },
   textContainer: {
     marginBottom: 20,
   },
   companyText: {
     fontFamily: 'Fredoka2',
-    fontSize: 22,
+    fontSize: 24,
     color: '#fff',
     marginBottom: 10,
+    alignSelf:'center',
+  },
+  company1Text: {
+    fontFamily: 'Fredoka2',
+    fontSize: 26,
+    color: 'white',
+    alignSelf:'center',
+    
+  },
+  company2Text: {
+    fontFamily: 'Fredoka2',
+    fontSize: 34,
+    color: 'white',
   },
   infoText: {
     fontFamily: 'Fredoka',
-    fontSize: 16,
+    fontSize: 18,
     color: '#fff',
   },
   closeButton: {
