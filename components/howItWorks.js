@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native'; 
-
 import * as Font from 'expo-font';
 
 const HowItWorks = () => {
@@ -20,17 +19,21 @@ const HowItWorks = () => {
         loadFont();
     }, []);
 
-    
     if (!fontLoaded) {
         return null;
     }
+
     const handleNavigateBack = () => {
         navigation.goBack();
     };
 
     return (
-        <View style={styles.modal}>
+        <LinearGradient colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']} style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
+            <View style={styles.logoContainer}>
+                <Image source={require('../assets/joffer2.png')} style={styles.logo} />
+                <Text style={styles.headerText}>Let advanced Joffer algorithms find your ideal talent!</Text>
+            </View>
                 <View style={styles.modalContent}>
                     <Text style={styles.heading}>So how it works..?</Text>
                     <View style={styles.iconContainer}>
@@ -56,6 +59,15 @@ const HowItWorks = () => {
                             </Text>
                         </View>
                     </View>
+                    <View style={styles.iconContainer}>
+                        <Image source={require('../assets/Role.png')} style={styles.customIcon} />
+                        <View style={styles.textContainer}>
+                            <Text style={[styles.stepText1, { color: '#00367F' }]}>Select Role</Text>
+                            <Text style={styles.moreInfoText1}>
+                            This button is for you to view more specific matches based on the roles that you create. As detailed you will arrange the role settings as specific matches you will have. You can adjust roles from the settings.
+                            </Text>
+                        </View>
+                    </View>
                     <TouchableOpacity style={styles.registerButton} onPress={handleNavigateBack}>
                     <LinearGradient
                             colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
@@ -68,16 +80,28 @@ const HowItWorks = () => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-        </View>
+        </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
-    modal: {
+    container: {
         flex: 1,
-        justifyContent: 'center',
+    },
+    logoContainer: {
         alignItems: 'center',
-        backgroundColor: '#0C6BE8',
+        paddingTop: 40,
+        paddingBottom: 20,
+    },
+    logo: {
+        width: 120,
+        height: 120,
+        marginBottom: 10,
+    },
+    headerText: {
+        fontFamily: 'Fredoka',
+        fontSize: 18,
+        color: 'black',
     },
     scrollView: {
         flexGrow: 1,
@@ -87,7 +111,7 @@ const styles = StyleSheet.create({
     modalContent: {
         backgroundColor: 'white',
         padding: 20,
-        borderRadius: 10,
+        borderRadius: 20,
         fontFamily: 'Fredoka1',
         minWidth: '95%', 
     },
