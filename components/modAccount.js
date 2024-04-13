@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, ScrollView, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import { useTheme } from '../context/ThemeContext';
+import DeleteModal from './DeleteModal';
 
 const ModAccount = () => {
   const navigation = useNavigation();
   const [fontLoaded, setFontLoaded] = useState(false);
   const { isDarkMode } = useTheme();
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const loadFont = async () => {
@@ -33,6 +35,18 @@ const ModAccount = () => {
 
   const handleNavigateTo = (screenName) => {
     navigation.navigate(screenName);
+  };
+
+  const handleDeleteAccount = () => {
+    // Tässä voit toteuttaa logiikan tilin poistamiselle
+    // Esimerkiksi: Kutsu API:ta tai suorita tarvittavat toiminnot
+    // Lopuksi siirry takaisin edelliseen näkymään
+    navigation.goBack();
+  };
+
+  // Lisää funktio, joka käsittelee DeleteModalin "Kyllä" painikkeen painalluksen
+  const handleDeleteConfirmation = () => {
+    handleDeleteAccount(); // Kutsu tilin poistofunktiota täällä
   };
 
   const handleSaveChanges = () => {
@@ -116,20 +130,25 @@ const ModAccount = () => {
                 <Text style={styles.registerText}>Modify Applications</Text>
               </LinearGradient>
             </TouchableOpacity>
-          </View>
-        </View>
-        {/* Uncomment below for Save Changes button */}
-        {/* <TouchableOpacity style={[styles.registerButton, { width: itemWidth  }]} onPress={handleSaveChanges}>
-            <LinearGradient
-                colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={() => setShowDeleteModal(true)}>
+              <LinearGradient
+                colors={['rgba(238, 84, 84, 1)', 'rgba(230, 0, 0, 1)']}
                 style={styles.linearGradient}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
-            >
-                <Text style={styles.registerText}>Save Changes</Text>
-            </LinearGradient>
-        </TouchableOpacity> */}
+              >
+                <Text style={styles.registerText}>Delete Account</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
+      {/* DeleteModalin käyttö */}
+      <DeleteModal
+        visible={showDeleteModal}
+        onCancel={() => setShowDeleteModal(false)}
+        onDelete={handleDeleteConfirmation} // Käsittele tilin poistovahvistus täällä
+      />
     </LinearGradient>
   );
 };
