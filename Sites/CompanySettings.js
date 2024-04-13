@@ -63,12 +63,16 @@ const CompanySettings = () => {
   return (
     <ThemeProvider> 
     <View style={isDarkMode ? styles.containerDark : styles.containerLight}>
-      <View style={styles.logoContainer}>
+      <View>
+      <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.logoContainer}>
         <Image
           source={require('./img/Joffer-Logobig.png')}
           style={styles.logo}
         />
         <Text style={styles.headerText}>Let advanced Joffer algorithms find your ideal talent!</Text>
+        </LinearGradient>
       </View>
       <Text style={styles.subHeaderText}>Settings</Text>
       <View style={styles.buttonsContainer}>
@@ -346,6 +350,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 50,
   },
+  headerText: {
+    color: "#fff",
+    fontFamily: 'fredoka'
+  }
 });
 
 export default CompanySettings;

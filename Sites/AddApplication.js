@@ -4,6 +4,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import Offer from "./Offer";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from '@react-navigation/native'
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 export default function AddApplication() {
@@ -24,9 +26,14 @@ export default function AddApplication() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.blueContainer}>
+      <View>
         <View style={styles.logoImage}>
-          <Image source={require('./img/Joffer-Logobig.png')} />
+        <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.blueContainer}>
+          <Image source={require('./img/Joffer-Logobig.png')} 
+          style={styles.logo} />
+          </LinearGradient>
         </View >
       </View>
       <View style={styles.ScrollContainer}>
@@ -85,14 +92,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffff",
   },
   blueContainer: {
-    backgroundColor: '#0C6BE8',
+    marginTop: 0,
     width: 400,
-    height: 200,
+    height: 180,
     alignItems: 'center',
 
   },
-  logoImage: {
-    top: 15
+  logo: {
+    resizeMode: 'contain',
+    width: 150,
   },
   addContainer: {
     bottom: 50,

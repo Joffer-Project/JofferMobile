@@ -26,7 +26,10 @@ const HowItWorks = () => {
     }
 
     return (
-        <View style={styles.modal}>
+        <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.modal}>
+         <View >
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <View style={styles.modalContent}>
                     <Text style={styles.heading}>So how it works..?</Text>
@@ -65,7 +68,8 @@ const HowItWorks = () => {
                             <Text style={styles.registerText}>Let's try!</Text>
                         </LinearGradient>
             </TouchableOpacity>
-        </View>
+            </View>
+        </LinearGradient>
     );
 };
 

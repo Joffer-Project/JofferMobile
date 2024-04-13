@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform, Alert} from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
 
 
 const CompanyRegister = () => {
   const navigation = useNavigation();
   
-  
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+ 
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -18,11 +24,6 @@ const CompanyRegister = () => {
   }, []);
 
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-
   
   return (
     <KeyboardAvoidingView
@@ -31,20 +32,21 @@ const CompanyRegister = () => {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} // Adjust the value as needed
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
-        {/* Logo with Welcome text */}
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('./img/Joffer-Logobig.png')} 
+        <View>
+          <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.logoContainer}>
+            <Image
+            source={require('./img/Joffer-Logobig.png')}
             style={styles.logo}
-          />
-          <Text style={styles.descriptionText}>Let's find new talents!</Text>
+            />
+            <Text style={styles.descriptionText}>Let's find new talents!</Text>
+            </LinearGradient>
         </View>
-        {/* Other content */}
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Step 1/5: Essentials</Text>
         </View>
 
-        {/* Username and Password input fields */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -58,7 +60,7 @@ const CompanyRegister = () => {
             value={email}
             onChangeText={setEmail}
           />
-          <TextInput
+         <TextInput
             style={styles.input}
             placeholder="Phone"
             value={phone}
@@ -80,10 +82,52 @@ const CompanyRegister = () => {
           />
         </View>
         
-        {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={() =>navigation.navigate("CompanyRegister2")}>
-            <Text style={styles.returnButtonText}>Next</Text>
+          <TouchableOpacity style={styles.returnButton} onPress={async () => {
+            try{
+              const payload = {
+                auth0Id: "string",
+                name,
+                email,
+                password,
+                accountType: "Company",
+                isPremium: false,
+                isActive: true
+              };
+            
+          
+              console.log('Payload:', payload);
+          
+              const response = await axios.post('https://joffer-backend-latest.onrender.com/Account', payload);
+          
+              console.log('Response:', response.data);
+              const userId = response.data.id;
+             
+              console.log(userId);
+              navigation.navigate('CompanyRegister2',{ userEmail: email });
+            } catch (error) {
+              console.error('Error creating account:', error);
+          
+              
+              if (error.response) {
+                
+                console.error('Response data:', error.response.data);
+                console.error('Response status:', error.response.status);
+                console.error('Response headers:', error.response.headers);
+              } else if (error.request) {
+                
+                console.error('Request:', error.request);
+              } else {
+                
+                console.error('Error message:', error.message);
+              }
+            }
+          }}>
+          <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.returnButton}>
+            <Text style={styles.returnButtonText}>Next</Text> 
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -160,7 +204,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor:'#1771E9',
     width: 130,
   },
   returnButtonText: {

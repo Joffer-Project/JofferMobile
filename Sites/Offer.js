@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet} from 'react-native';
-import { View, Text, TextInput, Image, Button} from "react-native";
+import { View, Text, TextInput, Image} from "react-native";
 import DatePicker from '@react-native-community/datetimepicker'
 import * as Font from 'expo-font';
-import AddApplication from "./AddApplication";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from '@react-navigation/native'
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export default function Offer() {
@@ -62,8 +62,15 @@ export default function Offer() {
             <View style={styles.inputContainer}>
                 <View style={styles.logoImage}>
                     <Image source={require('./img/JofferLogo.png')} />
+                    <Text style={styles.textOffer}>Add new job offer</Text>
                 </View >
-                <View style={styles.Cardcontainer}>
+                <View>
+                <LinearGradient
+                    colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+                    style={styles.Cardcontainer}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                                            >
                     <View style={styles.textTitle}>
                         <Text style={styles.Title}>Title</Text>
                     </View>
@@ -96,9 +103,16 @@ export default function Offer() {
                             ></TextInput>
                         </View>
                            <View style={styles.input3}>
-                                <TouchableOpacity style={styles.DateButton} onPress={() => showMode("date")}>
-                                    <Text style={styles.dateButtonText}>Choose date</Text>
+                                <TouchableOpacity onPress={() => showMode("date")}>
+                                <LinearGradient
+                                        colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+                                        style={styles.DateButton}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 1, y: 0 }}>
+                                        <Text style={styles.dateButtonText}>Choose date</Text>
+                                        </LinearGradient>
                                     </TouchableOpacity>
+                                 
                                 {show && (
                                     <DatePicker
                                     value={date}
@@ -107,21 +121,31 @@ export default function Offer() {
                                     onChange={onChange}
                                 ></DatePicker>
                              )}
-                              <Text>{date.toLocaleString()}</Text>
+                             
+                              <Text style={styles.LocaleText}>{date.toLocaleString()}</Text>
+                             
                             </View>
                         <TextInput
                             style={styles.input2}
+                            placeholder="Write something about the job offer"
                         ></TextInput>
                     </View>
-                    <View style={styles.DoneButtonContainer}>
+                    <View>
+                    <LinearGradient
+                            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+                            style={styles.DoneButtonContainer}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}>
                 <TouchableOpacity
                 onPress = {upload}
                 style={styles.DoneButton}
                 title="upload"
                 >
-                <Text style={styles.Textcontainer}>Add</Text>
+                <Text style={styles.Textcontainer}>+</Text>
                 </TouchableOpacity>
-                </View>
+                </LinearGradient>
+                </View> 
+                </LinearGradient>
                 </View>
             </View>
         </View>
@@ -133,7 +157,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#0C6BE8',
+        backgroundColor: '#fff',
         
     },
     Cardcontainer: {
@@ -142,9 +166,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderBottomRightRadius: 40,
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#0C6BE8',
         borderColor: "#fff",
-        borderRadius: 20,
     },
     input1: {
         top: 90,
@@ -155,7 +178,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: 'white',
         borderWidth: 3,
-        borderColor: '#0C6BE8',
+        borderColor: '#fff',
         paddingTop: 5,
         paddingLeft: 5,
         textAlignVertical: 'center',
@@ -163,10 +186,11 @@ const styles = StyleSheet.create({
     DateButton: {
         width: 300,
         height: 40,
-        backgroundColor: '#0C6BE8',
         borderRadius: 10, 
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: 'white',
     },
     input3: {
         top: 100,
@@ -190,7 +214,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: 'white',
-        borderColor: '#0C6BE8',
+        borderColor: '#fff',
         borderWidth: 3,
         textAlign: 'left', 
         textAlignVertical: 'top',
@@ -206,7 +230,7 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         backgroundColor: 'white',
         borderWidth: 3,
-        borderColor: '#0C6BE8',
+        borderColor: '#fff',
         paddingTop: 0,
         paddingLeft: 5,
         textAlignVertical: 'center',
@@ -222,10 +246,12 @@ const styles = StyleSheet.create({
         height: 30,
         top: 30,
         right: 105,
+        
     },
     Title: {
         fontSize: 24,
         fontFamily: 'Fredoka',
+        color: '#fff'
     },
     textSalary: {
         width: 80,
@@ -238,26 +264,36 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontSize: 24,
         fontFamily: 'Fredoka',
+        color: '#fff'
     },
     rowSalary: {
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     DoneButtonContainer: {
-        width: 80,
-        height: 80,
-        borderRadius: 50,
+        width: 150,
+        height: 37,
         backgroundColor: "#0C6BE8",
         borderWidth: 1,
         borderColor: "#fff",
-        left: 140,
-        top: 80,
+        left: 98,
+        top: 118,
         alignItems: 'center',
         justifyContent: 'center',
     },
     DoneText: {
         fontSize: 20,
         fontWeight: "600",
-        color: "#000"
+        color: "#000",
+        fontFamily: 'Fredoka',
+    },
+    LocaleText: {
+        color: '#fff'
+    },
+    textOffer: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: "black",
+        fontFamily: 'fredoka'
     }
 })

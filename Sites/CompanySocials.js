@@ -4,6 +4,8 @@ import * as Font from 'expo-font';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 const CompanySocials = () => {
@@ -55,12 +57,16 @@ const CompanySocials = () => {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
       
     >
-          <View style={styles.logoContainer}>
+          <View>
+          <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.logoContainer}>
           <Image
             source={require('./img/Joffer-Logobig.png')} 
             style={styles.logo}
           />
           <Text style={styles.descriptionText}>Let's find new talents!</Text>
+          </LinearGradient>
         </View>
         
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -86,7 +92,11 @@ const CompanySocials = () => {
         
         <View style={styles.uploadContainer}>
           <TouchableOpacity style={styles.uploadButton}>
+          <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.uploadButton}>
             <Text style={styles.uploadText}>Upload Images</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
         
@@ -109,7 +119,11 @@ const CompanySocials = () => {
         </View>
         <View style={styles.PreviewContainer}>
           <TouchableOpacity style={styles.uploadButton} onPress={() => navigation.navigate("CompanyPreview")}>
+          <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.uploadButton}>
             <Text style={styles.uploadText}>Preview Your Profile</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
        
@@ -199,7 +213,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   uploadButton: {
-    backgroundColor:  '#1771E9',
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 20,

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -6,6 +6,8 @@ import { faHeart, faTimesCircle, faCircleQuestion, faGear } from '@fortawesome/f
 import UserInfo from '../Components/UserInfo.js';
 import { useSwipeContext } from '../Components/ItsMatch.js'
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 const CompanySwipe = () => {
@@ -30,6 +32,15 @@ const CompanySwipe = () => {
     },
   ]);
 
+  useEffect(() => {
+    const loadFont = async () => {
+      await Font.loadAsync({
+        'fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
+      });
+      setFontLoaded(true);
+    };
+    loadFont();
+  }, []);
     
   const handleSwipedRight = (index) => {
     addUserSwipe(users[index].name);
@@ -66,11 +77,15 @@ const CompanySwipe = () => {
 
   return (
     <View style={styles.container}>
-        <View style={styles.logoContainer}>
+        <View>
+        <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.logoContainer}>
           <Image
             source={require('./img/Joffer-Logobig.png')} 
             style={styles.logo}
           />
+          </LinearGradient>
         </View>
         {renderSwiper()}
         <View style={styles.iconsContainer}>

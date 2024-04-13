@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import SwipeButton from 'rn-swipe-button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 const CompanyPreview = () => {
@@ -11,6 +13,8 @@ const CompanyPreview = () => {
   const [registered, setRegistered] = useState(false);
   const [okPressed, setOkPressed] = useState(false);
   const isFocused = useIsFocused();
+
+  
 
   useEffect(() => {
     AsyncStorage.getItem('isRegistered').then((value) => {
@@ -40,9 +44,13 @@ const CompanyPreview = () => {
   return (
     <View>
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.logoContainer}>
+      <View>
+      <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.logoContainer}>
         <Image source={require('./img/Joffer-Logobig.png')} style={styles.logo} />
         <Text style={styles.descriptionText}>Let's find new talents!</Text>
+        </LinearGradient>
       </View>
       <View style={styles.profileContainer}>
         <Text style={[styles.userName, { color: '#1771E9', fontSize: 26, marginBottom: 15 }]}>IntelliTech Solutions</Text>
@@ -89,13 +97,11 @@ const CompanyPreview = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 20,
     backgroundColor: "#fff"
 
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 0,
     backgroundColor: '#1771E9',
     padding: 20,
     marginBottom: 10,

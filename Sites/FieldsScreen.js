@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 const FieldsScreen = () => {
@@ -11,6 +13,7 @@ const FieldsScreen = () => {
     async function loadFonts() {
       await Font.loadAsync({
         'Fredoka': require('../assets/Fredoka-VariableFont_wdth,wght.ttf'),
+        'Fredoka1': require('../assets/Fredoka-Regular.ttf'),
       });
     }
     loadFonts();
@@ -66,12 +69,16 @@ const FieldsScreen = () => {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
     >
     
-    <View style={styles.logoContainer}>
+    <View>
+        <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.logoContainer}>
           <Image
             source={require('./img/Joffer-Logobig.png')} 
             style={styles.logo}
           />
           <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+          </LinearGradient>
         </View>
         
         <View style={styles.welcomeContainer}>
@@ -188,6 +195,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Fredoka1',
     color: 'white',
   },
+
 });
 
 

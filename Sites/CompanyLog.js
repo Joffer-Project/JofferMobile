@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput,ScrollView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput,ScrollView, ImageBackground} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 
@@ -27,12 +28,16 @@ const CompanyLog = () => {
 
   return (
     <View>
-    <View style={styles.logoContainer}>
+    <View>
+    <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.logoContainer}>
     <Image
       source={require('./img/Joffer-Logobig.png')}
       style={styles.logo}
     />
     <Text style={styles.descriptionText}>Let's find new talents!</Text>
+  </LinearGradient>
   </View>
     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.container}>
@@ -71,7 +76,11 @@ const CompanyLog = () => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.returnButton} onPress={() => console.log("Return pressed")}>
+            <LinearGradient
+            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+            style={styles.returnButtonLinear}>
             <Text style={styles.returnButtonText}>Sign in</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
 
@@ -195,9 +204,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 20,
-    backgroundColor: '#0C6BE8',
+    marginTop: 0,
     width: 130,
+  },
+  returnButtonLinear: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 0,
+    width: 130,
+    height: 50,
   },
   returnButtonText: {
     fontSize: 18,
