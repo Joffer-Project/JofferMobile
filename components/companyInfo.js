@@ -7,11 +7,8 @@ const CompanyInfo = ({ company }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
+  <LinearGradient colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']} style={styles.gradientContainer} >
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <LinearGradient
-        colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-        style={styles.gradientContainer}
-      >
         <View style={styles.container}>
           <Image source={company.image} style={styles.imageBackground} />
           <View style={styles.cardDetails}>
@@ -35,8 +32,8 @@ const CompanyInfo = ({ company }) => {
             <ModalComponent modalVisible={modalVisible} setModalVisible={setModalVisible} />
           </Modal>
         </View>
-      </LinearGradient>
     </ScrollView>
+  </LinearGradient>
   );
 };
 

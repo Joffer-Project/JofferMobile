@@ -7,9 +7,9 @@ import AboutScreen from './screens/AboutScreen';
 import FieldsScreen from './screens/FieldsScreen';
 import TitlesScreen from './screens/TitlesScreen';
 import PreviewScreen from './screens/PreviewScreen';
-import ModifyAccount from './components/modAccount';
+import ModifyAccount from './screens/modAccount';
 import HowItWorks from './components/howItWorks';
-import Settings from './components/settings';
+import Settings from './screens/settings';
 
 const Stack = createNativeStackNavigator();
 

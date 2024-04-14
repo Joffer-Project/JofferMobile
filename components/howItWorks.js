@@ -64,7 +64,7 @@ const HowItWorks = () => {
                         <View style={styles.textContainer}>
                             <Text style={[styles.stepText1, { color: '#00367F' }]}>Select Role</Text>
                             <Text style={styles.moreInfoText1}>
-                            This button is for you to view more specific matches based on the roles that you create. As detailed you will arrange the role settings as specific matches you will have. You can adjust roles from the settings.
+                            This button is for you to view more specific matches based on the roles that you create. As detailed you will arrange the role settings as specific matches you will have. You can adjust roles from the settings. This feature is only available in the online version.
                             </Text>
                         </View>
                     </View>
