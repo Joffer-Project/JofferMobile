@@ -24,7 +24,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
 
   // API endpoint URL ja login hakee tiedot tietokannasta
-  const API_URL = 'https://joffer-backend-latest.onrender.com/Account';
+  const API_URL = 'https://joffer-backend-latest.onrender.com/Accounts/GetAll';
 
   
   const fetchData = async () => {

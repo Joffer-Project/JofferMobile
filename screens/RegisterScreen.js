@@ -1,10 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import axios from 'axios';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -21,53 +19,12 @@ const RegisterScreen = () => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  //const [username, setUsername] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
   const handleNextPress = async () => {
-    try {
-      const payload = {
-        auth0Id: "string",
-        name,
-        //username,
-        email,
-        password,
-        accountType: "Applicant",
-        isPremium: false,
-        isActive: true
-      };
-    
-  
-      console.log('Payload:', payload);
-  
-      const response = await axios.post('https://joffer-backend-latest.onrender.com/Account', payload);
-  
-      console.log('Response:', response.data);
-      //const userId = response.data.id;
-     
-      //console.log(userId);
-      navigation.navigate('Register2',{ userEmail: email });
-    } catch (error) {
-      console.error('Error creating account:', error);
-  
-      
-      if (error.response) {
-        
-        console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
-        console.error('Response headers:', error.response.headers);
-      } else if (error.request) {
-        
-        console.error('Request:', error.request);
-      } else {
-        
-        console.error('Error message:', error.message);
-      }
-    }
+    navigation.navigate('Register2', { name, email, phone, password });
   };
-    
-      
 
   return (
     <KeyboardAvoidingView
@@ -76,7 +33,6 @@ const RegisterScreen = () => {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
-     
         <LinearGradient
           colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
           style={styles.logoContainer}
@@ -87,13 +43,9 @@ const RegisterScreen = () => {
           />
           <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
         </LinearGradient>
-       
-        
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Step 1/5: Essentials</Text>
         </View>
-
-      
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -101,7 +53,6 @@ const RegisterScreen = () => {
             value={name}
             onChangeText={setName}
           />
-          
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -129,8 +80,6 @@ const RegisterScreen = () => {
             onChangeText={setPassword}
           />
         </View>
-        
-        
         <View style={styles.buttonContainer}>
           <LinearGradient
             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
@@ -151,7 +100,7 @@ const RegisterScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 0, 
+    padding: 0,
   },
   scrollView: {
     flexGrow: 1,
@@ -216,7 +165,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    //backgroundColor: '#FF7E33',
     width: 130,
   },
   returnButtonText: {
@@ -227,4 +175,3 @@ const styles = StyleSheet.create({
 });
 
 export default RegisterScreen;
-

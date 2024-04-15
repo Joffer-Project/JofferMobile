@@ -34,6 +34,12 @@ const ModifyAccount = ({route}) => {
     const navigateToDeleteProfile = () => {
         navigation.navigate('DeleteProfile', {userId});
     };
+    const navigateToFieldsProfile = () => {
+        navigation.navigate('FModify', {userId});
+    };
+    const navigateToTitlesProfile = () => {
+        navigation.navigate('TModify', {userId});
+    };
 
 
     if (!fontLoaded) {
@@ -73,7 +79,7 @@ const ModifyAccount = ({route}) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.settingsButton, { width: itemWidth }]}
-                        onPress={navigateToMatches}
+                        onPress={navigateToFieldsProfile}
                     >
                         <LinearGradient
                             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
@@ -81,17 +87,17 @@ const ModifyAccount = ({route}) => {
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
                         >
-                            <Text style={styles.registerText}>Fields</Text>
+                            <Text style={styles.registerText}>Roles</Text>
                         </LinearGradient>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={handleNavigateBack}>
+                    <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={navigateToTitlesProfile}>
                         <LinearGradient
                             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
                             style={styles.linearGradient}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
                         >
-                            <Text style={styles.registerText}>Titles</Text>
+                            <Text style={styles.registerText}>Industries</Text>
                         </LinearGradient>
                     </TouchableOpacity>
                     
@@ -108,7 +114,7 @@ const ModifyAccount = ({route}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={navigateToDeleteProfile}>
                         <LinearGradient
-                            colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+                            colors={['rgba(255, 0, 0, 1)', 'rgba(255, 0, 0, 1)']}
                             style={styles.linearGradient}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}
@@ -169,9 +175,9 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     buttonsContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
+        //flexWrap: 'wrap',
+        justifyContent: 'center',
         paddingHorizontal: 10,
         paddingBottom: 20,
     },
@@ -180,7 +186,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 20,
         borderRadius: 20,
-        height: 100,
+        height: 50,
+        left: 85,
     },
     registerButton: {
         alignItems: 'center',
@@ -201,7 +208,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 20,
         height: '100%',
-        width: '100%',
+        width: '180%',
     },
 });
 

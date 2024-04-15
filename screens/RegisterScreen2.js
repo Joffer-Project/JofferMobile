@@ -21,67 +21,33 @@ const RegisterScreen2 = () => {
   }, []);
 
   const [about, setAbout] = useState('');
-  const [fact, setFact] = useState('');
-  
-  
-  // Navigate to the FieldsScreen
-   
-  const handleNextPress = async () => {
-    const userEmail = route.params.userEmail;
+  const [salaryMax, setSalaryMax] = useState('');
+  const [salaryMin, setSalaryMin] = useState('');
 
-    // Find the user by email
-    const response1 = await axios.get('https://joffer-backend-latest.onrender.com/Account');
-    console.log('API Response:', response1.data);
-    const user = response1.data.find((user) => user.email === userEmail);
-    
-    if (user) {
-      const userId = user.id;
-      console.log(userId);
-      navigation.navigate('Fields', { userId });
-    } else {
-    
-      alert('User not found. Please try again.');
-  
-    }
+  // Navigate to the FieldsScreen
+  const handleNextPress = async () => {
+    const { name, email, phone, password, about, salaryMax, salaryMin } = route.params;
+
+    // Use the values from the previous screen as needed
+    console.log('Name:', name);
+    console.log('Email:', email);
+    console.log('Phone:', phone);
+    console.log('Password:', password);
+    console.log('About Me:', about);
+    console.log('Salary Max:', salaryMax);
+    console.log('Salary Min:', salaryMin);
+
+    navigation.navigate('Fields', {
+      name,
+      email,
+      phone,
+      password,
+      about,
+      salaryMax,
+      salaryMin,
+    });
   };
 
-/*
-const handleNextPress = async () => {
-  try {
-    const payload = {
-      aboutMe: about,
-      EmploymentStatus: 'Employed' 
-    };
-
-    console.log('Payload:', payload);
-
-    // Get the user's email from the navigation params
-    const userEmail = route.params.userEmail;
-
-    // Find the user by email
-    const response1 = await axios.get('https://joffer-backend-latest.onrender.com/Account');
-    console.log('API Response:', response1.data);
-    const user = response1.data.find((user) => user.email === userEmail);
-    
-    if (user) {
-      const userId = user.id;
-      console.log(userId);
-    }
-
-    const response = await axios.post('https://joffer-backend-latest.onrender.com/Talent', payload);
-
-    console.log('Response:', response.data);
-    console.log('Response status:', response.status);
-    console.log('Response headers:', response.headers);
-
-    navigation.navigate('Fields');
-  } catch (error) {
-    console.error('Error creating applicant:', error);
-    console.error('Error response:', error.response);
-    console.error('Error message:', error.message);
-  }
-};
-*/
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -108,18 +74,26 @@ const handleNextPress = async () => {
      
         <View style={styles.inputContainer}>
           <TextInput
-            style={styles.input}
+            style={styles.input1}
             placeholder="About me"
             value={about}
-            onChangeText={setAbout}
+            onChangeText={(text) => setAbout(text)}
             multiline={true}
             textAlignVertical="top" 
           />
           <TextInput
             style={styles.input}
-            placeholder="A fun fact about me"
-            value={fact}
-            onChangeText={setFact}
+            placeholder="Salary Min"
+            value={salaryMin}
+            onChangeText={setSalaryMin}
+            multiline={true}
+             textAlignVertical="top" 
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Salary Max"
+            value={salaryMax}
+            onChangeText={setSalaryMax}
             multiline={true}
              textAlignVertical="top" 
           />
@@ -128,16 +102,16 @@ const handleNextPress = async () => {
         
         
         <View style={styles.buttonContainer}>
-        <LinearGradient
-    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-    style={styles.returnButton}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-  >
-    <TouchableOpacity onPress={handleNextPress}>
-      <Text style={styles.returnButtonText}>Next</Text>
-    </TouchableOpacity>
-  </LinearGradient>
+          <LinearGradient
+            colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+            style={styles.returnButton}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+          >
+            <TouchableOpacity onPress={handleNextPress}>
+              <Text style={styles.returnButtonText}>Next</Text>
+            </TouchableOpacity>
+          </LinearGradient>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -199,6 +173,19 @@ const styles = StyleSheet.create({
     
   },
   input: {
+    height: 50,
+    width: 230,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    fontFamily: 'Fredoka',
+    padding: 5,
+    
+    
+  },
+  input1: {
     height: 150,
     width: 230,
     borderColor: 'gray',

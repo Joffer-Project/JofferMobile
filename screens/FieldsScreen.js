@@ -2,15 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
-const FieldsScreen = ({route}) => {
+const FieldsScreen = () => {
   const navigation = useNavigation();
-  const { userId } = route.params;
+  const route = useRoute();
+  const { userId, name, email, phone, password, about, salaryMax, salaryMin } = route.params;
 
   const [fields, setFields] = useState([]); 
+  
 
   useEffect(() => {
     async function loadFonts() {
@@ -23,7 +25,7 @@ const FieldsScreen = ({route}) => {
 
   // ei toimi kun tuota endpointtia ei enään ole
     
-    axios.get('https://joffer-backend-latest.onrender.com/api/Field')
+    axios.get('https://joffer-backend-latest.onrender.com/Industries/GetAll')
       .then(response => {
       
         setFields(response.data);
@@ -57,7 +59,9 @@ const FieldsScreen = ({route}) => {
   };
 
   const handleNextPress = () => {
+    
     navigation.navigate('Titles', {userId});
+    console.log(name, email, phone,password, about, salaryMin, salaryMax);
   };
 
   return (

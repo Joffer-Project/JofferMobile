@@ -1,13 +1,17 @@
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
 
 const TitlesScreen = ({route}) => {
-  const { userId } = route.params; 
-  const navigation = useNavigation(); 
-  
+  const navigation = useNavigation();
+  const { userId } = route.params;
+
+  const [fields, setFields] = useState([]); 
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -16,28 +20,18 @@ const TitlesScreen = ({route}) => {
       });
     }
     loadFonts();
-  }, []);
-  const handleNextPress = () => {
-    navigation.navigate('Socials', {userId}); 
-  };
 
-  const fields = [
-    { id: 1, name: 'Tech' },
-    { id: 2, name: 'Health' },
-    { id: 3, name: 'Tech' },
-    { id: 4, name: 'Tech' },
-    { id: 5, name: 'Tech' },
-    { id: 6, name: 'Tech' },
-    { id: 7, name: 'Tech' },
-    { id: 8, name: 'Other' },
-    { id: 9, name: 'Other' },
-    { id: 10, name: 'Other' },
-    { id: 11, name: 'Other' },
-    { id: 12, name: 'Other' },
+  // ei toimi kun tuota endpointtia ei enään ole
     
-    
-   
-  ];
+    axios.get('https://joffer-backend-latest.onrender.com/Roles/GetAll')
+      .then(response => {
+      
+        setFields(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching fields:', error);
+      });
+  }, []);
 
   const [selectedFields, setSelectedFields] = useState([]);
 
@@ -59,8 +53,11 @@ const TitlesScreen = ({route}) => {
       >
         <Text style={[styles.fieldButtonText, isSelected && styles.selectedFieldButtonText]}>{item.name}</Text>
       </TouchableOpacity>
-      
     );
+  };
+
+  const handleNextPress = () => {
+    navigation.navigate('Socials', {userId});
   };
 
   return (
@@ -83,8 +80,8 @@ const TitlesScreen = ({route}) => {
         </LinearGradient>
         
         <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 4/5: Titles</Text>
-          <Text style={[styles.welcomeText, { fontSize: 16 }]}>Select the roles that align best with your interests, knowledge, experience, and wishes.  </Text>
+          <Text style={styles.welcomeText}>Step 4/5: Roles</Text>
+          <Text style={[styles.welcomeText, { fontSize: 16 }]}>Select the roles that align best with your interests, knowledge, experience, and wishes. </Text>
         </View>
 
         <FlatList
@@ -142,7 +139,8 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
-    color:'#FF7E33',
+    color: '#FF7E33',
+    
   },
   descriptionText: {
     fontSize: 15,
@@ -171,13 +169,15 @@ const styles = StyleSheet.create({
   },
   selectedFieldButton: {
     backgroundColor: '#FF7E33',
+    color: 'white',
    
   },
-  selectedFieldButtonText:{
+  selectedFieldButtonText: {
     color: 'white',
+   
   },
   fieldButtonText: {
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: 'Fredoka1',
     color: '#FF7E33',
   },

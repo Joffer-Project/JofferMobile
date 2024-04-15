@@ -23,7 +23,7 @@ const SwipeScreen = ({ route }) => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get('https://joffer-backend-latest.onrender.com/JobOffer');
+        const response = await axios.get('https://joffer-backend-latest.onrender.com/JobOffers/GetAll');
         setCompanies(response.data);
         
       } catch (error) {

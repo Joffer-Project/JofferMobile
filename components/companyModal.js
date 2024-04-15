@@ -21,12 +21,19 @@ const ModalComponent = ({ modalVisible, setModalVisible, companyId, offerId }) =
         const accountId = response.data.accountId;
         setAccountId(accountId);
         if (accountId) {
-        
-          const accountResponse = await axios.get(`https://joffer-backend-latest.onrender.com/Account/${accountId}`);
-          setAccountData(accountResponse.data);
+          try {
+            const accountResponse = await axios.get(`https://joffer-backend-latest.onrender.com/Accounts/GetAll?accountId=${accountId}`);
+            // Assuming accountResponse.data is an array of objects
+            const matchedAccount = accountResponse.data.find(account => account.id === accountId);
+            // Assuming account name is stored in a property called "name"
+            const accountName = matchedAccount ? matchedAccount.name : "Account not found";
+            setAccountData(accountName);
+          } catch (error) {
+            console.error('Error fetching account data:', error);
+          }
         }
       } catch (error) {
-        console.error('Error fetching company data:', error);
+        console.error('Error fetching companyy data:', error);
       }
     };
   
@@ -38,7 +45,7 @@ const ModalComponent = ({ modalVisible, setModalVisible, companyId, offerId }) =
   useEffect(() => {
     if (companyData) {
       console.log(companyData);
-      //console.log(companyData.description);
+      console.log('what',companyData.description);
     }
   }, [companyData]);
   
@@ -50,27 +57,31 @@ const ModalComponent = ({ modalVisible, setModalVisible, companyId, offerId }) =
 
   useEffect(() => {
     if (accountData) {
-      console.log(accountData);
+      console.log('HUH',accountData);
     }
   }, [accountData]);
   useEffect(() => {
     const fetchJobOfferData = async () => {
       try {
-        const response = await axios.get(`https://joffer-backend-latest.onrender.com/JobOffer/${offerId}`);
-        setOfferData(response.data);
+        const response = await axios.get(`https://joffer-backend-latest.onrender.com/JobOffers/GetAll`);
+        const allOffers = response.data;
+        const matchedOffer = allOffers.find(offer => offer.id === offerId);
         
+      
+        setOfferData(matchedOffer);
       } catch (error) {
         console.error('Error fetching job offer data:', error);
       }
     };
-
-    if (modalVisible && companyId) {
+  
+    if (modalVisible && companyId && offerId) {
       fetchJobOfferData();
     }
-  }, [modalVisible, companyId]);
+  }, [modalVisible, companyId, offerId]);
   useEffect(() => {
     if (offerData) {
       console.log('offerData:', offerData);
+      console.log(offerData.description);
     }
   }, [offerData]);
   return (
@@ -97,36 +108,14 @@ const ModalComponent = ({ modalVisible, setModalVisible, companyId, offerId }) =
               {offerData && <Text style={styles.companyText}>{offerData.title}{"\n"}</Text> }   
               {offerData &&<Text style={styles.infoText}>{offerData.employmentStatus}{"\n"}                                                   
 Salary Range:  {offerData.minSalary} - {offerData.maxSalary} e/month
-{"\n"}{"\n"}Job Description:{"\n"}{"\n"} 
-Nokia is seeking a talented and motivated Database Engineer to join our dynamic team. As a Database Engineer, you will play a crucial role in designing, implementing, and maintaining our database systems to ensure optimal performance, reliability, and scalability. You will collaborate closely with cross-functional teams to understand business requirements and translate them into efficient database solutions. Additionally, you will monitor database performance, troubleshoot issues, and implement security measures to safeguard sensitive data.
+{"\n"}{"\n"}Job Description:{"\n"}{"\n"} {offerData.description}
 
 {"\n"}{"\n"}Responsibilities:{"\n"}{"\n"}
-Design, implement, and maintain database systems, including schema design, indexing, and data migration.
-Collaborate with software engineers and other stakeholders to develop database solutions that meet business requirements.
-Optimize database performance through tuning, indexing, and query optimization techniques.
-Implement and maintain database security measures to protect sensitive data.
-Monitor database health and performance, and troubleshoot issues as they arise.
-Participate in capacity planning and scalability initiatives to support business growth.
-Stay updated on emerging technologies and best practices in database management.
 
 {"\n"}{"\n"}Requirements:{"\n"}{"\n"}
-Bachelor's degree in Computer Science, Information Technology, or related field.
-Proven experience as a Database Engineer or similar role, with expertise in database design, implementation, and maintenance.
-Proficiency in SQL and experience with relational database management systems (e.g., Oracle, MySQL, PostgreSQL).
-Strong understanding of database architecture, indexing, and performance optimization techniques.
-Experience with database security concepts and best practices.
-Excellent problem-solving skills and ability to troubleshoot database issues effectively.
-Strong communication and collaboration skills, with the ability to work effectively in cross-functional teams.
-Knowledge of NoSQL databases (e.g., MongoDB, Cassandra) and cloud database services (e.g., AWS RDS, Azure SQL Database) is a plus.
 
-{"\n"}{"\n"}Why Join Nokia:{"\n"}{"\n"}
-Opportunity to work with cutting-edge technology and shape the future of telecommunications.
-Collaborative and inclusive work culture that values innovation and diversity.
-Competitive salary and benefits package.
-Flexible work arrangements, including remote work options.
-Professional development opportunities and career growth prospects.
+{"\n"}{"\n"}Why Join :{"\n"}{"\n"}
 
-If you're passionate about database engineering and eager to make an impact in a global organization, we'd love to hear from you. Join us at Nokia and be part of our journey to connect the world! Apply now by submitting your resume and cover letter detailing your relevant experience and why you're the perfect fit for this role.
 {"\n"}{"\n"} Links: ......</Text>}
 
 <Text style={styles.companyText}>About the Company: </Text>

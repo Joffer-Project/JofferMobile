@@ -21,6 +21,9 @@ import ProfileModify from './screens/settingsScreens/profileModify.js';
 import DeleteProfile from './screens/settingsScreens/delete.js';
 import MatchScreen from './components/match.js';
 import CompanyRegister from './screens/company/companyRegister.js';
+//import Settings from './components/MariettaComponents/settings.js';
+import FieldsScreenModify from './screens/settingsScreens/fieldsModify.js';
+import TitlesScreenModify from './screens/settingsScreens/titlesModify.js';
 
 export default function Navigation (){
     return (
@@ -43,6 +46,8 @@ export default function Navigation (){
     <Stack.Screen name="DeleteProfile" component={DeleteProfile} />
     <Stack.Screen name="Match" component={MatchScreen} />
     <Stack.Screen name="Cregister" component={CompanyRegister} />
+    <Stack.Screen name="FModify" component={FieldsScreenModify} />
+    <Stack.Screen name="TModify" component={TitlesScreenModify} />
     
     </Stack.Navigator>
     </NavigationContainer>

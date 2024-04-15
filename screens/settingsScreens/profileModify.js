@@ -26,21 +26,24 @@ const ProfileModify = ({route}) => {
     const [profileImageUri, setProfileImageUri] = useState(null);
 
     useEffect(() => {
-        
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`https://joffer-backend-latest.onrender.com/Account/${userId}`);
-                const userData = response.data;
+                const response = await axios.get(`https://joffer-backend-latest.onrender.com/Accounts/GetAll`);
+                const userData = response.data.find(user => user.id === userId);
                 
-                setName(userData.name);
-                setEmail(userData.email);
-                setPhone(userData.phone);
+                if (userData) {
+                    setName(userData.name);
+                    setEmail(userData.email);
+                    setPhone(userData.phone);
+                } else {
+                    Alert.alert('Error', 'User data not found.');
+                }
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 Alert.alert('Error', 'An error occurred while fetching user data.');
             }
         };
-
+    
         fetchUserData(); 
     }, [userId]);
 
@@ -48,6 +51,7 @@ const ProfileModify = ({route}) => {
     const handleNextPress = () => {
         navigation.navigate('Swipe', {userId});
     };
+    
 
     useEffect(() => {
 
