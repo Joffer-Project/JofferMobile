@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios'; // Import Axios for HTTP requests
+import { render } from 'react-dom';
 
 
 
 const CompanyFields = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { name, email, phone, password, about} = route.params;
+
 
   useEffect(() => {
     async function loadFonts() {
@@ -40,11 +45,11 @@ const CompanyFields = () => {
   ];
 
   const [selectedFields, setSelectedFields] = useState([]);
-
+ 
   const toggleFieldSelection = (fieldId) => {
     const isSelected = selectedFields.includes(fieldId);
     if (isSelected) {
-      setSelectedFields(selectedFields.filter(id => id !== fieldId));
+      setSelectedFields(selectedFields.filter((id) => id !== fieldId));
     } else {
       setSelectedFields([...selectedFields, fieldId]);
     }
@@ -101,7 +106,16 @@ const CompanyFields = () => {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
           >
-          <TouchableOpacity onPress={() => navigation.navigate('CompanyTitles')}>
+          <TouchableOpacity onPress={() => {
+            navigation.navigate('CompanyTitles',{
+              name, 
+              password, 
+              phone, 
+              email, 
+              about, 
+              selectedFields });
+            console.log(name, password, phone, email, about, selectedFields );
+            }}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
           </LinearGradient>

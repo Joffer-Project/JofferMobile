@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import * as Font from 'expo-font';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
@@ -9,7 +9,9 @@ import axios from 'axios';
 
 const CompanyRegister2 = () => {
     const navigation = useNavigation();
+    const route = useRoute();
     const [description, setDescription] = useState('');
+    const { name, email, phone, password} = route.params;
 
 
   useEffect(() => {
@@ -64,30 +66,11 @@ const CompanyRegister2 = () => {
         </View>
         
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={async () => {
-            try{
-              const payload = {
-                auth0Id: "string",
-                description: "string",
-                logoUrl: "string",
-                recruiterToken: "string",
-                tokenActiveSince: "2024-04-09T16:14:58.634Z",
-                isActive: true
-              }
-                   
-              console.log('Payload:', payload);
-          
-              const response = await axios.post('https://joffer-backend-latest.onrender.com/Company', payload);
-          
-              console.log('Response:', response.data);
-              const userId = response.data.id;
-             
-              console.log(userId);
-              navigation.navigate('CompanyFields',{ companyDescription: description});
-            } catch (error) {
-              console.error('Error creating account:', error);
-            }
-          }}>
+          <TouchableOpacity style={styles.returnButton}  onPress={() => {
+            navigation.navigate('CompanyFields', { name, email, password, about, phone});
+            console.log(name, email, password, about, phone);
+            }}
+            >
             <LinearGradient
               colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
               style={styles.returnButton}>

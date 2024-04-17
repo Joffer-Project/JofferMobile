@@ -12,12 +12,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default function Offer() {
     const [date, setDate] = useState(new Date())
     const [show, setShow] = useState(false)
+    const [salaryMin, setSalaryMin] = useState('')
+    const [salaryMax, setSalaryMax] = useState('')
+    const [text, setText] = useState('')
     const [mode, setMode] = useState('date') 
     const [givenTitle, setGivenTitle] = useState("")
-    const [uploaded, setUploaded] = useState('')
     const navigation = useNavigation();
     const route = useRoute();
-    const [titleBox, setTitleBox] = useState(route.params?.titleBox || []);
 
 
 
@@ -31,18 +32,6 @@ export default function Offer() {
       }, []);
     
 
-      const upload = () => {
-        if (givenTitle.trim() !== "") {
-            setTitleBox(prevTitles => {
-                const updatedTitles = [...prevTitles, givenTitle.trim()];
-                console.log("New title added:", givenTitle.trim());
-                return updatedTitles;
-            });
-            setGivenTitle(""); // Clear input after adding
-        }
-        navigation.navigate("AddApplication", { titleBox });
-    };
-
     const onChange = (e, selectedDate) => {
         setDate(selectedDate)
         setShow(false)
@@ -51,15 +40,11 @@ export default function Offer() {
     const showMode = (modeToShow) => {
         setShow(true)
         setMode(modeToShow)
-    }
-
-    /*const handleTitleChange = (text) => {
-        setTitle(text);
-      };*/
+    } 
 
     return (
         <View style={styles.container}>
-            <View style={styles.inputContainer}>
+            <View style= {styles.inputContainer}>
                 <View style={styles.logoImage}>
                     <Image source={require('./img/JofferLogo.png')} />
                     <Text style={styles.textOffer}>Add new job offer</Text>
@@ -82,24 +67,23 @@ export default function Offer() {
                             style={styles.input4}
                             placeholder="Example: Cypersecurity assistant"
                             value={givenTitle}
-                            onChangeText={(text)=>setGivenTitle(text)}
-                        // value={}
-                        //onChangeText={}
-                        ></TextInput>
+                            onChangeText={setGivenTitle}
+                        >
+                        </TextInput>
                         <View style={styles.rowSalary}>
                          <TextInput
                                 keyboardType="numeric"
                                 style={styles.input1}
-                            /*    placeholder="Text"
-                                value={text}
-                                onChangeText={(text)=>setText(text)} */
+                                placeholder="Min"
+                                value={salaryMin}
+                                onChangeText={setSalaryMin}
                             ></TextInput>
                              <TextInput
                                 keyboardType="numeric"
                                 style={styles.input1}
-                            /*    placeholder="Text"
-                                value={text}
-                                onChangeText={(text)=>setText(text)} */
+                                placeholder="Max"
+                                value={SalaryMax}
+                                onChangeText={setSalaryMax} 
                             ></TextInput>
                         </View>
                            <View style={styles.input3}>
@@ -128,22 +112,26 @@ export default function Offer() {
                         <TextInput
                             style={styles.input2}
                             placeholder="Write something about the job offer"
+                            value={text}
+                            onChange={setText}
                         ></TextInput>
                     </View>
-                    <View>
                     <LinearGradient
                             colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
                             style={styles.DoneButtonContainer}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 0 }}>
                 <TouchableOpacity
-                onPress = {upload}
+                onPress = {() => {
+                navigation.navigate('AddApplication',{date, text, salaryMin, salaryMax, givenTitle});
+                console.log(date, text, min, max, givenTitle);
+                }}
                 style={styles.DoneButton}
-                title="upload"
                 >
                 <Text style={styles.Textcontainer}>+</Text>
                 </TouchableOpacity>
                 </LinearGradient>
+                <View>
                 </View> 
                 </LinearGradient>
                 </View>
@@ -157,8 +145,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
-        
     },
     Cardcontainer: {
         width: 350,

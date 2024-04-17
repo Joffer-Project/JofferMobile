@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform, Alert} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
-
 const CompanyRegister = () => {
   const navigation = useNavigation();
-  
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
- 
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -23,25 +22,24 @@ const CompanyRegister = () => {
     loadFonts();
   }, []);
 
-
-  
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : null}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} // Adjust the value as needed
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500}
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View>
           <LinearGradient
             colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
-            style={styles.logoContainer}>
+            style={styles.logoContainer}
+          >
             <Image
-            source={require('./img/Joffer-Logobig.png')}
-            style={styles.logo}
+              source={require('./img/Joffer-Logobig.png')}
+              style={styles.logo}
             />
             <Text style={styles.descriptionText}>Let's find new talents!</Text>
-            </LinearGradient>
+          </LinearGradient>
         </View>
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>Step 1/5: Essentials</Text>
@@ -60,7 +58,7 @@ const CompanyRegister = () => {
             value={email}
             onChangeText={setEmail}
           />
-         <TextInput
+          <TextInput
             style={styles.input}
             placeholder="Phone"
             value={phone}
@@ -75,58 +73,23 @@ const CompanyRegister = () => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Repeat Password"
+            placeholder="Password"
             secureTextEntry={true}
             value={password}
             onChangeText={setPassword}
           />
         </View>
-        
+
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={async () => {
-            try{
-              const payload = {
-                auth0Id: "string",
-                name,
-                email,
-                password,
-                accountType: "Company",
-                isPremium: false,
-                isActive: true
-              };
-            
-          
-              console.log('Payload:', payload);
-          
-              const response = await axios.post('https://joffer-backend-latest.onrender.com/Account', payload);
-          
-              console.log('Response:', response.data);
-              const userId = response.data.id;
-             
-              console.log(userId);
-              navigation.navigate('CompanyRegister2',{ userEmail: email });
-            } catch (error) {
-              console.error('Error creating account:', error);
-          
-              
-              if (error.response) {
-                
-                console.error('Response data:', error.response.data);
-                console.error('Response status:', error.response.status);
-                console.error('Response headers:', error.response.headers);
-              } else if (error.request) {
-                
-                console.error('Request:', error.request);
-              } else {
-                
-                console.error('Error message:', error.message);
-              }
-            }
-          }}>
-          <LinearGradient
-            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
-            style={styles.returnButton}>
-            <Text style={styles.returnButtonText}>Next</Text> 
+          <TouchableOpacity onPress={() => {
+
+          navigation.navigate('CompanyRegister2', { name, email, phone, password });
+          console.log(name, email, password, phone);}}>
+            <LinearGradient
+              colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+              style={styles.returnButton}
+            >
+              <Text style={styles.returnButtonText}>Next</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>

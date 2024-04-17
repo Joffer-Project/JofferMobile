@@ -70,9 +70,10 @@ const FieldsScreen = () => {
     >
     
     <View>
-        <LinearGradient
-            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
-            style={styles.logoContainer}>
+      <LinearGradient
+             colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+            style={styles.logoContainer}
+           >
           <Image
             source={require('./img/Joffer-Logobig.png')} 
             style={styles.logo}

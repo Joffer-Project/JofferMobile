@@ -31,6 +31,7 @@ import CompanySwipe from './Sites/CompanySwipe.js';
 import HowItWorks from './Sites/HowItWorks.js';
 import HowItWorksUser from './Sites/HowItWorksUser.js';
 import CompanySettings from './Sites/CompanySettings.js';
+import UserSettings from './Sites/UserSettings.js'
 
 
 
@@ -65,6 +66,7 @@ export default function App() {
       <Stack.Screen name="ProfilePreview" component={ProfilePreview}/> 
       <Stack.Screen name="SwipeScreen" component={SwipeScreen}/> 
       <Stack.Screen name="ItsMatch" component={SwipeProvider}/> 
+      <Stack.Screen name="UserSettings" component={UserSettings}/> 
       </Stack.Navigator>
      </NavigationContainer>
     </SwipeProvider>

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation, useRoute} from '@react-navigation/native'; 
 import { LinearGradient } from 'expo-linear-gradient';
 
 const CompanyTitles = () => {
   const navigation = useNavigation(); 
+  const route = useRoute();
+  const { name, email, phone, password, about, selectedFields} = route.params;
+
   
   useEffect(() => {
     async function loadFonts() {
@@ -17,7 +20,7 @@ const CompanyTitles = () => {
     loadFonts();
   }, []);
 
-  const fields = [
+  const titles = [
     { id: 1, name: 'Tech' },
     { id: 2, name: 'Health' },
     { id: 3, name: 'Tech' },
@@ -33,23 +36,23 @@ const CompanyTitles = () => {
     { id: 13, name: 'Other' },
   ];
 
-  const [selectedFields, setSelectedFields] = useState([]);
+  const [selectedTitles, setSelectedTitles] = useState([]);
 
-  const toggleFieldSelection = (fieldId) => {
-    const isSelected = selectedFields.includes(fieldId);
+  const toggleTitlesSelection = (titlesId) => {
+    const isSelected = selectedTitles.includes(titlesId);
     if (isSelected) {
-      setSelectedFields(selectedFields.filter(id => id !== fieldId));
+      setSelectedTitles(selectedTitles.filter(id => id !== titlesId));
     } else {
-      setSelectedFields([...selectedFields, fieldId]);
+      setSelectedTitles([...selectedTitles, titlesId]);
     }
   };
 
-  const renderFieldButton = ({ item }) => {
-    const isSelected = selectedFields.includes(item.id);
+  const renderTitlesButton = ({ item }) => {
+    const isSelected = selectedTitles.includes(item.id);
     return (
       <TouchableOpacity
         style={[styles.fieldButton, isSelected && styles.selectedFieldButton]}
-        onPress={() => toggleFieldSelection(item.id)}
+        onPress={() => toggleTitlesSelection(item.id)}
       >
         <Text style={[styles.fieldButtonText, isSelected && styles.selectedFieldButtonText]}>{item.name}</Text>
       </TouchableOpacity>
@@ -80,8 +83,8 @@ const CompanyTitles = () => {
       </View>
       
         <FlatList
-          data={fields}
-          renderItem={renderFieldButton}
+          data={titles}
+          renderItem={renderTitlesButton}
           keyExtractor={item => item.id.toString()}
           numColumns={3}
           contentContainerStyle={styles.fieldButtonsContainer}
@@ -94,7 +97,10 @@ const CompanyTitles = () => {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
           >
-          <TouchableOpacity onPress={() => navigation.navigate('CompanySocials')}>
+          <TouchableOpacity onPress={() => {  
+            navigation.navigate('CompanySocials',{name, password, phone, email, about, selectedFields, selectedTitles});
+            console.log(name, password, phone, email, about, selectedFields, selectedFields );
+            }}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
           </LinearGradient>
