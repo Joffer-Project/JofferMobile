@@ -17,7 +17,7 @@ const ModAccount = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
   const { isDarkMode } = useTheme();
   const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
-  const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
+  //const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showFieldsModal, setShowFieldsModal] = useState(false);
   const [showTitlesModal, setShowTitlesModal] = useState(false);
   const [showImagesLinksModal, setShowImagesLinksModal] = useState(false);
@@ -48,6 +48,19 @@ const ModAccount = () => {
   const handleNavigateTo = (screenName) => {
     navigation.navigate(screenName);
   };
+  const handleNavigateBack = () => {
+    navigation.goBack();
+  };
+  const navigateToFieldsProfile = () => {
+    navigation.navigate('FModify'); //{companyId});
+  };
+  const navigateToTitlesProfile = () => {
+    navigation.navigate('TModify'); //{companyId});
+  };
+  const handleProfileModifyPress = () => {
+    navigation.navigate('ProfileModify');
+  };
+
 
   const handleDeleteAccount = () => {
     // Tässä voit toteuttaa logiikan tilin poistamiselle
@@ -77,7 +90,7 @@ const ModAccount = () => {
         <View style={styles.buttonContent}>
           <Text style={styles.subHeaderText}>Customize account and applications below</Text>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={() => setShowCompanyInfoModal(true)}>
+          <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={handleProfileModifyPress}>
               <LinearGradient
                 colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
                 style={styles.linearGradient}
@@ -87,24 +100,24 @@ const ModAccount = () => {
                 <Text style={styles.registerText}>Company Information</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={() => setShowFieldsModal(true)}>
+            <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={navigateToFieldsProfile}>
               <LinearGradient
                 colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
                 style={styles.linearGradient}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
               >
-                <Text style={styles.registerText}>Fields</Text>
+                <Text style={styles.registerText}>Industries</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={() => setShowTitlesModal(true)}>
+            <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={navigateToTitlesProfile}>
               <LinearGradient
                 colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
                 style={styles.linearGradient}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
               >
-                <Text style={styles.registerText}>Titles</Text>
+                <Text style={styles.registerText}>Roles</Text>
               </LinearGradient>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={() => setShowImagesLinksModal(true)}>
@@ -151,10 +164,10 @@ const ModAccount = () => {
         </View>
       </ScrollView>
       {/* Modaalit */}
-      <CompanyInfoModal
+      {/*<CompanyInfoModal
         visible={showCompanyInfoModal}
         onClose={() => setShowCompanyInfoModal(false)}
-      />
+      />*/}
       <FieldsModal
         visible={showFieldsModal}
         onClose={() => setShowFieldsModal(false)}

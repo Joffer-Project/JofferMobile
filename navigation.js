@@ -7,9 +7,13 @@ import AboutScreen from './screens/AboutScreen';
 import FieldsScreen from './screens/FieldsScreen';
 import TitlesScreen from './screens/TitlesScreen';
 import PreviewScreen from './screens/PreviewScreen';
-import ModifyAccount from './screens/modAccount';
 import HowItWorks from './components/howItWorks';
 import Settings from './screens/settings';
+import FieldsScreenModify from './screens/settingsScreens/fieldsModify';
+import TitlesScreenModify from './screens/settingsScreens/titlesModify';
+import modAccount from './screens/modAccount';
+import ProfileModify from './screens/settingsScreens/profileModify';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -17,8 +21,11 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="ModifyProfile" component={modAccount} />
+        <Stack.Screen name="FModify" component={FieldsScreenModify} />
+        <Stack.Screen name="TModify" component={TitlesScreenModify} />
+        <Stack.Screen name="ProfileModify" component={ProfileModify} />
         <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="ModifyAccount" component={ModifyAccount} />
         <Stack.Screen name="HowItWorks" component={HowItWorks} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
