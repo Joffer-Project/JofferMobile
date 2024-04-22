@@ -91,12 +91,17 @@ const ProfileModify = ({route}) => {
         }
     };
     return (
-        <LinearGradient colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <View style={styles.logoContainer}>
-                <Image source={require('../../assets/joffer2.png')} style={styles.logo}/>
+        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme === 'dark' ? 'black' : 'white' }]}>
+            <LinearGradient
+                colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
+                style={styles.logoContainer}
+            >
+                <Image
+                    source={require('../../assets/joffer2.png')}
+                    style={styles.logo}
+                />
                 <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal talent!</Text>
-            </View>
+            </LinearGradient>
             <View style={styles.profileContainer}>
             <Text style={[styles.aboutHeaderText, { color: '#0C6BE8', fontSize: 20,marginBottom: 20, fontFamily: 'Fredoka1' }]}>Edit company's profile information below</Text>
                 <TouchableOpacity onPress={pickImage}>
@@ -221,7 +226,6 @@ const ProfileModify = ({route}) => {
             />
             
         </ScrollView>
-    </LinearGradient>
     );
 };
 
