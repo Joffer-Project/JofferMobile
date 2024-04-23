@@ -10,11 +10,14 @@ const DeleteProfile = ({ route }) => {
     const { userId } = route.params;
     const navigation = useNavigation();
     const { theme } = useTheme();
- 
-
     const deleteAccount = async () => {
         try {
-            await axios.delete(`https://joffer-backend-latest.onrender.com/Account/${userId}`);
+            console.log('Deleting account with userId:', userId);
+            
+            // Delete the profile using the userId
+            await axios.delete(`https://joffer-backend-latest.onrender.com/Talent/${userId}`);
+            
+            console.log('Account successfully deleted');
             Alert.alert('Account Deleted', 'Your account has been successfully deleted.');
             navigation.navigate('Home');
         } catch (error) {
@@ -22,7 +25,7 @@ const DeleteProfile = ({ route }) => {
             Alert.alert('Error', 'An error occurred while deleting your account.');
         }
     };
-
+    
     return (
         <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme === 'dark' ? 'black' : 'white' }]}>
             <LinearGradient

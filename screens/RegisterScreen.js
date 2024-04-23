@@ -21,9 +21,10 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [userId, setUserId] = useState('');
 
   const handleNextPress = async () => {
-    navigation.navigate('Register2', { name, email, phone, password });
+    navigation.navigate('Register2', { name, email, phone, password,});
   };
 
   return (

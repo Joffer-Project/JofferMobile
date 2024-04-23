@@ -9,13 +9,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../context/ThemeContext';
 import axios from 'axios';
 
-
 const SwipeScreen = ({ route }) => {
-  const { userId } = route.params;
+  const { userId, name, email } = route.params;
   const { theme } = useTheme();
   const [companies, setCompanies] = useState([]);
   const [showMatchModal, setShowMatchModal] = useState(false);
   const [companyId, setCompanyId] = useState(null);
+  const [companyAccountId, setCompanyAccountId] = useState(null);
 
   const [activeCardIndex, setActiveCardIndex] = useState(0); 
   const navigation = useNavigation();
@@ -25,6 +25,7 @@ const SwipeScreen = ({ route }) => {
       try {
         const response = await axios.get('https://joffer-backend-latest.onrender.com/JobOffers/GetAll');
         setCompanies(response.data);
+        
         
       } catch (error) {
         console.error('Error fetching companies:', error);
@@ -38,12 +39,13 @@ const SwipeScreen = ({ route }) => {
   
   const handleCompanyIdReceived = (companyId) => {
     setCompanyId(companyId);
-    console.log('whats',companyId);
+    console.log('company id?',companyId);
     
   };
 
   const handleSwipeRight = () => {
     setShowMatchModal(true);
+    //tämä toimintaan!! samoin dislike nappi MUISTA KORJATA!
   };
 
   const closeModal = () => {
@@ -55,8 +57,8 @@ const SwipeScreen = ({ route }) => {
   };
 
   const navigateToSettings = () => {
-    console.log(companyId);
-    navigation.navigate('Settings', { userId, companyId });
+    console.log('testataan',name,email);
+    navigation.navigate('Settings', {companyId, userId, name, email });
   };
 
   return (
@@ -111,13 +113,13 @@ const SwipeScreen = ({ route }) => {
 />
 
         <View style={styles.iconsContainer}>
-          <TouchableOpacity onPress={() => { /* icon */ }}>
+          <TouchableOpacity onPress={() => { /* iconi */ }}>
             <FontAwesomeIcon icon={faTimesCircle} size={60} style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { /* kuva */ }}>
             <Image source={require('../assets/Superlike.png')} style={styles.customIcon} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => { /* icon */ }}>
+          <TouchableOpacity onPress={() => { /* iconi */ }}>
             <FontAwesomeIcon icon={faHeart} size={60} style={[styles.icon, { color: '#58D336' }]} />
           </TouchableOpacity>
         </View>
@@ -186,6 +188,5 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
-
 
 export default SwipeScreen;

@@ -1,16 +1,13 @@
-
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
-import * as Font from 'expo-font';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
-const TitlesScreen = ({route}) => {
-  const navigation = useNavigation();
-  const { userId } = route.params;
+const TitlesScreen = ({ route, navigation }) => {
+  const { userId, name, email, phone, password, about, salaryMax, salaryMin, selectedFields } = route.params;
 
-  const [fields, setFields] = useState([]); 
+  const [titles, setTitles] = useState([]); 
+  const [selectedTitles, setSelectedTitles] = useState([]);
 
   useEffect(() => {
     async function loadFonts() {
@@ -21,43 +18,52 @@ const TitlesScreen = ({route}) => {
     }
     loadFonts();
 
-  // ei toimi kun tuota endpointtia ei enään ole
-    
+    // Fetch titles from API
     axios.get('https://joffer-backend-latest.onrender.com/Roles/GetAll')
       .then(response => {
-      
-        setFields(response.data);
+        setTitles(response.data);
       })
       .catch(error => {
-        console.error('Error fetching fields:', error);
+        console.error('Error fetching titles:', error);
       });
   }, []);
 
-  const [selectedFields, setSelectedFields] = useState([]);
-
-  const toggleFieldSelection = (fieldId) => {
-    const isSelected = selectedFields.includes(fieldId);
+  const toggleTitleSelection = (titleId) => {
+    const isSelected = selectedTitles.includes(titleId);
     if (isSelected) {
-      setSelectedFields(selectedFields.filter(id => id !== fieldId));
+      setSelectedTitles(selectedTitles.filter(id => id !== titleId));
     } else {
-      setSelectedFields([...selectedFields, fieldId]);
+      setSelectedTitles([...selectedTitles, titleId]);
     }
   };
 
-  const renderFieldButton = ({ item }) => {
-    const isSelected = selectedFields.includes(item.id);
-    return (
-      <TouchableOpacity
-        style={[styles.fieldButton, isSelected && styles.selectedFieldButton]}
-        onPress={() => toggleFieldSelection(item.id)}
-      >
-        <Text style={[styles.fieldButtonText, isSelected && styles.selectedFieldButtonText]}>{item.name}</Text>
-      </TouchableOpacity>
-    );
+  const handleNextPress = () => {
+    navigation.navigate('Socials', {
+      name,
+      userId,
+      email,
+      phone,
+      password,
+      about,
+      salaryMax,
+      salaryMin,
+      selectedFields,
+      selectedTitles, // Pass selectedTitles to the next screen
+    });
+    console.log(name, email, phone, password, about, salaryMin, salaryMax, selectedFields, selectedTitles);
   };
 
-  const handleNextPress = () => {
-    navigation.navigate('Socials', {userId});
+  const renderTitleButton = ({ item }) => {
+    const isSelected = selectedTitles.includes(item.id);
+  
+    return (
+      <TouchableOpacity
+        style={[styles.titleButton, isSelected && styles.selectedTitleButton]}
+        onPress={() => toggleTitleSelection(item.id)}
+      >
+        <Text style={[styles.titleButtonText, isSelected && styles.selectedTitleButtonText]}>{item.name}</Text>
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -66,45 +72,42 @@ const TitlesScreen = ({route}) => {
       behavior={Platform.OS === 'ios' ? 'padding' : null}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
     >
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        
       <LinearGradient
-          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-          style={styles.logoContainer}
-        >
-          <Image
-            source={require('../assets/joffer2.png')}
-            style={styles.logo}
-          />
-          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-        </LinearGradient>
-        
-        <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 4/5: Roles</Text>
-          <Text style={[styles.welcomeText, { fontSize: 16 }]}>Select the roles that align best with your interests, knowledge, experience, and wishes. </Text>
-        </View>
-
-        <FlatList
-          data={fields}
-          renderItem={renderFieldButton}
-          keyExtractor={item => item.id.toString()}
-          numColumns={3}
-          contentContainerStyle={styles.fieldButtonsContainer}
+        colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+        style={styles.logoContainer}
+      >
+        <Image
+          source={require('../assets/joffer2.png')}
+          style={styles.logo}
         />
-        
-        <View style={styles.buttonContainer}>
+        <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+      </LinearGradient>
+      
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.welcomeText}>Step 4/5: Roles</Text>
+        <Text style={[styles.welcomeText, { fontSize: 16 }]}>Select the roles that align best with your interests, knowledge, experience, and wishes. </Text>
+      </View>
+  
+      <FlatList
+        data={titles}
+        renderItem={renderTitleButton}
+        keyExtractor={item => item.id.toString()}
+        numColumns={3}
+        contentContainerStyle={styles.titleButtonsContainer}
+      />
+      
+      <View style={styles.buttonContainer}>
         <LinearGradient
-    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-    style={styles.returnButton}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-  >
-    <TouchableOpacity onPress={handleNextPress}>
-      <Text style={styles.returnButtonText}>Next</Text>
-    </TouchableOpacity>
-  </LinearGradient>
-        </View>
-      </ScrollView>
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.returnButton}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+        >
+          <TouchableOpacity onPress={handleNextPress}>
+            <Text style={styles.returnButtonText}>Next</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -114,18 +117,14 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 0, 
   },
-  scrollView: {
-    flexGrow: 1,
-  },
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    //backgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 20,
-    marginLeft:-20,
+    marginLeft: -20,
     marginRight: -20,
-    height:230,
+    height: 230,
   },
   logo: {
     width: 120,
@@ -140,7 +139,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     color: '#FF7E33',
-    
   },
   descriptionText: {
     fontSize: 15,
@@ -153,10 +151,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20, 
   },
-  fieldButtonsContainer: {
+  titleButtonsContainer: {
     alignItems: 'center',
   },
-  fieldButton: {
+  titleButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 20,
@@ -167,16 +165,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#FF7E33',
   },
-  selectedFieldButton: {
+  selectedTitleButton: {
     backgroundColor: '#FF7E33',
     color: 'white',
-   
   },
-  selectedFieldButtonText: {
+  selectedTitleButtonText: {
     color: 'white',
-   
   },
-  fieldButtonText: {
+  titleButtonText: {
     fontSize: 14,
     fontFamily: 'Fredoka1',
     color: '#FF7E33',
@@ -184,7 +180,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
     marginBottom: 45,
-    
   },
   returnButton: {
     paddingVertical: 10,
@@ -194,7 +189,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: '#FF7E33',
     width: 130,
-    
   },
   returnButtonText: {
     fontSize: 18,

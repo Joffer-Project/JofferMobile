@@ -26,16 +26,14 @@ const RegisterScreen2 = () => {
 
   // Navigate to the FieldsScreen
   const handleNextPress = async () => {
-    const { name, email, phone, password, about, salaryMax, salaryMin } = route.params;
+    const { name, email, phone, password} = route.params;
 
     // Use the values from the previous screen as needed
     console.log('Name:', name);
     console.log('Email:', email);
     console.log('Phone:', phone);
     console.log('Password:', password);
-    console.log('About Me:', about);
-    console.log('Salary Max:', salaryMax);
-    console.log('Salary Min:', salaryMin);
+    
 
     navigation.navigate('Fields', {
       name,
@@ -85,7 +83,7 @@ const RegisterScreen2 = () => {
             style={styles.input}
             placeholder="Salary Min"
             value={salaryMin}
-            onChangeText={setSalaryMin}
+            onChangeText={(text) => setSalaryMin(text)} 
             multiline={true}
              textAlignVertical="top" 
           />
@@ -93,7 +91,7 @@ const RegisterScreen2 = () => {
             style={styles.input}
             placeholder="Salary Max"
             value={salaryMax}
-            onChangeText={setSalaryMax}
+            onChangeText={(text) => setSalaryMax(text)} 
             multiline={true}
              textAlignVertical="top" 
           />
@@ -215,6 +213,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Fredoka1',
     color: 'white',
+
   },
 });
 

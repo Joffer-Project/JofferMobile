@@ -1,14 +1,18 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, ImageBackground, Alert } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import axios from 'axios';
-
+import Auth0 from 'react-native-auth0';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+
+  // Auth0 configuration
+  const auth0 = new Auth0({
+    domain: 'dev-katcbz7xhn8gswyp.us.auth0.com',
+    clientId: '7rOiEYBIbncRcvFEfKcwWyKDBG9bmj1z',
+  });
 
   useEffect(() => {
     async function loadFonts() {
@@ -19,50 +23,37 @@ const LoginScreen = () => {
     }
     loadFonts();
   }, []);
-  // muuttujat
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // API endpoint URL ja login hakee tiedot tietokannasta
-  const API_URL = 'https://joffer-backend-latest.onrender.com/Accounts/GetAll';
-
-  
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(API_URL);
-      console.log('API Response:', response.data);
-    
-      const user = response.data.find(
-        (user) => user.email === email && user.password === password
-      );
-      if (user) {
-        const userId = user.id;
-        console.log(userId);
-        navigation.navigate('Swipe', { userId });
-      } else {
-       
-        Alert.alert('Invalid credentials', 'Please enter valid email and password.');
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-     
-      Alert.alert('Error', 'An error occurred ');
-    }
-  };
-
-  
   const handleLoginPress = () => {
-    
     if (email.trim() === '' || password.trim() === '') {
       Alert.alert('Missing credentials', 'Please enter both email and password.');
     } else {
-     
-      fetchData();
+      auth0.auth
+        .passwordRealm({
+          username: email,
+          password: password,
+          realm: 'Username-Password-Authentication', // Your Auth0 connection name
+          
+         
+        })
+        .then(credentials => {
+          // Successfully logged in, navigate to next screen
+          console.log('Authenticated:', credentials);
+          navigation.navigate('Swipe');
+        })
+        .catch(error => {
+          // Handle login error
+          console.error('Login error:', error);
+          Alert.alert('Invalid credentials', 'Please enter valid email and password.');
+        });
     }
   };
+
   const handleRegisterPress = () => {
     navigation.navigate('Register');
-    
   };
 
   return (

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
@@ -9,10 +8,8 @@ import axios from 'axios';
 const FieldsScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { userId, name, email, phone, password, about, salaryMax, salaryMin } = route.params;
-
   const [fields, setFields] = useState([]); 
-  
+  const [selectedFields, setSelectedFields] = useState([]);
 
   useEffect(() => {
     async function loadFonts() {
@@ -23,19 +20,14 @@ const FieldsScreen = () => {
     }
     loadFonts();
 
-  // ei toimi kun tuota endpointtia ei enään ole
-    
     axios.get('https://joffer-backend-latest.onrender.com/Industries/GetAll')
       .then(response => {
-      
         setFields(response.data);
       })
       .catch(error => {
         console.error('Error fetching fields:', error);
       });
   }, []);
-
-  const [selectedFields, setSelectedFields] = useState([]);
 
   const toggleFieldSelection = (fieldId) => {
     const isSelected = selectedFields.includes(fieldId);
@@ -44,6 +36,22 @@ const FieldsScreen = () => {
     } else {
       setSelectedFields([...selectedFields, fieldId]);
     }
+  };
+
+  const handleNextPress = () => {
+    const { userId, name, email, phone, password, about, salaryMax, salaryMin } = route.params;
+    navigation.navigate('Titles', {
+      name,
+      userId,
+      email,
+      phone,
+      password,
+      about,
+      salaryMax,
+      salaryMin,
+      selectedFields, // Pass selectedFields to the next screen
+    });
+    console.log(name, email, phone, password, about, salaryMin, salaryMax, selectedFields);
   };
 
   const renderFieldButton = ({ item }) => {
@@ -58,57 +66,48 @@ const FieldsScreen = () => {
     );
   };
 
-  const handleNextPress = () => {
-    
-    navigation.navigate('Titles', {userId});
-    console.log(name, email, phone,password, about, salaryMin, salaryMax);
-  };
-
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : null}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
     >
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        
       <LinearGradient
-          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-          style={styles.logoContainer}
-        >
-          <Image
-            source={require('../assets/joffer2.png')}
-            style={styles.logo}
-          />
-          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-        </LinearGradient>
-        
-        <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 3/5: Industries</Text>
-          <Text style={[styles.welcomeText, { fontSize: 16 }]}>Select the industries that align best with your interests, knowledge, experience, and wishes. </Text>
-        </View>
-
-        <FlatList
-          data={fields}
-          renderItem={renderFieldButton}
-          keyExtractor={item => item.id.toString()}
-          numColumns={3}
-          contentContainerStyle={styles.fieldButtonsContainer}
+        colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+        style={styles.logoContainer}
+      >
+        <Image
+          source={require('../assets/joffer2.png')}
+          style={styles.logo}
         />
-        
-        <View style={styles.buttonContainer}>
+        <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+      </LinearGradient>
+      
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.welcomeText}>Step 3/5: Industries</Text>
+        <Text style={[styles.welcomeText, { fontSize: 16 }]}>Select the industries that align best with your interests, knowledge, experience, and wishes. </Text>
+      </View>
+  
+      <FlatList
+        data={fields}
+        renderItem={renderFieldButton}
+        keyExtractor={item => item.id.toString()}
+        numColumns={3}
+        contentContainerStyle={styles.fieldButtonsContainer}
+      />
+      
+      <View style={styles.buttonContainer}>
         <LinearGradient
-    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
-    style={styles.returnButton}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-  >
-    <TouchableOpacity onPress={handleNextPress}>
-      <Text style={styles.returnButtonText}>Next</Text>
-    </TouchableOpacity>
-  </LinearGradient>
-        </View>
-      </ScrollView>
+          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+          style={styles.returnButton}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+        >
+          <TouchableOpacity onPress={handleNextPress}>
+            <Text style={styles.returnButtonText}>Next</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -124,12 +123,11 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    //backgroundColor: '#FF7E33',
     padding: 20,
     marginBottom: 20,
-    marginLeft:-20,
+    marginLeft: -20,
     marginRight: -20,
-    height:230,
+    height: 230,
   },
   logo: {
     width: 120,
@@ -144,7 +142,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     color: '#FF7E33',
-    
   },
   descriptionText: {
     fontSize: 15,
@@ -174,11 +171,9 @@ const styles = StyleSheet.create({
   selectedFieldButton: {
     backgroundColor: '#FF7E33',
     color: 'white',
-   
   },
   selectedFieldButtonText: {
     color: 'white',
-   
   },
   fieldButtonText: {
     fontSize: 14,
@@ -188,7 +183,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
     marginBottom: 45,
-    
   },
   returnButton: {
     paddingVertical: 10,
@@ -198,7 +192,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: '#FF7E33',
     width: 130,
-    
   },
   returnButtonText: {
     fontSize: 18,
@@ -208,4 +201,5 @@ const styles = StyleSheet.create({
 });
 
 export default FieldsScreen;
+
 

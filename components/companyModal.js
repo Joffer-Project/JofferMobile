@@ -11,21 +11,22 @@ const ModalComponent = ({ modalVisible, setModalVisible, companyId, offerId }) =
   const [offerData, setOfferData] = useState();
   
 
-  // sitten job offer tarkemmin
+  // sitte job offer tarkemmin
   
   useEffect(() => {
     const fetchCompanyData = async () => {
       try {
         const response = await axios.get(`https://joffer-backend-latest.onrender.com/Company/${companyId}`);
         setCompanyData(response.data);
-        const accountId = response.data.accountId;
-        setAccountId(accountId);
+        
+        setAccountId(response.data.accountId);
+      
         if (accountId) {
           try {
             const accountResponse = await axios.get(`https://joffer-backend-latest.onrender.com/Accounts/GetAll?accountId=${accountId}`);
-            // Assuming accountResponse.data is an array of objects
+           
             const matchedAccount = accountResponse.data.find(account => account.id === accountId);
-            // Assuming account name is stored in a property called "name"
+          
             const accountName = matchedAccount ? matchedAccount.name : "Account not found";
             setAccountData(accountName);
           } catch (error) {
@@ -39,6 +40,7 @@ const ModalComponent = ({ modalVisible, setModalVisible, companyId, offerId }) =
   
     if (modalVisible && companyId) {
       fetchCompanyData();
+      console.log('accountid', accountId);
     }
   }, [modalVisible, companyId]);
 

@@ -8,9 +8,9 @@ import { useState } from 'react';
 import VersionModal from './versionModal';
 
 const Settings = ({ route }) => {
-    const { userId } = route.params;
+    const { userId, name, email } = route.params;
     const { companyId } = route.params;
-    console.log(userId);
+    console.log('userId',userId);
     console.log(companyId);
     const navigation = useNavigation();
     const { theme, toggleTheme } = useTheme();
@@ -38,7 +38,8 @@ const Settings = ({ route }) => {
         navigation.navigate('HowItWorks');
     };
     const navigateToModify = () => {
-        navigation.navigate('Modify', { userId });
+        console.log('testataan',name,email);
+        navigation.navigate('Modify', { userId, name, email });
     };
     const handleToggleVersionModal = () => {
         setVersionModalVisible(!versionModalVisible);
