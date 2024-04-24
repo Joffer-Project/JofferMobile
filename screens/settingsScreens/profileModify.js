@@ -14,12 +14,11 @@ const ProfileModify = ({route}) => {
     //console.log(userId);
     const navigation = useNavigation();
     const { theme } = useTheme();
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [phone, setPhone] = useState('');
+    const [name, setName] = useState('Tesla');
+    const [email, setEmail] = useState('eupress@tesla.com');
+    const [password, setPassword] = useState('***********');
     const [titles, setTitles] = useState('Robotics & Automation ● Hardware ● GIS');
-    const [aboutMe, setAboutMe] = useState(" Founded in 2003 by a group of engineers with a vision for sustainable transportation, Tesla has embarked on an extraordinary journey to revolutionize the automotive industry and beyond.");
+    const [aboutUs, setAboutUs] = useState(" Founded in 2003 by a group of engineers with a vision for sustainable transportation, Tesla has embarked on an extraordinary journey to revolutionize the automotive industry and beyond.");
     const [funFact, setFunFact] = useState('"The Model S is our highest rated car ever"');
     const [link1, setLink1] = useState('https://tesla.com');
     const [link2, setLink2] = useState('https://tesla.com/careers');
@@ -49,7 +48,7 @@ const ProfileModify = ({route}) => {
     */}
 
     const handleNextPress = () => {
-        navigation.navigate('Swipe', {userId});
+        navigation.navigate('Swipe', goBack = true);
     };
     
 
@@ -142,17 +141,6 @@ const ProfileModify = ({route}) => {
                         placeholder="Password"
                     />
                 </View>
-                <View style={styles.inputContainer}>
-                    <TouchableOpacity onPress={() => setPhone('')}>
-                        <FontAwesomeIcon icon={faEdit} size={30} style={styles.icon} />
-                    </TouchableOpacity>
-                    <TextInput
-                        style={[styles.inputField, { color: '#0C6BE8', fontSize: 20 }]}
-                        value={phone}
-                        onChangeText={setPhone}
-                        placeholder="Phone number"
-                    />
-                </View>
                 <TouchableOpacity onPress={() => setTitles('')}>
                     <FontAwesomeIcon icon={faEdit} size={30} style={styles.icon1} />
                 </TouchableOpacity>
@@ -164,14 +152,14 @@ const ProfileModify = ({route}) => {
                 />
             </View>
             <View style={styles.aboutContainer}>
-                <TouchableOpacity onPress={() => setAboutMe('')}>
+                <TouchableOpacity onPress={() => setAboutUs('')}>
                     <FontAwesomeIcon icon={faEdit} size={30} style={styles.icon} />
                 </TouchableOpacity>
                 <Text style={[styles.aboutHeaderText, { color: '#0C6BE8', fontSize: 22, fontFamily: 'Fredoka1' }]}>About the company</Text>
                 <TextInput
                     style={[styles.aboutText, { color: 'black', fontSize: 18 }]}
-                    value={aboutMe}
-                    onChangeText={setAboutMe}
+                    value={aboutUs}
+                    onChangeText={setAboutUs}
                     multiline={true}
                     placeholder="Tell something about the company"
                 />
@@ -183,7 +171,7 @@ const ProfileModify = ({route}) => {
                     style={[styles.professions, { marginTop: 20, fontSize: 18, fontFamily: 'Fredoka1', marginBottom: -20, color: 'black' }]}
                     value={funFact}
                     onChangeText={setFunFact}
-                    placeholder="Share a fun fact about the company"
+                    placeholder="Share some nice to know fact about the company"
                 />
             </View>
             <View style={styles.linksContainer}>
