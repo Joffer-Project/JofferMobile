@@ -14,7 +14,7 @@ const Passcode = ({route}) => {
     const navigation = useNavigation();
     const [windowWidth, setWindowWidth] = useState(Dimensions.get('window').width);
     const { theme } = useTheme();
-    const [passcode, setPasscode] = useState('');
+    const [passcode, setPasscode] = useState('Tesla2024');
 
     useEffect(() => {
         const loadFont = async () => {
@@ -37,7 +37,7 @@ const Passcode = ({route}) => {
       }, []);
     
       const handleNextPress = () => {
-        navigation.navigate('Swipe', {userId});
+        navigation.navigate('Swipe', goBack = true);
     };
     
     return (
