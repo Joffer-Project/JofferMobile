@@ -1,15 +1,30 @@
-// Kuvat ja linkit
-import React from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Linking, Alert } from 'react-native';
 
 const ImagesLinksModal = ({ visible, onClose }) => {
+  const [companyLinks, setCompanyLinks] = useState([
+    { id: 1, url: 'https://tesla.com', label: 'Tesla Website' },
+    { id: 2, url: 'https://tesla.com/careers', label: 'Tesla Careers' }
+  ]);
+
+  const openLink = (url) => {
+    Linking.openURL(url);
+  };
+
   return (
     <Modal visible={visible} transparent>
       <View style={styles.modalBackground}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalText}>Images and links</Text>
-          <TouchableOpacity style={styles.modalButton} onPress={onClose}>
-            <Text style={styles.modalButtonText}>Close</Text>
+          <Text style={styles.versionText}>Added Links</Text>
+          <ScrollView style={styles.linksContainer}>
+            {companyLinks.map(link => (
+              <TouchableOpacity key={link.id} onPress={() => openLink(link.url)}>
+                <Text style={styles.linkText}>{link.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -29,18 +44,29 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     alignItems: 'center',
+    width: 300, // Set modal width
   },
-  modalText: {
-    fontSize: 16,
+  versionText: {
+    fontSize: 18,
+    fontWeight: 'bold',
     marginBottom: 10,
-    textAlign: 'center',
+    color: '#0C6BE8',
   },
-  modalButton: {
-    padding: 10,
-    borderRadius: 5,
+  linksContainer: {
+    maxHeight: 200,
+  },
+  linkText: {
+    color: '#0C6BE8',
+    marginBottom: 10,
+  },
+  closeButton: {
     backgroundColor: '#0C6BE8',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 20,
   },
-  modalButtonText: {
+  closeButtonText: {
     color: 'white',
     fontSize: 16,
   },
