@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, ImageBackground } from
 import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-// tää nyt skippaa loginin täysin suoraan swippeen
+// this skips the entire login page now since the auth0 is not compatable with expo go and I cant implement the login.
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -40,7 +40,7 @@ const HomeScreen = () => {
         </Text>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonBox}>
-          <TouchableOpacity style={[styles.box, styles.talentBox]} onPress={() => navigation.navigate('Login')}>
+          <TouchableOpacity style={[styles.box, styles.talentBox]} onPress={() => navigation.navigate('Swipe')}>
             
           <ImageBackground
               source={require('../assets/talent.png')}

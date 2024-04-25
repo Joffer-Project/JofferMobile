@@ -21,7 +21,7 @@ const TitlesScreenModify = ({route}) => {
     }
     loadFonts();
 
-  // ei toimi kun tuota endpointtia ei enään ole
+
     
     axios.get('https://joffer-backend-latest.onrender.com/Industries/GetAll')
       .then(response => {

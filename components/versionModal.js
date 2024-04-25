@@ -23,7 +23,7 @@ const VersionModal = ({ visible, onClose, version }) => {
       <View style={styles.modalBackground}>
         <View style={styles.modalContent}>
         <Text style={[styles.infoText, styles.fontFredoka]}>Version:</Text>
-          <Text style={[styles.infoText, styles.fontFredoka]}>Versio joku gfkogdfkgfdgdfnglfgndfklgndfl</Text>
+          <Text style={[styles.infoText, styles.fontFredoka]}>Version 1.0 25.4.2024</Text>
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
             <LinearGradient
               colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}

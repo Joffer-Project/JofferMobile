@@ -160,6 +160,7 @@ const ProfileModify = ({ route }) => {
                 personalUrl: link5,
                 auth0Id: auth0Id,
                 
+                
             };
     
             const response = await axios.put('https://joffer-backend-latest.onrender.com/Talent', userData, config);

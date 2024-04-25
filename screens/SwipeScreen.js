@@ -49,7 +49,8 @@ const SwipeScreen = ({ route }) => {
 
   const handleSwipeRight = () => {
     setShowMatchModal(true);
-    //tämä toimintaan!! samoin dislike nappi MUISTA KORJATA!
+    // Here I would have implemented the functionality that when i tab on the heart or swipe, it would have saved the
+    // joboffer to spesific accounts matches. However time got in the way
   };
 
   const closeModal = () => {
