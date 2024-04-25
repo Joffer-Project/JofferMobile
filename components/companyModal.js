@@ -9,41 +9,33 @@ const ModalComponent = ({ modalVisible, setModalVisible, companyId, offerId }) =
   const [companyData, setCompanyData] = useState();
   const [accountData, setAccountData] = useState();
   const [offerData, setOfferData] = useState();
-  
-
+  const token= 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikl2eHBMemJuLV85R3pKdWxhcXFfcSJ9.eyJodHRwOi8vd3d3LmpvZmZlci5jb20vcm9sZXMiOltdLCJpc3MiOiJodHRwczovL2Rldi0zbGVieHVsd2prcGtzZWhuLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NjI3NmE3Y2E0OWYzODZlNzNmOWQ2YjgiLCJhdWQiOiJodHRwczovL2pvZmZlci5jb20vYXBpIiwiaWF0IjoxNzEzOTUxMjMzLCJleHAiOjE3MTM5NTg0MzMsInNjb3BlIjoiIiwiYXpwIjoiUzZ2MDRoRElsMlZaNlZFbEthdVl2UHFPVE5BR1FQN0EiLCJwZXJtaXNzaW9ucyI6W119.irB19ZuqGsnx9EfiliphQ7NBnN_8AyZ9tIifPMC_SO20jW4RCCzvchvAuveRKMywDANGtMEqGZM394luJqMghGhqm3K962mLT9G5SQI3mtwi7CvE2-BEYzATHDjobYonjWwKUP9wtDnFVOSoSs3C6SCwqw3hDsVdv3svTeZXBebBOgyKNL4ct5YkpXnGGD50ApgdCsMGHO8SlRNiJ8JurEczglkMWvO_gomZiHUNLdAKMfhL5IIo6MVR377ObeXklT3fdw9aWiunLLNqd8AN-yhyEV6rmcFaH4DL6bmzQhKLm06YuU66ChIHAHR9ni9CgKjV6gfkGIrHWWdaEg5Cjg';
+  const companyToken ='eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikl2eHBMemJuLV85R3pKdWxhcXFfcSJ9.eyJodHRwOi8vd3d3LmpvZmZlci5jb20vcm9sZXMiOltdLCJpc3MiOiJodHRwczovL2Rldi0zbGVieHVsd2prcGtzZWhuLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NjI4YjA5MjY5NmI1YWZmNGY1OTQ4MWUiLCJhdWQiOiJodHRwczovL2pvZmZlci5jb20vYXBpIiwiaWF0IjoxNzEzOTUxNTkxLCJleHAiOjE3MTM5NTg3OTEsInNjb3BlIjoiIiwiYXpwIjoiUzZ2MDRoRElsMlZaNlZFbEthdVl2UHFPVE5BR1FQN0EiLCJwZXJtaXNzaW9ucyI6W119.Jqv1Wlwdr6gNWvR8xnXdZ7zxOCiizX72P4rV7sUBVGQWTxLyTEyS8mO7KXAjoe6mtF62Omx1pd54ocK4ZYElatQ6BYnx784MPErMV-wmLaHMbfnePa4VgFuvHZ82z_z8gof5NmAe9wf6KoZcnXf4T_chzU_PQbP5EztHno9VPxft2K18IMB76RnVmLHUNo1W7oJI9kMpPBsyhbks6ipePNVRLsF92M2Gr-FlzEsjl9Zix96sQxaiElMFBHOCvlHoFj9WSHUtkn-LQXuvUGRsdkEcE9j6WOi31ppgbuIHM-Whm3_KqBr4N5PpIArpHptjxPe7_r55mTjshQ8Jx2tgFA';
   // sitte job offer tarkemmin
-  
+  //const companyToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikl2eHBMemJuLV85R3pKdWxhcXFfcSJ9.eyJodHRwOi8vd3d3LmpvZmZlci5jb20vcm9sZXMiOltdLCJpc3MiOiJodHRwczovL2Rldi0zbGVieHVsd2prcGtzZWhuLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NjI4YjA5MjY5NmI1YWZmNGY1OTQ4MWUiLCJhdWQiOiJodHRwczovL2pvZmZlci5jb20vYXBpIiwiaWF0IjoxNzEzOTUxNTkxLCJleHAiOjE3MTM5NTg3OTEsInNjb3BlIjoiIiwiYXpwIjoiUzZ2MDRoRElsMlZaNlZFbEthdVl2UHFPVE5BR1FQN0EiLCJwZXJtaXNzaW9ucyI6W119.Jqv1Wlwdr6gNWvR8xnXdZ7zxOCiizX72P4rV7sUBVGQWTxLyTEyS8mO7KXAjoe6mtF62Omx1pd54ocK4ZYElatQ6BYnx784MPErMV-wmLaHMbfnePa4VgFuvHZ82z_z8gof5NmAe9wf6KoZcnXf4T_chzU_PQbP5EztHno9VPxft2K18IMB76RnVmLHUNo1W7oJI9kMpPBsyhbks6ipePNVRLsF92M2Gr-FlzEsjl9Zix96sQxaiElMFBHOCvlHoFj9WSHUtkn-LQXuvUGRsdkEcE9j6WOi31ppgbuIHM-Whm3_KqBr4N5PpIArpHptjxPe7_r55mTjshQ8Jx2tgFA'; 
+
   useEffect(() => {
     const fetchCompanyData = async () => {
       try {
-        const response = await axios.get(`https://joffer-backend-latest.onrender.com/Company/${companyId}`);
-        setCompanyData(response.data);
-        
-        setAccountId(response.data.accountId);
-      
-        if (accountId) {
-          try {
-            const accountResponse = await axios.get(`https://joffer-backend-latest.onrender.com/Accounts/GetAll?accountId=${accountId}`);
-           
-            const matchedAccount = accountResponse.data.find(account => account.id === accountId);
-          
-            const accountName = matchedAccount ? matchedAccount.name : "Account not found";
-            setAccountData(accountName);
-          } catch (error) {
-            console.error('Error fetching account data:', error);
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${companyToken}`
           }
-        }
+        };
+  
+        const response = await axios.get(`https://joffer-backend-latest.onrender.com/Company`, config);
+        setCompanyData(response.data);
+        console.log('?',response.data);
       } catch (error) {
-        console.error('Error fetching companyy data:', error);
+        console.error('Error fetching company data:', error);
       }
     };
   
     if (modalVisible && companyId) {
       fetchCompanyData();
-      console.log('accountid', accountId);
     }
   }, [modalVisible, companyId]);
-
+  
   useEffect(() => {
     if (companyData) {
       console.log(companyData);

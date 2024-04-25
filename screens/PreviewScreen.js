@@ -5,6 +5,7 @@ import SwipeButton from 'rn-swipe-button';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
+
 const ProfilePreview = ({ route }) => {
   const navigation = useNavigation();
   const {  name, email, phone, password, about, salaryMax, salaryMin, selectedFields, selectedTitles, profileImageUri, additionalImageUri1, linkAddress1, linkAddress2, linkAddress3, linkAddress4, linkAddress5 } = route.params;
@@ -95,7 +96,7 @@ const ProfilePreview = ({ route }) => {
         email: email,
         aboutMe: about,
         salaryMinimum: salaryMin,
-       
+        //  phone number ei toimi ollenkaan 
         avatarUrl: profileImageUri,
         image2Url: additionalImageUri1,
         gitHubUrl: linkAddress1,

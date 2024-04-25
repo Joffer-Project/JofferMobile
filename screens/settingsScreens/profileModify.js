@@ -11,15 +11,16 @@ import { useTheme } from '../../context/ThemeContext';
 
 
 const ProfileModify = ({ route }) => {
-    const { userId, name, email } = route.params;
-    console.log(userId);
+    //const { userId, name, email } = route.params;
+    //console.log(userId);
     const navigation = useNavigation();
     const { theme } = useTheme();
-    const [newname, setNewName] = useState(name);
-    const [newemail, setNewEmail] = useState(email);
+    const [newname, setNewName] = useState('');
+    const [newemail, setNewEmail] = useState('');
     const [password, setPassword] = useState('Change password');
     const [aboutMe, setAboutMe] = useState("I'm a software engineer passionate about building mobile applications. I love hiking, reading, and being awesome in my free time.");
     const [salaryMin, setSalaryMin] = useState('');
+    const [auth0Id, setAuth0Id] = useState('');
 
     const [link1, setLink1] = useState('');
     const [link2, setLink2] = useState('');
@@ -29,63 +30,77 @@ const ProfileModify = ({ route }) => {
     const [profileImageUri, setProfileImageUri] = useState(null);
     const [userAccountId, setUserAccountId] = useState('');
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await axios.get(`https://joffer-backend-latest.onrender.com/Talents/GetAll`);
-                const userData = response.data.find(user => user.id === userId);
-                console.log(userData);
-                if (userData) {
+    const token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikl2eHBMemJuLV85R3pKdWxhcXFfcSJ9.eyJodHRwOi8vd3d3LmpvZmZlci5jb20vcm9sZXMiOltdLCJpc3MiOiJodHRwczovL2Rldi0zbGVieHVsd2prcGtzZWhuLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NjI4ZjRmOGZjNDM2N2E3MzIxNjg5YTEiLCJhdWQiOlsiaHR0cHM6Ly9qb2ZmZXIuY29tL2FwaSIsImh0dHBzOi8vZGV2LTNsZWJ4dWx3amtwa3NlaG4udXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTcxMzk2MDE4NywiZXhwIjoxNzE0MDQ2NTg3LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXpwIjoiUzZ2MDRoRElsMlZaNlZFbEthdVl2UHFPVE5BR1FQN0EiLCJwZXJtaXNzaW9ucyI6W119.DHOeOvbMDzIhZni6uBm7q5h6H4ma9LTGRvN_s7KbVumc0RO9wkyI6HEwSMBSsBFkckCKEwkz01FsTlbo6Vb8SOnjmTDvpe0MQx_7Mr2ZuVQHYbiaWPBdGYT-xudSv7FV8LjzSLHt2zKnrX_KPdhVnP0g-mkde9DW0GZM0I55XiEBKHNWFRoAa6ecVi7fLLRh9k0PPo3SnT8-doCa7T9WXl_cEXrieKlBhraw6K64lEbftuINXwNrr_cHf2wGUgVa9OJthbXiwsYYWM5nJU70TFIoN_HtrOXLf0G8sFT70z9tFvVY3v3xjQJalyDmymQi3TpgjqEBgz9KrnbNMLcRgQ';
+    const talentToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ikl2eHBMemJuLV85R3pKdWxhcXFfcSJ9.eyJodHRwOi8vd3d3LmpvZmZlci5jb20vcm9sZXMiOltdLCJpc3MiOiJodHRwczovL2Rldi0zbGVieHVsd2prcGtzZWhuLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NjI3NmE3Y2E0OWYzODZlNzNmOWQ2YjgiLCJhdWQiOiJodHRwczovL2pvZmZlci5jb20vYXBpIiwiaWF0IjoxNzEzOTYxODkxLCJleHAiOjE3MTM5NjkwOTEsInNjb3BlIjoiIiwiYXpwIjoiUzZ2MDRoRElsMlZaNlZFbEthdVl2UHFPVE5BR1FQN0EiLCJwZXJtaXNzaW9ucyI6W119.Yyw_3_wt5mRhSbmmXQIHuAxy7DgXngTHkCHof7i9CtyLPRZ93Oy7q1ecATvZIuUjOYV2GoLHsgWOrEzeK2UEdO1G0NmxPe6vrleKfvXa9njOdhZBkaWHh2-Bu-KBIAQDZ3O-gvGxNIbPdYTW4Q1f9dRGoYn_kucIpJiob82ImZj-bIFrOoxUBz4ksEm1THz9OZGqOdxBtT12wPLqmNMN6x_ZnWxAex5DpQ6ZIUrBtCcODghkHJsPx8JgFCNhi7AnikdldPPG0IHea1zhPKMOHkYQFaK8nRs2rDjdfD85_sTM5GHPMHT3XXMJLJLauMvUwwnpSx7G5a125ruL4dvdCg';
+        useEffect(() => {
+            const fetchUserData = async () => {
+                try {
+                    const config = {
+                        headers: {
+                            'Authorization': `Bearer ${talentToken}`
+                        }
+                    };
 
-                    setAboutMe(userData.aboutMe);
-                    setUserAccountId(userData.accountId);
-                    setProfileImageUri(userData.avatarUrl);
-                    setSalaryMin(userData.salaryMinimum);
-                    setLink1(userData.gitHubUrl);
-                    setLink2(userData.linkedInUrl);
-                    setLink3(userData.mediumUrl);
-                    setLink4(userData.dribbleUrl);
-                    setLink5(userData.personalUrl);
-                } else {
+                    const response = await axios.get(`https://joffer-backend-latest.onrender.com/Talent`, config);
+                    const userData = response.data;
+                    console.log('userdata??',userData);
+                    console.log('auth0id', userData.auth0Id);
+                    if (userData) {
+                        setAboutMe(userData.aboutMe);
+                        setProfileImageUri(userData.avatarUrl);
+                        setSalaryMin(userData.salaryMinimum);
+                        setLink1(userData.gitHubUrl);
+                        setLink2(userData.linkedInUrl);
+                        setLink3(userData.mediumUrl);
+                        setLink4(userData.dribbleUrl);
+                        setLink5(userData.personalUrl);
+                        setAuth0Id(userData.auth0Id);
+                    } else {
+                       console.log('not working');
+                    }
+                } catch (error) {
+                    console.error('Error fetching user dataa:', error);
                 }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        fetchUserData();
-    }, [userId]);
+            };
+        
+            fetchUserData();
+        }, []);
 
 
     const handleNextPress = () => {
 
-        navigation.navigate('Swipe', { userId });
+        navigation.navigate('Swipe');
     };
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                // Fetch user data based on userAccountId
-                const response = await axios.get(`https://joffer-backend-latest.onrender.com/Accounts/GetAll`);
-                const userData1 = response.data.find(user => user.id === userAccountId);
-                console.log('uuuuserdata', userData1);
+                const config = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                };
+    
+                const response = await axios.get(`https://joffer-backend-latest.onrender.com/Account`, config);
+                const userData1 = response.data;
+                console.log('data', userData1);
                 if (userData1) {
-                    setNewName(name);
-                    setNewEmail(email);
+                    setNewName(userData1.name);
+                    setNewEmail(userData1.email);
 
-
-                    // Set other user data as needed
+    
+                   
                 } else {
-
+                   
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 Alert.alert('Error', 'An error occurred while fetching user data.');
             }
         };
-
+    
         fetchUserData();
-    }, [userAccountId]);
+    }, [token, userAccountId]);
     useEffect(() => {
         console.log('salaryMin:', salaryMin);
     }, [salaryMin]);
@@ -127,6 +142,45 @@ const ProfileModify = ({ route }) => {
             alert('Error picking image. Please try again.');
         }
     };
+    const saveProfile = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${talentToken}`
+                }
+            };
+    
+            const userData = {
+                aboutMe,
+                salaryMinimum: salaryMin,
+                gitHubUrl: link1,
+                linkedInUrl: link2,
+                mediumUrl: link3,
+                dribbleUrl: link4,
+                personalUrl: link5,
+                auth0Id: auth0Id,
+                
+            };
+    
+            const response = await axios.put('https://joffer-backend-latest.onrender.com/Talent', userData, config);
+            console.log('Profile saved successfully:', response.data);
+            
+        } catch (error) {
+            if (error.response) {
+               
+                console.error('Request failed with status code:', error.response.status);
+                console.log('Response data:', error.response.data);
+                console.log('Response headers:', error.response.headers);
+            } else if (error.request) {
+              
+                console.error('No response received:', error.request);
+            } else {
+              
+                console.error('Error:', error.message);
+            }
+           
+        }
+    };
     return (
         <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme === 'dark' ? 'black' : 'white' }]}>
             <LinearGradient
@@ -152,9 +206,9 @@ const ProfileModify = ({ route }) => {
                     </TouchableOpacity>
                     <TextInput
                         style={[styles.inputField, { color: theme === 'dark' ? '#FF7E33' : '#F98A4B' }]}
-                        value={name}
+                        value={newname}
                         onChangeText={setNewName}
-                        placeholder={name}
+                        placeholder={newname}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -163,7 +217,7 @@ const ProfileModify = ({ route }) => {
                     </TouchableOpacity>
                     <TextInput
                         style={[styles.inputField, { color: '#F98A4B', fontSize: 20 }]}
-                        value={email}
+                        value={newemail}
                         onChangeText={setNewEmail}
                         placeholder="Enter your email"
                     />
@@ -271,7 +325,7 @@ const ProfileModify = ({ route }) => {
 
             <SwipeButton
                 title="    Save "
-                onSwipeSuccess={handleNextPress}
+                onSwipeSuccess={saveProfile}
                 railStyles={{
                     backgroundColor: 'rgba(255, 191, 129, 0.3)',
                     borderColor: '#FF7E33',

@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Font from 'expo-font';
 
 const ModifyAccount = ({route}) => {
-    const { userId, name, email } = route.params;
+    //const { userId } = route.params;
     const navigation = useNavigation();
     const [fontLoaded, setFontLoaded] = React.useState(false);
     React.useEffect(() => {
@@ -29,17 +29,17 @@ const ModifyAccount = ({route}) => {
         navigation.navigate('HowItWorks');
     };
     const navigateToProfileModify = () => {
-        console.log('modify user id', userId);
-        navigation.navigate('ModifyProfile', {userId, name,email});
+        console.log('modify user id');
+        navigation.navigate('ModifyProfile');
     };
     const navigateToDeleteProfile = () => {
-        navigation.navigate('DeleteProfile', {userId});
+        navigation.navigate('DeleteProfile');
     };
     const navigateToFieldsProfile = () => {
-        navigation.navigate('FModify', {userId});
+        navigation.navigate('FModify');
     };
     const navigateToTitlesProfile = () => {
-        navigation.navigate('TModify', {userId});
+        navigation.navigate('TModify');
     };
 
 

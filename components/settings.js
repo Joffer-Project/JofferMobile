@@ -8,7 +8,7 @@ import { useState } from 'react';
 import VersionModal from './versionModal';
 
 const Settings = ({ route }) => {
-    const { userId, name, email } = route.params;
+    const { userId, token } = route.params;
     const { companyId } = route.params;
     console.log('userId',userId);
     console.log(companyId);
@@ -38,8 +38,9 @@ const Settings = ({ route }) => {
         navigation.navigate('HowItWorks');
     };
     const navigateToModify = () => {
-        console.log('testataan',name,email);
-        navigation.navigate('Modify', { userId, name, email });
+        //console.log('testataan',name,email);
+        console.log(token);
+        navigation.navigate('Modify');
     };
     const handleToggleVersionModal = () => {
         setVersionModalVisible(!versionModalVisible);

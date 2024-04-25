@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet, TouchableOpacity, ImageBackground } from
 import * as Font from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-
+// tää nyt skippaa loginin täysin suoraan swippeen
 
 const HomeScreen = () => {
   const navigation = useNavigation();

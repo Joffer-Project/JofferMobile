@@ -1,0 +1,23 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "joffer",
+            "database": "joffer",
+            "username": "netuser"
+        },
+        {
+            "previewLimit": 50,
+            "server": "dpg-cojqo0gcmk4c73c1f7og-a",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Joffer2",
+            "database": "joffer_d9as",
+            "username": "joffer_d9as_user"
+        }
+    ]
+}

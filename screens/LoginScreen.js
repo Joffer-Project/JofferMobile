@@ -1,18 +1,13 @@
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, ImageBackground, Alert } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Auth0 from 'react-native-auth0';
+import axios from 'axios';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-
-  // Auth0 configuration
-  const auth0 = new Auth0({
-    domain: 'dev-katcbz7xhn8gswyp.us.auth0.com',
-    clientId: '7rOiEYBIbncRcvFEfKcwWyKDBG9bmj1z',
-  });
 
   useEffect(() => {
     async function loadFonts() {
@@ -24,37 +19,47 @@ const LoginScreen = () => {
     loadFonts();
   }, []);
 
-  const [email, setEmail] = useState('');
+  // muuttujat
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLoginPress = () => {
-    if (email.trim() === '' || password.trim() === '') {
-      Alert.alert('Missing credentials', 'Please enter both email and password.');
-    } else {
-      auth0.auth
-        .passwordRealm({
-          username: email,
-          password: password,
-          realm: 'Username-Password-Authentication', // Your Auth0 connection name
-          
-         
-        })
-        .then(credentials => {
-          // Successfully logged in, navigate to next screen
-          console.log('Authenticated:', credentials);
-          navigation.navigate('Swipe');
-        })
-        .catch(error => {
-          // Handle login error
-          console.error('Login error:', error);
-          Alert.alert('Invalid credentials', 'Please enter valid email and password.');
-        });
+  // API endpoint URL ja login hakee tiedot tietokannasta
+  const API_URL = 'https://joffer-backend-latest.onrender.com/Accounts/GetAll';
+
+  
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(API_URL);
+      console.log('API Response:', response.data);
+    
+      const user = response.data.find(
+        (user) => user.username === username && user.password === password
+      );
+      if (user) {
+        
+        navigation.navigate('Swipe');
+      } else {
+       
+        Alert.alert('Invalid credentials', 'Please enter valid username and password.');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+     
+      Alert.alert('Error', 'An error occurred ');
     }
   };
 
-  const handleRegisterPress = () => {
-    navigation.navigate('Register');
+  
+  const handleLoginPress = () => {
+    
+    if (username.trim() === '' || password.trim() === '') {
+      Alert.alert('Missing credentials', 'Please enter both username and password.');
+    } else {
+     
+      fetchData();
+    }
   };
+
 
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
@@ -85,9 +90,9 @@ const LoginScreen = () => {
           >
             <TextInput
               style={[styles.input, { fontSize: 16, textAlign: 'left', paddingVertical: 10, marginTop: 10, }]}
-              placeholder="Email"
-              value={email}
-              onChangeText={setEmail}
+              placeholder="Username"
+              value={username}
+              onChangeText={setUsername}
               placeholderTextColor="transparent"
             />
           </ImageBackground>
@@ -135,14 +140,13 @@ const LoginScreen = () => {
           <Text style={styles.registerText}>Forgot your password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.registerButton} onPress={handleRegisterPress}>
+        <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate("Register")}>
           <Text style={styles.registerText}>Create an account!</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -289,4 +293,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-
