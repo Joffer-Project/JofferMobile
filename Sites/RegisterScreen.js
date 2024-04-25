@@ -83,7 +83,14 @@ const RegisterScreen = () => {
         
         {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.returnButton} onPress={() =>navigation.navigate("RegisterScreen2")}>
+          <TouchableOpacity style={styles.returnButton} onPress={ () => { navigation.navigate("RegisterScreen2", {
+            name,
+            email,
+            phone,
+            password
+  });
+  console.log(name, email, phone, password);
+  }}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
         </View>

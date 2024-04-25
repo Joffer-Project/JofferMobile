@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, Modal, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView, Modal, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import * as Font from 'expo-font';
 import * as ImagePicker from 'expo-image-picker';
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import LinksSection from './Links';
 
-
-
-const CompanySocials = () => {
+const CompanySocials = ({ route }) => {
   const navigation = useNavigation();
+  const { userId , name, email, password, about, salaryMax, salaryMin, selectedFields, selectedTitles } = route.params;
 
   useEffect(() => {
     async function loadFonts() {
@@ -20,113 +19,119 @@ const CompanySocials = () => {
     loadFonts();
   }, []);
 
-  const [profileImage, setProfileImage] = useState(null);
-  const [links, setLinks] = useState([]);
+  const [profileImageUri, setProfileImageUri] = useState(null);
+  const [additionalImageUri1, setAdditionalImageUri1] = useState(null);
+  const [additionalImageUri2, setAdditionalImageUri2] = useState(null);
+  const [additionalImageUri3, setAdditionalImageUri3] = useState(null);
 
-  const pickImage = async () => {
+  const [linkAddress1, setLinkAddress1] = useState('');
+  const [linkAddress2, setLinkAddress2] = useState('');
+  const [linkAddress3, setLinkAddress3] = useState('');
+  const [linkAddress4, setLinkAddress4] = useState('');
+  const [linkAddress5, setLinkAddress5] = useState('');
+
+  const pickImage = async (setImageUri) => {
     try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+        return;
+      }
+
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [1, 1],
         quality: 1,
       });
-      if (!result.cancelled) {
-        setProfileImage(result.uri);
+
+      console.log("Image Picker Result:", result); 
+
+      if (result.assets && result.assets.length > 0) {
+        const selectedUri = result.assets[0].uri;
+        console.log("Selected Image URI:", selectedUri); 
+        setImageUri(selectedUri);
+      } else {
+        console.log("Image selection cancelled or URI is undefined.");
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to pick an image.');
+      console.error('Error picking image:', error);
+      alert('Error picking image. Please try again.');
     }
   };
-
-  const handleAddLink = () => {
-    
-    setLinks([...links, 'https://example.com']);
-  };
-
-  const handleRemoveLink = (index) => {
-    const updatedLinks = [...links];
-    updatedLinks.splice(index, 1);
-    setLinks(updatedLinks);
-  };
+  
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : null}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
-      
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500}
     >
-          <View>
-          <LinearGradient
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <LinearGradient
             colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
-            style={styles.logoContainer}>
+            style={styles.logoContainer}
+        >
           <Image
-            source={require('./img/Joffer-Logobig.png')} 
+            source={require('./img/Joffer-Logobig.png')}
             style={styles.logo}
           />
-          <Text style={styles.descriptionText}>Let's find new talents!</Text>
-          </LinearGradient>
-        </View>
-        
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        
-        <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 5/5: Socials And Links</Text>
-        </View>
+          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
+        </LinearGradient>
 
+        <View style={styles.welcomeContainer}>
+          <Text style={[styles.welcomeText, { marginBottom: -10 }]}>Step 5/5: Images & Links</Text>
+        </View>
+        <View style={styles.welcomeContainer}>
+          <Text style={[styles.welcomeText, { marginBottom: -20 }]}>Profile Picture</Text>
+        </View>
 
         <View style={styles.profileContainer}>
-          <Text style={styles.descriptionText}>Add Company Logo</Text>
-          {profileImage ? (
-            <Image source={{ uri: profileImage }} style={styles.profileImage} />
-          ) : (
-            <TouchableOpacity onPress={pickImage}>
-              <Image source={require('./img/userAvatar.png')} style={styles.profileImage} />
-              <View style={styles.addIconContainer}>
-                <Text style={styles.addIcon}>+</Text>
-              </View>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity onPress={() => pickImage(setProfileImageUri)}>
+            <Image source={profileImageUri ? { uri: profileImageUri } : require('./img/Blue.png')} style={styles.profileImage} />
+          </TouchableOpacity>
+
         </View>
-        
-        <View style={styles.uploadContainer}>
-          <TouchableOpacity style={styles.uploadButton}>
-          <LinearGradient
-            colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
-            style={styles.uploadButton}>
-            <Text style={styles.uploadText}>Upload Images</Text>
-            </LinearGradient>
+        <Text style={[styles.welcomeText1,]}>Additional pictures</Text>
+        {/* Additional images */}
+        <View style={styles.additionalImagesContainer}>
+          <TouchableOpacity onPress={() => pickImage(setAdditionalImageUri1)}>
+            <Image source={additionalImageUri1 ? { uri: additionalImageUri1 } : require('./img/Blue.png')} style={styles.profileImage1} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => pickImage(setAdditionalImageUri3)}>
+            <Image source={additionalImageUri3 ? { uri: additionalImageUri3 } : require('./img/Blue.png')} style={styles.profileImage1} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => pickImage(setAdditionalImageUri2)}>
+            <Image source={additionalImageUri2 ? { uri: additionalImageUri2 } : require('./img/Blue.png')} style={styles.profileImage1} />
           </TouchableOpacity>
         </View>
-        
-        <View style={styles.linksContainer}>
-          <Text style={styles.linksHeader}>Links</Text>
-          <View style={styles.linksList}>
-            {links.map((link, index) => (
-              <View key={index} style={styles.linkItem}>
-                <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveLink(index)}>
-                  <Ionicons name="remove-circle-outline" size={24} color='#1771E9' />
-                </TouchableOpacity>
-                <Text style={styles.linkText}>{link}</Text>
-              </View>
-            ))}
-          </View>
-          <TouchableOpacity style={styles.addLinkButton} onPress={handleAddLink}>
-            <Ionicons name="add-circle-outline" size={24} color='#1771E9' />
-            <Text style={styles.addLinkButtonText}>Add a Link</Text>
-          </TouchableOpacity>
-        </View>
+        <LinksSection 
+          linkAddress1={linkAddress1}
+          setLinkAddress1={setLinkAddress1}
+          linkAddress2={linkAddress2}
+          setLinkAddress2={setLinkAddress2}
+          linkAddress3={linkAddress3}
+          setLinkAddress3={setLinkAddress3}
+          linkAddress4={linkAddress4}
+          setLinkAddress4={setLinkAddress4}
+          linkAddress5={linkAddress5}
+          setLinkAddress5={setLinkAddress5}
+        />
         <View style={styles.PreviewContainer}>
-          <TouchableOpacity style={styles.uploadButton} onPress={() => navigation.navigate("CompanyPreview")}>
-          <LinearGradient
+          <TouchableOpacity style={styles.uploadButton} onPress={() => {
+            console.log(linkAddress1);
+            navigation.navigate('CompanyPreview', { userId, name, email, password, about, salaryMax, salaryMin, selectedFields, selectedTitles, profileImageUri, additionalImageUri1, linkAddress1, linkAddress2, linkAddress3, linkAddress4, linkAddress5});
+            console.log( name, email, password, about, salaryMax, salaryMin, selectedFields, selectedTitles, linkAddress1, linkAddress2, linkAddress3, linkAddress4, linkAddress5, profileImageUri);
+          }}>
+            <LinearGradient
             colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
-            style={styles.uploadButton}>
-            <Text style={styles.uploadText}>Preview Your Profile</Text>
+            style={styles.buttonGradient}
+            >
+              <Text style={styles.uploadText}>Preview Your Profile</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
-       
+
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -136,7 +141,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 0,
-    backgroundColor: "#fff"
   },
   scrollView: {
     flexGrow: 1,
@@ -144,69 +148,79 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor:  '#1771E9',
     padding: 20,
-    marginBottom: 10,
+    marginBottom: 20,
     marginLeft: -20,
     marginRight: -20,
-    height: 200,
+    height: 230,
   },
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 5,
+    marginBottom: 10,
     marginTop: 15,
   },
   profileContainer: {
-    alignItems: 'center',
+    borderColor: '#0C6BE8',
+    borderRadius: 20,
     marginTop: 0,
-    marginBottom: 20,
+    marginBottom: 10,
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
   },
   profileImage: {
     width: 100,
     height: 100,
-    borderRadius: 60,
+    resizeMode: 'cover',
+    borderRadius: 20,
+    borderColor: '#0C6BE8',
   },
-  addIconContainer: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    backgroundColor:  '#1771E9',
-    borderRadius: 15,
-    width: 30,
-    height: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+  profileImage1: {
+    width: 90,
+    height: 90,
+    resizeMode: 'cover',
+    borderRadius: 10,
+
   },
-  addIcon: {
-    fontSize: 20,
-    color: 'white',
-  },
+
+
   descriptionText: {
-    fontSize: 20,
-    marginTop: 5,
+    fontSize: 15,
+    marginTop: 10,
     fontFamily: 'Fredoka',
-    textAlign: 'center', 
-    color: 'white', 
-    padding: 0, 
-    
+    textAlign: 'center',
+    padding: 10,
   },
   welcomeContainer: {
     alignItems: 'center',
-    marginBottom: 20, 
+    marginBottom: 20,
   },
   welcomeText: {
     fontSize: 20,
-     fontFamily: 'Fredoka',
-    marginTop: 10,
-    padding: 0,
+    fontFamily: 'Fredoka',
+    marginTop: 0,
+    marginBottom: 10,
+    padding: 10,
+    color: '#0C6BE8',
   },
-  uploadContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 20,
+  welcomeText1: {
+    fontSize: 18,
+    fontFamily: 'Fredoka',
+    marginTop: 0,
+    marginBottom: 10,
+    padding: 10,
+    color: '#0C6BE8',
+    left: 90,
   },
-  PreviewContainer:{
+  gradient: {
+    borderRadius: 50,
+    overflow: 'hidden',
+    width: '100%',
+    height: '100%',
+  },
+  PreviewContainer: {
     marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -214,53 +228,27 @@ const styles = StyleSheet.create({
   },
   uploadButton: {
     borderRadius: 10,
+    marginHorizontal: 10,
+    overflow: 'hidden',
+  },
+  buttonGradient: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginHorizontal: 10,
   },
   uploadText: {
     fontSize: 16,
     color: 'white',
-   fontFamily: 'Fredoka',
-  },
-  linksContainer: {
-    marginTop: 20,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-  },
-  linksHeader: {
-    fontSize: 18,
     fontFamily: 'Fredoka',
-    marginBottom: 10,
+    textAlign: 'center',
   },
-  linksList: {
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    marginBottom: 10,
-  },
-  linkItem: {
+  additionalImagesContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 10,
-    marginBottom: 10,
+    justifyContent: 'space-between',
+    marginLeft: 30,
+    marginRight: 30,
+
   },
-  removeButton: {
-    marginRight: 5,
-  },
-  linkText: {
-    fontFamily: 'Fredoka',
-    fontSize: 16,
-  },
-  addLinkButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  addLinkButtonText: {
-   fontFamily: 'Fredoka',
-    fontSize: 16,
-    marginLeft: 5,
-    color: '#1771E9',
-  },
+
 });
 
 export default CompanySocials;

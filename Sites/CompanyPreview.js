@@ -1,14 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView} from 'react-native';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { useNavigation, useIsFocused,  useRoute } from '@react-navigation/native';
 import SwipeButton from 'rn-swipe-button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
-
-
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Linking } from 'react-native';
 
 const CompanyPreview = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { userId, name, email, password, about, salaryMax, salaryMin, selectedFields, selectedTitles, profileImageUri, additionalImageUri1, linkAddress1, linkAddress2, linkAddress3, linkAddress4, linkAddress5} = route.params;
 
   const [registered, setRegistered] = useState(false);
   const [okPressed, setOkPressed] = useState(false);
@@ -54,7 +56,7 @@ const CompanyPreview = () => {
       </View>
       <View style={styles.profileContainer}>
         <Text style={[styles.userName, { color: '#1771E9', fontSize: 26, marginBottom: 15 }]}>IntelliTech Solutions</Text>
-        <Image source={require('./img/logo.png')} style={styles.profileImage} />
+        <Image source={{ uri: profileImageUri }} style={styles.profileImage} />
         <Text style={[styles.professions, { marginTop: 10 }]}>Cybersecurity & IT -Services</Text>
       </View>
       <View style={styles.aboutContainer}>
@@ -64,15 +66,19 @@ const CompanyPreview = () => {
       <View style={styles.linksContainer}>
         <Text style={[styles.linksHeader, { color: '#1771E9', fontSize: 18 }]}>Links and Socials</Text>
         <View style={styles.linksList}>
-          <Text style={[styles.linkText, { color: '#1771E9' }]}>https://example.com</Text>
-          <Text style={[styles.linkText, { color: '#1771E9' }]}>https://example2.com</Text>
+          <TouchableOpacity>
+          <Text source={{ uri: linkAddress1 }} onPress={() => Linking.openURL(linkAddress1)} style={[styles.linkText, { color: '#1771E9' }]}>{linkAddress1}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+          <Text source={{ uri: linkAddress2 }} onPress={() => Linking.openURL(linkAddress2)} style={[styles.linkText, { color: '#1771E9' }]}>{linkAddress2}</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <SwipeButton
         title=" Save and start swiping!"
         onSwipeSuccess={() => {
             handleOkPress();
-           // navigation.navigate("HowItWorks")
+            navigation.navigate("HowItWorks")
           }}
         railStyles={{ 
           backgroundColor: 'rgba(255, 191, 129, 0.3)',

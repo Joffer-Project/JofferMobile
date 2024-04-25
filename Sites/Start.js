@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
-
+import * as Font from 'expo-font'; 
 
 export default function Start() {
   const navigation = useNavigation();

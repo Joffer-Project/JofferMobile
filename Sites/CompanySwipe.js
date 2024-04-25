@@ -106,7 +106,7 @@ const CompanySwipe = () => {
             <Image style={styles.addImage} source={require('./img/add.png')} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity /* onPress={} */ >
+        <TouchableOpacity onPress={() => navigation.navigate("CompanyModify")} >
           <View style={styles.BottomButton}>
             <Image style={styles.userImage} source={require('./img/userAvatar.png')} />
           </View>

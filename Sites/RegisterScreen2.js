@@ -9,6 +9,7 @@ import axios from 'axios';
 const RegisterScreen2 = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const { name, email, password} = route.params;
 
   useEffect(() => {
     async function loadFonts() {
@@ -136,7 +137,10 @@ const handleNextPress = async () => {
     start={{ x: 0, y: 0 }}
     end={{ x: 1, y: 0 }}
   >
-    <TouchableOpacity onPress={() => navigation.navigate("FieldsScreen")}>
+    <TouchableOpacity onPress={() => { navigation.navigate("FieldsScreen", { name, email, password, about});
+            console.log(name, email, password, about);
+            }}
+          >
       <Text style={styles.returnButtonText}>Next</Text>
     </TouchableOpacity>
   </LinearGradient>

@@ -1,14 +1,17 @@
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import * as Font from 'expo-font';
-import { useNavigation, useRoute } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
 
-const TitlesScreen = () => {
-  const navigation = useNavigation(); 
-  const route = useRoute();
-  const { name, email, password, about, selectedFields} = route.params;
-  
+const TitlesScreenModify = ({route}) => {
+  const navigation = useNavigation();
+  //const { companyId } = route.params;
+
+  const [fields, setFields] = useState([]); 
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -17,46 +20,44 @@ const TitlesScreen = () => {
       });
     }
     loadFonts();
+
+  // ei toimi kun tuota endpointtia ei enään ole
+    
+    axios.get('https://joffer-backend-latest.onrender.com/Industries/GetAll')
+      .then(response => {
+      
+        setFields(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching roles:', error);
+      });
   }, []);
 
-  const titles = [
-    { id: 1, name: 'Tech' },
-    { id: 2, name: 'Health' },
-    { id: 3, name: 'Tech' },
-    { id: 4, name: 'Tech' },
-    { id: 5, name: 'Tech' },
-    { id: 6, name: 'Tech' },
-    { id: 7, name: 'Tech' },
-    { id: 8, name: 'Other' },
-    { id: 9, name: 'Other' },
-    { id: 10, name: 'Other' },
-    { id: 11, name: 'Other' },
-    { id: 12, name: 'Other' },
-  ];
+  const [selectedFields, setSelectedFields] = useState([]);
 
-  
-  const [selectedTitles, setSelectedTitles] = useState([]);
-
-  const toggleTitlesSelection = (titlesId) => {
-    const isSelected = selectedTitles.includes(titlesId);
+  const toggleFieldSelection = (fieldId) => {
+    const isSelected = selectedFields.includes(fieldId);
     if (isSelected) {
-      setSelectedTitles(selectedTitles.filter(id => id !== titlesId));
+      setSelectedFields(selectedFields.filter(id => id !== fieldId));
     } else {
-      setSelectedTitles([...selectedTitles, titlesId]);
+      setSelectedFields([...selectedFields, fieldId]);
     }
   };
 
-  const renderTitlesButton = ({ item }) => {
-    const isSelected = selectedTitles.includes(item.id);
+  const renderFieldButton = ({ item }) => {
+    const isSelected = selectedFields.includes(item.id);
     return (
       <TouchableOpacity
         style={[styles.fieldButton, isSelected && styles.selectedFieldButton]}
-        onPress={() => toggleTitlesSelection(item.id)}
+        onPress={() => toggleFieldSelection(item.id)}
       >
         <Text style={[styles.fieldButtonText, isSelected && styles.selectedFieldButtonText]}>{item.name}</Text>
       </TouchableOpacity>
-      
     );
+  };
+
+  const handleNextPress = () => {
+    navigation.navigate('Titles'); //{companyId});
   };
 
   return (
@@ -65,45 +66,45 @@ const TitlesScreen = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : null}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -500} 
     >
-           <LinearGradient
-          colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        
+      <LinearGradient
+          colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
           style={styles.logoContainer}
         >
           <Image
             source={require('./img/Joffer-Logobig.png')}
             style={styles.logo}
           />
-          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal career fit!</Text>
-      </LinearGradient>
+          <Text style={styles.descriptionText}>Let advanced Joffer algorithms find your ideal talent!</Text>
+        </LinearGradient>
         
-      <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Step 4/5: Titles</Text>
-          <Text style={[styles.welcomeText, { fontSize: 16 }]}>Select the roles that align best with your interests, knowledge, experience, and wishes.  </Text>
-      </View>
-      
+        <View style={styles.welcomeContainer}>
+          <Text style={styles.welcomeText}>Roles</Text>
+          <Text style={[styles.welcomeText, { fontSize: 16 }]}>Choose the roles that describes best the talent that you are searching for </Text>
+        </View>
+
         <FlatList
-          data={titles}
-          renderItem={renderTitlesButton}
+          data={fields}
+          renderItem={renderFieldButton}
           keyExtractor={item => item.id.toString()}
           numColumns={3}
           contentContainerStyle={styles.fieldButtonsContainer}
         />
         
-      <View style={styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
         <LinearGradient
-    colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+    colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
     style={styles.returnButton}
     start={{ x: 0, y: 0 }}
     end={{ x: 1, y: 0 }}
   >
-    <TouchableOpacity onPress={() => {  
-            navigation.navigate('SocialsScreen',{name, password, email, about, selectedFields, selectedTitles});
-            console.log(name, password, email, about, selectedFields, selectedTitles );
-            }}>
-      <Text style={styles.returnButtonText}>Next</Text>
+    <TouchableOpacity onPress={handleNextPress}>
+      <Text style={styles.returnButtonText}>Save</Text>
     </TouchableOpacity>
   </LinearGradient>
         </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    backgroundColor: '#FF7E33',
+    //backgroundColor: '#0C6BE8',
     padding: 20,
     marginBottom: 20,
     marginLeft:-20,
@@ -138,7 +139,8 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
-    color:'#FF7E33',
+    color: '#0C6BE8',
+    
   },
   descriptionText: {
     fontSize: 15,
@@ -163,19 +165,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: 100,
     borderWidth: 1,
-    borderColor: '#FF7E33',
+    borderColor: '#0C6BE8',
   },
   selectedFieldButton: {
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#0C6BE8',
+    color: 'white',
    
   },
-  selectedFieldButtonText:{
+  selectedFieldButtonText: {
     color: 'white',
+   
   },
   fieldButtonText: {
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: 'Fredoka1',
-    color: '#FF7E33',
+    color: '#0C6BE8',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -188,7 +192,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor: '#FF7E33',
+    backgroundColor: '#0C6BE8',
     width: 130,
     
   },
@@ -199,4 +203,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TitlesScreen;
+export default TitlesScreenModify;

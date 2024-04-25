@@ -7,7 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const CompanyTitles = () => {
   const navigation = useNavigation(); 
   const route = useRoute();
-  const { name, email, phone, password, about, selectedFields} = route.params;
+  const { name, email, password, about, selectedFields} = route.params;
 
   
   useEffect(() => {
@@ -98,8 +98,8 @@ const CompanyTitles = () => {
             end={{ x: 1, y: 0 }}
           >
           <TouchableOpacity onPress={() => {  
-            navigation.navigate('CompanySocials',{name, password, phone, email, about, selectedFields, selectedTitles});
-            console.log(name, password, phone, email, about, selectedFields, selectedFields );
+            navigation.navigate('CompanySocials',{name, password, email, about, selectedFields, selectedTitles});
+            console.log(name, password, email, about, selectedFields, selectedTitles );
             }}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>

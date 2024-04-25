@@ -32,8 +32,10 @@ import HowItWorks from './Sites/HowItWorks.js';
 import HowItWorksUser from './Sites/HowItWorksUser.js';
 import CompanySettings from './Sites/CompanySettings.js';
 import UserSettings from './Sites/UserSettings.js'
-
-
+import CompanyModify from './Sites/CompanyModify.js';
+import CompanyModAccount from './Sites/CompanyModAccount.js';
+import FieldsScreenModify from './Sites/FieldsModal.js';
+import TitlesScreenModify from './Sites/TitlesModal.js';
 
 const Stack = createStackNavigator();
 
@@ -52,7 +54,11 @@ export default function App() {
       <Stack.Screen name="CompanySocials"component={CompanySocials}/>
       <Stack.Screen name="CompanyPreview"component={CompanyPreview}/>
       <Stack.Screen name="CompanySettings"component={CompanySettings}/>
+      <Stack.Screen name="CompanyModAccount"component={CompanyModAccount}/>
+      <Stack.Screen name="FieldsModal"component={FieldsScreenModify}/>
+      <Stack.Screen name="TitlesModal"component={TitlesScreenModify}/>
       <Stack.Screen name="HowItWorks"component={HowItWorks}/> 
+      <Stack.Screen name="CompanyModify" component={CompanyModify}/> 
       <Stack.Screen name="HowItWorksUser"component={HowItWorksUser}/> 
       <Stack.Screen name="CompanySwipe"component={CompanySwipe}/>
       <Stack.Screen name="AddApplication" component={AddApplication} options={{ title: "upload",}}/> 

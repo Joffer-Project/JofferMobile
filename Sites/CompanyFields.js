@@ -7,11 +7,10 @@ import axios from 'axios'; // Import Axios for HTTP requests
 import { render } from 'react-dom';
 
 
-
 const CompanyFields = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { name, email, phone, password, about} = route.params;
+  const { name, email, password, about} = route.params;
 
 
   useEffect(() => {
@@ -110,11 +109,10 @@ const CompanyFields = () => {
             navigation.navigate('CompanyTitles',{
               name, 
               password, 
-              phone, 
               email, 
               about, 
               selectedFields });
-            console.log(name, password, phone, email, about, selectedFields );
+            console.log(name, password, email, about, selectedFields );
             }}>
             <Text style={styles.returnButtonText}>Next</Text>
           </TouchableOpacity>
@@ -150,7 +148,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 20,
-    fontFamily: 'Fredoka1',
+    fontFamily: 'Fredoka',
     marginTop: 0,
     marginBottom: 10,
     padding: 10,
@@ -193,7 +191,7 @@ const styles = StyleSheet.create({
   },
   fieldButtonText: {
     fontSize: 18,
-    fontFamily: 'Fredoka1',
+    fontFamily: 'Fredoka',
     color: '#0C6BE8',
   },
   buttonContainer: {
@@ -212,7 +210,7 @@ const styles = StyleSheet.create({
   },
   returnButtonText: {
     fontSize: 18,
-    fontFamily: 'Fredoka1',
+    fontFamily: 'Fredoka',
     color: 'white',
   },
 });

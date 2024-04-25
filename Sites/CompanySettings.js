@@ -111,7 +111,7 @@ const Settings = () => {
               <Text style={styles.registerText}>Supermatches</Text>
             </LinearGradient>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={handleNavigateToModifyAccount}>
+          <TouchableOpacity style={[styles.settingsButton, { width: itemWidth }]} onPress={() => navigation.navigate("CompanyModAccount")}>
             <LinearGradient
               colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
               style={styles.linearGradient}
@@ -197,7 +197,7 @@ const Settings = () => {
             <Image style={styles.addImage} source={require('./img/add.png')} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity  /* onPress={} */ >
+        <TouchableOpacity   onPress={() => navigation.navigate('CompanyModify')} >
           <View style={styles.BottomButton}>
             <Image style={styles.userImage} source={require('./img/userAvatar.png')} />
           </View>

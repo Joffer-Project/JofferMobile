@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useRoute } from '@react-navigation/native'
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
 
 
 export default function Offer() {
@@ -16,10 +17,9 @@ export default function Offer() {
     const [salaryMax, setSalaryMax] = useState('')
     const [text, setText] = useState('')
     const [mode, setMode] = useState('date') 
-    const [givenTitle, setGivenTitle] = useState("")
+    const [title, setTitle] = useState("")
     const navigation = useNavigation();
     const route = useRoute();
-
 
 
     useEffect(() => {
@@ -32,7 +32,7 @@ export default function Offer() {
       }, []);
     
 
-    const onChange = (e, selectedDate) => {
+    const onChange = (e, selectedDate) => {        
         setDate(selectedDate)
         setShow(false)
     };
@@ -66,8 +66,8 @@ export default function Offer() {
                         <TextInput
                             style={styles.input4}
                             placeholder="Example: Cypersecurity assistant"
-                            value={givenTitle}
-                            onChangeText={setGivenTitle}
+                            value={title}
+                            onChangeText={setTitle}
                         >
                         </TextInput>
                         <View style={styles.rowSalary}>
@@ -82,7 +82,7 @@ export default function Offer() {
                                 keyboardType="numeric"
                                 style={styles.input1}
                                 placeholder="Max"
-                                value={SalaryMax}
+                                value={salaryMax}
                                 onChangeText={setSalaryMax} 
                             ></TextInput>
                         </View>
@@ -100,20 +100,18 @@ export default function Offer() {
                                 {show && (
                                     <DatePicker
                                     value={date}
-                                    mode={mode}
+                                    mode="date"
                                     is24Hour={true}
-                                    onChange={onChange}
+                                    onChangeText={setDate}
                                 ></DatePicker>
                              )}
-                             
-                              <Text style={styles.LocaleText}>{date.toLocaleString()}</Text>
-                             
+                              <Text style={styles.LocaleText}>{date.toLocaleDateString()}</Text>
                             </View>
                         <TextInput
                             style={styles.input2}
                             placeholder="Write something about the job offer"
                             value={text}
-                            onChange={setText}
+                            onChangeText={setText}
                         ></TextInput>
                     </View>
                     <LinearGradient
@@ -123,8 +121,13 @@ export default function Offer() {
                             end={{ x: 1, y: 0 }}>
                 <TouchableOpacity
                 onPress = {() => {
-                navigation.navigate('AddApplication',{date, text, salaryMin, salaryMax, givenTitle});
-                console.log(date, text, min, max, givenTitle);
+                navigation.navigate('AddApplication', {
+                    date: date.toLocaleDateString(),
+                    text: text, 
+                    salaryMin: salaryMin,
+                    salaryMax: salaryMax, 
+                    title: title});
+                console.log(date, text, salaryMin, salaryMax, title);
                 }}
                 style={styles.DoneButton}
                 >

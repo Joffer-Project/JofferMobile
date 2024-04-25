@@ -1,43 +1,53 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Modal } from 'react-native';
 
-const CompanyInfo = ({ company }) => {
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import ModalComponent from './CompanyModal'; 
+
+const CompanyInfo = ({ company, onCompanyIdReceived }) => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (company && company.companyId !== undefined) {
+      onCompanyIdReceived(company.companyId);
+    }
+  }, [onCompanyIdReceived]);
+  console.log(company.companyId);
+  console.log('okay',company.id);
+  if (!company || company.companyId === undefined) {
+    return null; 
+  } 
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <View style={styles.container}>
-        <Image source={company.image} style={styles.imageBackground} />
-        <View style={styles.cardDetails}>
-          <Text style={styles.companyName}>{company.name}</Text>
-          <Text style={styles.jobDetails}>{company.jobDetails}</Text>
-          <Text style={styles.jobDetails1}>{company.jobDetails1}</Text>
-          <TouchableOpacity
-            style={styles.moreInfoButton}
-            onPress={() => setModalVisible(true)}
-          >
-            <Text style={styles.moreInfoButtonText}>More Info</Text>
-          </TouchableOpacity>
-        </View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text>Ehkä fiksuin tähän lisätä tietoa companysta ja siitä job offerista. liian pieni näyttö!</Text>
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={styles.closeButtonText}>Close</Text>
-              </TouchableOpacity>
-            </View>
+      <LinearGradient
+        colors={['rgba(255, 126, 51, 1)', 'rgba(255, 94, 0, 1)']}
+        style={styles.gradientContainer}
+      >
+        <View style={styles.container}>
+          <Image source={company.image} style={styles.imageBackground} />
+          <View style={styles.cardDetails}>
+            <Text style={styles.companyName}>{company.title}</Text>
+            <Text style={styles.jobDetails}>{company.description}</Text>
+        
+            <TouchableOpacity
+              style={styles.moreInfoButton}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text style={styles.moreInfoButtonText}>More Info</Text>
+            </TouchableOpacity>
           </View>
-        </Modal>
-      </View>
+       
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <ModalComponent modalVisible={modalVisible} setModalVisible={setModalVisible} companyId={company.companyId} offerId={company.id} />
+          </Modal>
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 };
@@ -47,35 +57,27 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
   },
-  container: {
-    backgroundColor: '#FF7E33',
-    padding: 20,
+  gradientContainer: {
     borderRadius: 10,
     margin: 10,
-    alignItems: 'center', 
+  },
+  container: {
+    padding: 20,
+    alignItems: 'center',
     height: 400,
-    position: 'relative', 
+    position: 'relative',
     overflow: 'hidden',
-    marginTop: 30,
   },
   companyName: {
-  //  fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     fontSize: 26,
-    color: 'black',
+    color: 'white',
     marginBottom: 10,
     textAlign: 'center',
     marginTop: 20,
   },
   jobDetails: {
-  //  fontFamily: 'Fredoka',
-    fontSize: 16,
-    lineHeight: 24,
-    textAlign: 'center',
-    marginBottom: 10,
-    color: 'black',
-  },
-  jobDetails1: {
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka1',
     fontSize: 16,
     lineHeight: 24,
     textAlign: 'center',
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   moreInfoButtonText: {
-   // fontFamily: 'Fredoka',
+    fontFamily: 'Fredoka2',
     fontSize: 16,
     color: '#FF7E33',
   },
@@ -100,31 +102,6 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: 'cover',
     borderRadius: 30,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: '#FFFFFF',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  closeButton: {
-    backgroundColor: '#FF7E33',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
-
-  },
-  closeButtonText: {
-   // fontFamily: 'Fredoka',
-    fontSize: 16,
-    color: '#FFFFFF',
   },
 });
 

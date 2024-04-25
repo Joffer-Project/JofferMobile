@@ -10,7 +10,6 @@ const CompanyRegister = () => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
@@ -60,12 +59,6 @@ const CompanyRegister = () => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Phone"
-            value={phone}
-            onChangeText={setPhone}
-          />
-          <TextInput
-            style={styles.input}
             placeholder="Password"
             secureTextEntry={true}
             value={password}
@@ -82,9 +75,8 @@ const CompanyRegister = () => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={() => {
-
-          navigation.navigate('CompanyRegister2', { name, email, phone, password });
-          console.log(name, email, password, phone);}}>
+          navigation.navigate('CompanyRegister2', { name, email, password });
+          console.log(name, email, password);}}>
             <LinearGradient
               colors={['rgba(84, 150, 238, 1)', 'rgba(0, 99, 230, 1)']}
               style={styles.returnButton}

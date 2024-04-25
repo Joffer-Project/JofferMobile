@@ -3,15 +3,13 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView,
 import * as Font from 'expo-font';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import axios from 'axios';
-
 
 
 const CompanyRegister2 = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const [description, setDescription] = useState('');
-    const { name, email, phone, password} = route.params;
+    const { name, email, password} = route.params;
 
 
   useEffect(() => {
@@ -67,8 +65,8 @@ const CompanyRegister2 = () => {
         
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.returnButton}  onPress={() => {
-            navigation.navigate('CompanyFields', { name, email, password, about, phone});
-            console.log(name, email, password, about, phone);
+            navigation.navigate('CompanyFields', { name, email, password, about});
+            console.log(name, email, password, about);
             }}
             >
             <LinearGradient
